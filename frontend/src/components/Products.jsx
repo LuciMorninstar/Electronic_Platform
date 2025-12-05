@@ -70,17 +70,17 @@ const Products = () => {
    <WidthWrapper className = "">
     <section className = " flex flex-col gap-5 ">
     <h3 className = "uppercase ">Products</h3>
-    
+     {/* cards container */}
      <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4">
       {productItems.map((item) => (
         // card wrapper
-        <div className="  relative flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
+        <div className="  relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
  ">
           {/* <div className="absolute z-10 top-3 right-3">
             <HiPlus className="card-icon" />
           </div> */}
           {/* first div (image) */}
-          <div className="relative group w-full h-[200px] overflow-hidden">
+          <div className="relative  w-full h-[200px] overflow-hidden">
             <img
               className="group-hover:scale-120 transition-transform duration-300 ease-in-out w-full h-full object-cover object-center"
               src={item.image}

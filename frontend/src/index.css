@@ -40,7 +40,69 @@
   }
  }
 
- 
+
+
+.carousel{
+  scroll-behavior: smooth;
+}
+.carousel::-webkit-scrollbar{
+  display:none;
+  anchor-name: --carousel;
+}
+
+.carousel::scroll-button(right), .carousel::scroll-button(left){
+  content:"Right";
+  width:max-content;
+  font-size:20px;
+  cursor:pointer;
+  color:black;
+  background-color:white;
+  height:60px;
+  width:60px;
+  border-radius:100%;
+  position:fixed;
+  position-anchor:--carousel;
+  position-area:right center;
+  z-index:10;
+}
+.carousel::scroll-button(left){
+  content:"Left";
+  translate:50%;
+}
+
+.carousel::scroll-button(right):disabled, .carousel::scroll-button(left):disabled{
+  opacity:0.5;
+  cursor:auto;
+  position-area:left center;
+}
+
+
+
+
+
+
+
+
+
+ /* infinite brand partners logo */
+
+
+@keyframes loop {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  width: max-content;      /* IMPORTANT */
+  animation: loop 12s linear infinite;
+}
+
+.card-container > div {
+  flex-shrink: 0;          /* IMPORTANT */
+}
 
 
 
@@ -50,6 +112,7 @@
 
   /* ----------color-section----------- */
   /* lightMode */
+  --color-most-important-color:#464040;
   --color-primary-color:#FFFFFF;
   --color-secondary-color:rgb(209, 213, 219);  /*gray-300*/
   --color-tertiary-color:#6B7280;
@@ -75,7 +138,9 @@
 
 
   /* white mode */
-
+/* --font-most-important-color:#464040; */
+--font-important-color:#f4f4f5;
+--font-description-color:#a1a1aa;
 
   /* dark mode */
   --font-primary-color:oklch(98.5% 0.002 247.839); /*for most important headings*/
@@ -119,6 +184,15 @@
   .card-button{
     @apply bg-tertiary-color dark:bg-dark-tertiary-color px-4 py-4  hover:text-secondary-color dark:hover:text-color-teal-300 transition-all duration-200 ease-in-out shadow-xl 
   }
+
+  /* signup */
+  .form-input-style{
+    @apply w-[320px] bg-dark-search-bar-bg px-3 py-2 rounded-md placeholder:text-gray-700 dark:placeholder:text-primary-color outline-none border-none caret-color-teal-500
+
+  }
+
+
+
   
 
   

@@ -1,14 +1,15 @@
 import React from 'react'
 import WidthWrapper from "../components/WidthWrapper"
-import laptop from "../assets/lap-cat.png"
+import macbook from "../assets/macbook.png"
+import headphones from "../assets/headphones.png"
 import monitor from "../assets/mon-cat.png"
 import mouse from "../assets/mouse-cat.png"
 const Categories = () => {
 
 const categories = [
   {
-    name: "Laptop",
-    image:mouse
+    name: "Headphones",
+    image:headphones
   },
   {
     name: "Monitor",
@@ -23,8 +24,24 @@ const categories = [
     image: monitor
   },
   {
-    name: "Cameras",
+    name: "Macbook",
+    image: macbook
+  },
+  {
+    name: "Monitor",
+    image: monitor
+  },
+  {
+    name: "Mouse",
     image: mouse
+  },
+  {
+    name: "Motherboard",
+    image: monitor
+  },
+  {
+    name: "Macbook",
+    image: macbook
   }
 ];
 
@@ -34,13 +51,14 @@ const categories = [
    <WidthWrapper>
     
     <section className = "flex flex-col gap-5">
-        <h3 className = "uppercase ">Categories</h3>
+        <h3 className = "uppercase text-most-important-color font-poppins ">Categories</h3>
         {/* cards conatiner */}
-        <div className = " grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 gap-x-5 gap-y-4">
+        <div className = "carousel overflow-x-auto ">
 
+            <div className = "group animation-loop duration-400 infinite linear  gap-5 flex flex-row ">
             {categories.map((category)=>(
                 // card wrapper (z-5 to show under the text and over the blurry white also fixed height and fixed width)
-                <div className ="overflow-hidden relative w-[280px] h-[350px] flex flex-col items-center justify-center gap-5 rounded-3xl bg-teal-500  py-8 z-5">
+                <div className =" shrink-0 overflow-hidden relative w-[280px] h-[350px] flex flex-col items-center justify-center gap-5 rounded-3xl bg-teal-500  py-8 z-5">
                     {/* absoluting the details so to get over the blurry bg */}
                     <div className = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10  flex flex-col items-center justify-center gap-5">
                      <div className = "w-full h-[150px]  ">
@@ -61,6 +79,7 @@ const categories = [
 
                 </div>
             ))}
+            </div>
 
 
         </div>
