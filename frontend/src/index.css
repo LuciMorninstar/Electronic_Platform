@@ -16,7 +16,7 @@
 
  body{
 
-  @apply bg-primary-color dark:bg-dark-primary-color font-poppins text-dark-primary-color dark:text-primary-color;
+  @apply bg-secondary-color dark:bg-dark-primary-color font-poppins text-dark-primary-color dark:text-primary-color;
  }
 
  @layer base{
@@ -30,7 +30,7 @@
     @apply text-xl sm:text-2xl lg:text-3xl font-semibold font-poppins
   }
   h4{
-    @apply text-lg sm:text-xl lg:text-2xl font-semibold font-poppins
+    @apply text-lg sm:text-xl lg:text-2xl font-semibold font-poppins text-font-white
   }
   h5{
     @apply text-base sm:text-lg lg:text-xl font-semibold font-poppins
@@ -112,12 +112,17 @@
 
   /* ----------color-section----------- */
   /* lightMode */
-  --color-most-important-color:#464040;
+  
   --color-primary-color:#FFFFFF;
   --color-secondary-color:rgb(209, 213, 219);  /*gray-300*/
-  --color-tertiary-color:#6B7280;
-  --color-lightest-color:#F3F4F6;
-  --color-lighter-color:#E5E7EB;
+  --color-tertiary-color:rgb(229, 231, 235);
+  --color-quad-color:#6B7280;
+
+  /* font ko lagi */
+  --color-font-white:#E8E8E8;
+  --color-font-light-white:#696969;
+  /* --color-lightest-color:#F3F4F6;
+  --color-lighter-color:#E5E7EB; */
 
   /* darkMode */
   --color-dark-primary-color:#000000;   /*background*/
@@ -151,7 +156,7 @@
 }
 
 @layer utilities{
-
+ /* navbar */
   .logo{
     @apply text-2xl sm:text-3xl  font-audiowide text-color-teal-400
   }
@@ -164,8 +169,8 @@
     @apply text-2xl sm:text-3xl   text-dark-primary-color dark:text-primary-color rounded-lg   transition-colors duration-300 ease-in-out 
   }
   .searchbar{
-    @apply w-full rounded-xl px-10 py-2  max-lg:border max-lg:border-gray-700 lg:w-[300px] xl:w-[400px] bg-gray-200 dark:bg-dark-secondary-color lg:dark:bg-dark-search-bar-bg
-    placeholder:text-base placeholder:font-poppins dark:placeholder:text-gray-600 focus:outline-none dark:text-white
+    @apply w-full rounded-xl px-10 py-2  max-lg:border max-lg:border-gray-700 lg:w-[300px] text-font-light-white xl:w-[400px] bg-gray-200 dark:bg-dark-secondary-color lg:dark:bg-dark-search-bar-bg
+    placeholder:text-base placeholder:font-poppins dark:placeholder:text-gray-600 focus:outline-none dark:text-white animate-pulse
   }
 
   /* Slides in hero section */
@@ -187,7 +192,7 @@
 
   /* signup */
   .form-input-style{
-    @apply w-[320px] bg-dark-search-bar-bg px-3 py-2 rounded-md placeholder:text-gray-700 dark:placeholder:text-primary-color outline-none border-none caret-color-teal-500
+    @apply w-[320px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white dark:placeholder:text-font-light-white  outline-none border-none caret-color-teal-500 text-sm
 
   }
 

@@ -133,7 +133,7 @@ const Navbar = () => {
                 key={item.name}
               >
                 {item.icon ? (
-                  <span className="icon-style">{item.icon} </span>
+                  <span className="icon-style hover:text-font-light-white active:text-font-light-white">{item.icon} </span>
                 ) : (
                   "null"
                 )}
@@ -155,7 +155,7 @@ const Navbar = () => {
 
       <nav className=" absolute top-7 w-full z-50 max-lg:hidden opacity-95  ">
         {/* For small screens */}
-        <div className="flex flex-row justify-between items-center lg:mx-4 xl:mx-6 px-6 xl:px-8 py-2 bg-secondary-color dark:bg-dark-secondary-color  rounded-2xl ">
+        <div className="flex flex-row justify-between items-center lg:mx-4 xl:mx-6 px-6 xl:px-8 py-2 shadow-xl bg-secondary-color dark:bg-dark-secondary-color  rounded-2xl ">
           {/* 1st part   */}
           <div className="flex flex-row gap-1 items-center sm:gap-4 lg:gap-6 ">
             {/* hamburger */}
@@ -191,14 +191,14 @@ const Navbar = () => {
                 >
                   {/* add the border animation on bottom for the icon names */}
                   {item.name && (
-                    <span className="lg:text-md xl:text-lg  uppercase text-white font-poppins">
+                    <span className="group lg:text-md xl:text-lg  uppercase text-black hover:text-font-light-white dark:text-font-white dark:hover:text-font-light-white transition-colors duration-300 ease-in-out cursor-pointer  font-poppins">
                       {item.name}
                     </span>
                   )}
 
                   {item.showNumber && (
                     <div className="relative flex flex-row">
-                      <span className="icon-style  ">{item.icon}</span>
+                      <span className=" icon-style  ">{item.icon}</span>
                       <span className="absolute flex flex-row justify-center items-center top-0 right-0 bg-color-teal-500 rounded-full w-4 h-4 text-xs text-white font-semibold">
                         1
                       </span>
@@ -206,7 +206,7 @@ const Navbar = () => {
                   )}
 
                   {item.onlyIcon && (
-                    <span className="icon-style">{item.icon}</span>
+                    <span className="hover:text-font-light-white cursor-pointer icon-style">{item.icon}</span>
                   )}
                 </div>
               ))}
@@ -228,7 +228,7 @@ const Navbar = () => {
             <div key={item.name} className="relative  py-4 sm:py-6 md:py-8  flex-1 flex justify-center items-center">
               {item.icon && (
                 <div className = " relative flex flex-row">
-                  <span className="icon-style text-3xl ">{item.icon}</span>
+                  <span className="icon-style hover:text-font-light-white active:text-font-light-white text-3xl cursor-pointer ">{item.icon}</span>
                   {item.showNumber && (
                     <span className="absolute flex flex-row justify-center items-center -top-3 -right-3 bg-color-teal-500 rounded-full w-4 h-4 text-xs text-white font-semibold">
                       1

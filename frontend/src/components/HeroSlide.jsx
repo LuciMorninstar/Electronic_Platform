@@ -3,14 +3,35 @@ import { FaStar } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
 import { FaRegBookmark } from "react-icons/fa";
-
-
-
-
-
+import gsap from "gsap"
+import {useGSAP} from "@gsap/react"
+import { SplitText } from 'gsap/all';
 
 
 const HeroSlide = ({item}) => {
+
+  useGSAP(()=>{
+
+    const HeroTitleSplit = new SplitText(".title", {type:'words,chars'});
+    const HeroDescriptionSplit = new SplitText(".description", {type:'line'})
+
+    gsap.from(HeroTitleSplit.words,{
+      opacity:0,
+      duration:1.5,
+      ease:'power1.inOut',
+      stagger:0.04
+
+    });
+
+    gsap.from(HeroDescriptionSplit.lines,{
+      opacity:0,
+      duration:1.8,
+      ease:'expo.out',
+      stagger:0.06,
+
+    })
+
+  },[])
 
 
 
@@ -31,13 +52,13 @@ const HeroSlide = ({item}) => {
           
            {/* slide details */}
           <div  className = " pb-5 lg:pb-7 xl:pb-10 absolute   left-1/2 max-lg:-translate-x-1/2 bottom-0 lg:bottom-0 lg:left-0 flex flex-col  lg:gap-2 max-lg:items-center content-center w-full lg:w-1/2 px-5 lg:px-10 ">
-            <h1>{item.name}</h1>
+            <h1 className = " title ">{item.name}</h1>
             <span className ="flex flex-row gap-2 items-center">
               <FaStar className = "text-yellow-500" />
               <span>{item.rating}/5</span>
               </span>
               <div className = "hidden lg:block">
-                <p className = "text-xs lg:text-lg line-clamp-2 lg:line-clamp-3">{item.description}</p>
+                <p className = "description text-xs lg:text-lg line-clamp-2 lg:line-clamp-3 text-font-light-white">{item.description}</p>
               </div>
             <div className = "flex flex-row gap-5">
               <button className = " px-3 text-sm lg:text-base py-2 border-t rounded-xl ">{item.category}</button>

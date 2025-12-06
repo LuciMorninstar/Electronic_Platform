@@ -27,7 +27,7 @@ const ToggleDarkMode = () => {
   return (
 
     <div onClick={()=>setIsDarkMode(prev=>!prev)} className ="">
-        {isDarkMode ?(<GiLightningFlame className ="text-5xl rounded-full px-2 py-2 dark:text-black bg-gray-200 cursor-pointer shadow-md" />) :(<GiMoonBats className = "text-5xl rounded-full px-2 py-2 bg-gray-200 cursor-pointer shadow-md" />)
+        {isDarkMode ?(<GiLightningFlame className ="text-5xl rounded-full px-2 py-2 dark:text-black bg-secondary-color cursor-pointer shadow-md" />) :(<GiMoonBats className = "text-5xl rounded-full px-2 py-2 bg-gray-200 cursor-pointer shadow-md" />)
 }
     </div>
    
