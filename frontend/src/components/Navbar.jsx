@@ -12,8 +12,25 @@ import { IoMdCart } from "react-icons/io";
 import Search from "./Search";
 import { useState } from "react";
 import ToggleDarkMode from "./ToggleDarkMode";
+import gsap from "gsap"
+import { useGSAP } from "@gsap/react";
 
 const Navbar = () => {
+
+
+  useGSAP(()=>{
+
+    gsap.from(".gsapNav",{
+      opacity:0,
+      // z:-200,
+      duration:1,
+      ease:"power1.in",
+      delay:0.3,
+    })
+
+  },[])
+
+
   const [showSearchBar, setShowSearchBar] = useState(false);
 
   const OnSearchIconClick = (iconname) => {
@@ -100,7 +117,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className=" absolute z-50 top-6 w-full  lg:hidden opacity-100  ">
+      <nav className="gsapNav absolute z-50 top-6 w-full  lg:hidden opacity-100  ">
         {/* For small screens upto lg:1024px */}
         <div className=" relative flex flex-row justify-between items-center mx-4 px-4 py-2  bg-secondary-color dark:bg-dark-secondary-color  rounded-2xl ">
           {/* 1st part   */}
@@ -153,7 +170,7 @@ const Navbar = () => {
 
       {/* for large screen lg and up(1024px and up) */}
 
-      <nav className=" absolute top-7 w-full z-50 max-lg:hidden opacity-95  ">
+      <nav className="gsapNav absolute top-7 w-full z-50 max-lg:hidden opacity-95  ">
         {/* For small screens */}
         <div className="flex flex-row justify-between items-center lg:mx-4 xl:mx-6 px-6 xl:px-8 py-2 shadow-xl bg-secondary-color dark:bg-dark-secondary-color  rounded-2xl ">
           {/* 1st part   */}

@@ -48,8 +48,8 @@
 .carousel::-webkit-scrollbar{
   display:none;
   anchor-name: --carousel;
-}
-
+} 
+/* 
 .carousel::scroll-button(right), .carousel::scroll-button(left){
   content:"Right";
   width:max-content;
@@ -74,7 +74,7 @@
   opacity:0.5;
   cursor:auto;
   position-area:left center;
-}
+} */
 
 
 
@@ -102,6 +102,19 @@
 
 .card-container > div {
   flex-shrink: 0;          /* IMPORTANT */
+}
+
+
+.productCard{
+  transform:translateX(-200px);
+  opacity:0;
+  transition:transform 0.5s ease-in, opacity 0.5s ease-out;
+  
+}
+
+.show{
+  transform:translateX(0);
+  opacity:1
 }
 
 
@@ -156,6 +169,14 @@
 }
 
 @layer utilities{
+
+/* for all */
+.section_style{
+  @apply flex flex-col gap-5 lg:gap-8
+}
+
+
+
  /* navbar */
   .logo{
     @apply text-2xl sm:text-3xl  font-audiowide text-color-teal-400
@@ -195,6 +216,27 @@
     @apply w-[320px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white dark:placeholder:text-font-light-white  outline-none border-none caret-color-teal-500 text-sm
 
   }
+
+
+
+  /* footer */
+
+  .footer_icons{
+    @apply group-hover:text-font-light-white 
+  }
+  .footer_links{
+    @apply text-xs md:text-sm lg:text-base xl:text-lg group-hover:text-font-light-white 
+  }
+  /* for  footer links page */
+  .footer_links_paragraph{
+  @apply text-justify text-xs  lg:text-sm  font-poppins
+
+}
+
+.footer_link_paragraph_container{
+  @apply flex flex-col gap-2 lg:gap-4
+
+}
 
 
 

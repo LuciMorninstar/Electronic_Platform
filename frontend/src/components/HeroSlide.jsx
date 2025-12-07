@@ -10,28 +10,52 @@ import { SplitText } from 'gsap/all';
 
 const HeroSlide = ({item}) => {
 
-  useGSAP(()=>{
+  
+  
+  
+  // useGSAP(()=>{
+    
+  //   gsap.registerPlugin(SplitText);
 
-    const HeroTitleSplit = new SplitText(".title", {type:'words,chars'});
-    const HeroDescriptionSplit = new SplitText(".description", {type:'line'})
+  //   document.fonts.ready.then(()=>{
+  //         let SplitHeroTitle = new SplitText(".title",{
+  //     type:"words"
+  //   });
+  //     gsap.from(SplitHeroTitle.words,{
+  //    opacity:0,
+  //   y:200,
+  //   stagger:0.3,
+  //   ease:"power1.in"
+  // })
 
-    gsap.from(HeroTitleSplit.words,{
-      opacity:0,
-      duration:1.5,
-      ease:'power1.inOut',
-      stagger:0.04
+  //   })
 
-    });
+  // },[])
 
-    gsap.from(HeroDescriptionSplit.lines,{
-      opacity:0,
-      duration:1.8,
-      ease:'expo.out',
-      stagger:0.06,
 
-    })
 
-  },[])
+  // useGSAP(()=>{
+
+  //   const HeroTitleSplit = new SplitText(".title", {type:'words,chars'});
+  //   const HeroDescriptionSplit = new SplitText(".description", {type:'line'})
+
+  //   gsap.from(HeroTitleSplit.words,{
+  //     opacity:0,
+  //     duration:1.5,
+  //     ease:'power1.inOut',
+  //     stagger:0.04
+
+  //   });
+
+  //   gsap.from(HeroDescriptionSplit.lines,{
+  //     opacity:0,
+  //     duration:1.8,
+  //     ease:'expo.out',
+  //     stagger:0.06,
+
+  //   })
+
+  // },[])
 
 
 

@@ -14,6 +14,7 @@ import HeroSlide from "./HeroSlide";
 
 
 const HeroSection = () => {
+  
  const featuredProducts = [
   {
     name: "Asus Rog Strix G15",
@@ -105,8 +106,8 @@ const HeroSection = () => {
         
       
       >
-        {featuredProducts.map((item)=>(
-           <SwiperSlide key = {item.name}><HeroSlide item={item} /></SwiperSlide>
+        {featuredProducts.map((item,i)=>(
+           <SwiperSlide key = {i}><HeroSlide item={item} /></SwiperSlide>
 
         ))}
 

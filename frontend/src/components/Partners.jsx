@@ -21,7 +21,7 @@ const Partners = () => {
 
   return (
     <WidthWrapper>
-  <section className = "flex flex-col gap-5">
+  <section className = "section_style">
     <h3 className = "uppercase">Our Partners</h3>
     
 <div className="w-full overflow-hidden">
