@@ -51,7 +51,7 @@ const socialMedias = [
   <div className = "grid grid-cols-2 gap-15 sm:gap-20 md:gap-30 lg:gap-40 xl:gap-60 w-full sm:w-max  mx-auto  ">
 {
   footerItems.map((item,i)=>(
-    <div key ={i} className = "flex flex-col gap-5">
+    <div  key ={i} className = "  flex flex-col gap-5">
       <h4>{item.topic}</h4>
       {item.links.map((link,i)=>(
         <div key={i} className = " group flex flex-row gap-2 items-center">

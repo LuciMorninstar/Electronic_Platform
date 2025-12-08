@@ -71,11 +71,11 @@ const HeroSlide = ({item}) => {
           <img className = "w-full h-full object-cover object-center" src={item.image} alt="product-image"/>
           </div>
          {/* blur background on left of big screen */}
-          <div className = "bg-black max-lg:hidden lg:block absolute top-0 z-10 left-[20%] h-full w-3/12 blur-xl opacity-20 ">
+          <div className = "bg-black blur-3xl max-lg:hidden lg:block absolute top-0 z-10 left-0 h-full w-5/12 brightness-90 opacity-20 ">
           </div>
           
            {/* slide details */}
-          <div  className = " pb-5 lg:pb-7 xl:pb-10 absolute   left-1/2 max-lg:-translate-x-1/2 bottom-0 lg:bottom-0 lg:left-0 flex flex-col  lg:gap-2 max-lg:items-center content-center w-full lg:w-1/2 px-5 lg:px-10 ">
+          <div  className = " pb-5 lg:pb-7 xl:pb-25 absolute   left-1/2 max-lg:-translate-x-1/2 bottom-0 lg:bottom-0 lg:left-0 flex flex-col  lg:gap-2 max-lg:items-center content-center w-full lg:w-1/2 px-5 lg:px-10 z-20 ">
             <h1 className = " title ">{item.name}</h1>
             <span className ="flex flex-row gap-2 items-center">
               <FaStar className = "text-yellow-500" />

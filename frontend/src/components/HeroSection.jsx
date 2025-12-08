@@ -3,6 +3,8 @@ import laptop from "../assets/laptop.webp"
 import monitor from "../assets/monitor.webp"
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
 import { Pagination,Autoplay,Navigation  } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -96,11 +98,11 @@ const HeroSection = () => {
           effect="fade"
         fadeEffect={{ crossFade: true }}
         autoplay={{delay:3000, disableOnInteraction:false}}
-        navigation={true}
+        // navigation={true} 
       
         className="mySwiper"
         loop={true}
-        spaceBetween={20}
+        spaceBetween={20} 
         slidesPerView={1}
         autoHeight={false}
         

@@ -8,12 +8,16 @@ import { FaStar } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
 import { FiExternalLink } from "react-icons/fi";
 import WidthWrapper from "./WidthWrapper";
+import gsap from "gsap"
+import { useGSAP } from "@gsap/react";
 
 
 
 
 
 const Products = () => {
+
+
   const productItems = [
     {
       name: "Asus Rog strix g15",

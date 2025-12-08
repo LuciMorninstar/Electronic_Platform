@@ -40,6 +40,21 @@
   }
  }
 
+/*hero slide */
+/* 
+.swiper-button-next,.swiper-button-prev{
+ @apply !text-teal-400 p-1
+} */
+
+.swiper-pagination-bullet{
+  @apply !bg-teal-500 
+}
+
+
+
+
+
+
 
 
 .carousel{
@@ -75,6 +90,9 @@
   cursor:auto;
   position-area:left center;
 } */
+
+
+
 
 
 
@@ -196,10 +214,10 @@
 
   /* Slides in hero section */
   .swiper{
-    @apply w-full h-[350px] lg:h-[680px] 
+    @apply w-full h-[350px] lg:h-[690px] 
   }
   .swiper-slide{
-    @apply  pb-4 w-full h-full
+    @apply   w-full h-full
   }
 
   /* product card styles */
