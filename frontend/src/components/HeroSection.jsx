@@ -100,7 +100,7 @@ const HeroSection = () => {
         autoplay={{delay:3000, disableOnInteraction:false}}
         // navigation={true} 
       
-        className="mySwiper"
+        className="mySwiper heroSwiper"
         loop={true}
         spaceBetween={20} 
         slidesPerView={1}
@@ -109,7 +109,7 @@ const HeroSection = () => {
       
       >
         {featuredProducts.map((item,i)=>(
-           <SwiperSlide key = {i}><HeroSlide item={item} /></SwiperSlide>
+           <SwiperSlide className = "heroSwiperSlide" key = {i}><HeroSlide item={item} /></SwiperSlide>
 
         ))}
 

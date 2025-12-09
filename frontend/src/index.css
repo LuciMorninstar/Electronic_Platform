@@ -21,7 +21,7 @@
 
  @layer base{
   h1{
-    @apply text-2xl sm:text-4xl lg:text-5xl   font-semibold text-primary-color font-poppins
+    @apply text-2xl sm:text-4xl lg:text-5xl   font-semibold dark:text-primary-color font-poppins
   }
   h2{
     @apply text-2xl sm:text-3xl lg:text-4xl font-semibold font-poppins
@@ -213,11 +213,34 @@
   }
 
   /* Slides in hero section */
-  .swiper{
-    @apply w-full h-[350px] lg:h-[690px] 
+  .heroSwiper{
+    @apply w-full h-[350px] lg:h-[690px]
   }
-  .swiper-slide{
-    @apply   w-full h-full
+  .heroSwiperSlide{
+    @apply   w-full h-full 
+  }
+
+  /* Slides for product gallery */
+
+  .galleryTopSwiper{
+    @apply w-full h-[20em] sm:h-[30em] md:h-[23em] lg:h-[32em] xl:h-[34em] border-gray-500 rounded-xl
+
+  }
+  .galleryTopSwiperSlide{
+    @apply w-full h-full
+  }
+
+  .galleryBottomSwiper{
+    @apply relative z-10 w-full mt-5 h-[100px] sm:h-[140px] ;
+  
+    .swiper-button-prev,.swiper-button-next{    
+      @apply !absolute !bg-white !text-black rounded-full p-2 !w-8 !h-8 !z-50 
+      
+    }
+  }
+  .galleryBottomSwiperSlide{
+    @apply w-full h-full shadow-2xl rounded-md
+
   }
 
   /* product card styles */
