@@ -279,6 +279,17 @@
 
 }
 
+/* specs styles */
+
+.specs_row_wrapper{
+  @apply dark:text-gray-300 w-full border-t-2 border-b-1 border-font-light-white  flex flex-row gap-10 last:border-b-2 
+}
+
+.list_value_style{
+  @apply   relative flex flex-row gap-2 text-sm  lg:text-base font-poppins border-l-2 border-font-light-white pl-10 before:content-[''] before:absolute before:w-2 before:h-2 before:bg-teal-500 before:top-1/2 before:-translate-y-1/2 before:left-5 before:rounded-full  
+}
+
+
 
 
   

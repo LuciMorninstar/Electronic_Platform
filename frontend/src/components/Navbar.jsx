@@ -7,7 +7,7 @@ import { FiUser } from "react-icons/fi";
 import { IoIosHeart } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
 import { IoMdHeart } from "react-icons/io";
-
+import {Link} from "react-router-dom"
 import { IoMdCart } from "react-icons/io";
 import Search from "./Search";
 import { useState } from "react";
@@ -136,7 +136,7 @@ const Navbar = () => {
             </div>
             {/* logo */}
             <div>
-              <span className="logo">TechHive</span>
+              <Link to ="/" className="logo">TechHive</Link>
             </div>
           </div>
 
@@ -189,7 +189,7 @@ const Navbar = () => {
             </div>
             {/* logo */}
             <div>
-              <span className="logo">TechHive</span>
+              <Link to ="/" className="logo">TechHive</Link>
             </div>
           </div>
 

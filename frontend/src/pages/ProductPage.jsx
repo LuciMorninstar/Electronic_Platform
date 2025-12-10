@@ -2,7 +2,7 @@ import React from 'react'
 import ProductWidthWrapper from '../components/ProductWidthWrapper'
 import laptop from "../assets/laptop.webp";
 import monitor from "../assets/monitor.webp"
-import { FaStar, FaUser } from "react-icons/fa6";
+import { FaHtml5, FaStar, FaUser } from "react-icons/fa6";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 
@@ -11,8 +11,9 @@ import { AiOutlineDislike } from "react-icons/ai";
 import { IoMdAdd, IoMdHeart, IoMdSend, IoMdStar } from 'react-icons/io';
 import ProductGallery from '../components/ProductGallery';
 import { useState } from 'react';
+import Specs from '../components/Specs';
 
-const LaptopsPage = () => {
+const ProductPage = () => {
 
   const [iscommentSectionActive, setIsCommentSectionActive] = useState(false);
   console.log("active",iscommentSectionActive);
@@ -35,6 +36,17 @@ const LaptopsPage = () => {
   const disLikingFunction =()=>{
     setIsDisliked(true);
     setIsLiked(false);
+
+  }
+
+  // to submit comment by user
+
+  const submitComment = ()=>{
+
+    // Here is where i want to store to the express Database.
+
+    console.log("Data submitted to the mongodb", comment)
+
 
   }
 
@@ -213,7 +225,7 @@ const LaptopsPage = () => {
             {/* /first part */}
 
             {/* 2nd part */}
-            <div className = "flex flex-col gap-3 py-5  border-b-2 border-gray-500 ">
+            <div className = "flex flex-col gap-3 py-5  ">
 
               <h6 className = "font-semibold">Powerful Features at a glance !</h6>
 
@@ -243,29 +255,12 @@ x
     {/* /hero section ends       */}
 
 {/* specs sectiion */}
-    {/* <div className = 'w-full flex flex-col gap-5 '>
-      <h3>Tech Specs</h3>
-
-      <h4>Performance</h4>
-
-      <div className = "flex flex-col">
-
-      {product.specs}
-
-    
-      </div>    
-
-
-
-
-
-
-    </div> */}
+   <Specs product = {product}/>
 
 {/* comment section */}
 
 
-<div className = "flex flex-col gap-4">
+<div className = "flex flex-col gap-4 border-t-2 border-gray-500 pt-5 ">
 
   <h3>Comments</h3>
 
@@ -285,7 +280,7 @@ x
       {iscommentSectionActive &&(
           <div className ={`${iscommentSectionActive?"transition-all duration-300 ease-in  opacity-100":"opacity-0"} w-full flex flex-row gap-5  justify-end pb-2 pr-2`}>
   <button className="text-sm text-font-light-white cursor-pointer">cancel</button>
-      <button className="bg-dark-primary-color text-black dark:bg-color-teal-500 dark:text-black px-4 py-2 rounded-md text-xl font-poppins cursor-pointer"><IoMdSend/></button>
+      <button onClick={submitComment} className=" text-black bg-color-teal-500 dark:text-black px-4 py-2 rounded-md text-xl font-poppins cursor-pointer"><IoMdSend/></button>
     </div>
       )}
  
@@ -348,6 +343,8 @@ x
 
 
 </div>
+
+
     
 
           
@@ -361,4 +358,4 @@ x
   )
 }
 
-export default LaptopsPage
+export default ProductPage

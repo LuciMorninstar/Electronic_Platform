@@ -8,7 +8,7 @@ import SignUp from './components/SignUp'
 import Privacy from "./pages/Privacy"
 import Terms from './pages/Terms'
 import TermsOfUse from './pages/TermsOfUse'
-import LaptopsPage from './pages/LaptopsPage'
+import ProductPage from './pages/ProductPage'
 
 // import { useEffect } from 'react'
 
@@ -32,7 +32,7 @@ const App = () => {
          <Route path="/terms-of-use" element = {<TermsOfUse/>}/>    
          <Route path="/signIn" element = {<SignIn/>}/>  
          <Route path="/signUp" element = {<SignUp/>}/>  
-         <Route path="/category/laptops" element = {<LaptopsPage/>}/>  
+         <Route path="/category/product" element = {<ProductPage/>}/>  
          <Route path="*" element={<Error/>}/>
 
         </Route>
