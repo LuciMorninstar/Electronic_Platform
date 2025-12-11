@@ -76,7 +76,7 @@ const categories = [
             <div className = " group animation-loop duration-400 infinite linear  gap-5 flex flex-row ">
             {categories.map((category,i)=>(
                 // card wrapper (z-5 to show under the text and over the blurry white also fixed height and fixed width)
-                <div key={i} className ="gsapCategories shrink-0 overflow-hidden relative w-[280px] h-[350px] flex flex-col items-center justify-center gap-5 rounded-3xl bg-teal-500  py-8 z-5">
+                <div key={i} className ="gsapCategories shrink-0 overflow-hidden relative w-[280px] h-[350px] flex flex-col items-center justify-center gap-5 rounded-3xl bg-teal-500  py-8 z-5 cursor-pointer">
                     {/* absoluting the details so to get over the blurry bg */}
                     <div className = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10  flex flex-col items-center justify-center gap-5">
                      <div className = "w-full h-[150px]  ">
@@ -84,8 +84,8 @@ const categories = [
                     </div>
 
                     <span className = "text-lg sm:text-xl lg:text-2xl xl:text-3xl font text-dark-primary-color font-poppins ">{category.name}</span>
-                    <button className = "bg-secondary-color dark:bg-dark-primary-color rounded-full px-5 py-3 ">
-                        <span className= "text-dark-primary-color dark:text-primary-color font-poppins font-semibold "> Shop Now</span>
+                    <button className = "category_button_style ">
+                        <span className= "font-poppins font-semibold "> Shop Now</span>
                     </button>
                     </div>
                    

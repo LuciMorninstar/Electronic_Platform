@@ -79,7 +79,7 @@ const Navbar = () => {
     },
     {
       name: "Cart",
-      link: "",
+      link: "/cart",
       icon: <IoMdCart />,
       showNumber: true,
     },
@@ -109,7 +109,7 @@ const Navbar = () => {
     },
     {
       name: "Cart",
-      link: "",
+      link: "/cart",
       icon: <IoMdCart />,
       showNumber: true,
     },
@@ -202,7 +202,7 @@ const Navbar = () => {
 
             <div className="flex flex-row gap-1 items-center  lg:gap-6 xl:gap-8 ">
               {largeScreenLinksForTopNav.slice(1).map((item) => (
-                <div
+                <Link to ={item.link}
                   className="flex flex-row gap-1 items-center "
                   key={item.name}
                 >
@@ -225,7 +225,7 @@ const Navbar = () => {
                   {item.onlyIcon && (
                     <span className="hover:text-font-light-white cursor-pointer icon-style">{item.icon}</span>
                   )}
-                </div>
+                </Link>
               ))}
 
               <ToggleDarkMode />
@@ -242,7 +242,7 @@ const Navbar = () => {
         {/* 1st div */}
        
           {smallScreenLinksForBottomNav.map((item) => ( 
-            <div key={item.name} className="relative  py-4 sm:py-6 md:py-8  flex-1 flex justify-center items-center">
+            <Link to ={item.link} key={item.name} className="relative  py-4 sm:py-6 md:py-8  flex-1 flex justify-center items-center">
               {item.icon && (
                 <div className = " relative flex flex-row">
                   <span className="icon-style hover:text-font-light-white active:text-font-light-white text-3xl cursor-pointer ">{item.icon}</span>
@@ -253,7 +253,7 @@ const Navbar = () => {
                   )}
                 </div>
               )}
-            </div>
+            </Link>
           ))}
            {/* 2nd div for dark mode */}
          <div className = "flex-1  flex justify-center">

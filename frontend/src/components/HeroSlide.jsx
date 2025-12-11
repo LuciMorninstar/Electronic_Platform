@@ -91,10 +91,10 @@ const HeroSlide = ({item}) => {
             <div className = "flex flex-row gap-5 items-center">
            
            
-              <button className = "group flex flex-row gap-2 items-center  bg-secondary-color dark:bg-dark-secondary-color px-2 py-2 lg:px-4 lg:py-3  rounded-2xl lg:rounded-r-2xl cursor-pointer">
+              <button className = "group flex flex-row gap-2 items-center  bg-secondary-color dark:bg-dark-secondary-color p-4 max-lg:rounded-full lg:px-4 lg:py-3  rounded-2xl lg:rounded-r-2xl cursor-pointer">
 
-                <span className = "font-semibold text-lg lg:text-xl xl:2xl">Add to Cart</span>
-                <IoMdCart className = "text-xl lg:text-2xl xl:text-3xl focus:hover:rotate-30 active:rotate-30 group-hover:rotate-30 transition-transform duration-300"/>
+                <span className = "hidden lg:block font-semibold text-lg lg:text-xl xl:2xl p-2">Add to Cart</span>
+                <IoMdCart className = "text-xl lg:text-xl xl:text-2xl focus:hover:rotate-30 active:rotate-30 group-hover:rotate-30 transition-transform duration-300 ease-in-out"/>
                 </button>
                 <button className = "group bg-secondary-color dark:bg-dark-secondary-color p-4 rounded-full cursor-pointer">
                 <FaRegBookmark className = "text-lg lg:text-xl xl:text-2xl cursor-pointer group-hover:text-yellow-500 transition-colors duration-300 ease-in-out " />
