@@ -11,6 +11,8 @@ import TermsOfUse from './pages/TermsOfUse'
 import ProductPage from './pages/ProductPage'
 import CategoryPage from './pages/CategoryPage'
 import CartPage from './pages/CartPage'
+import AdminLayout from './layouts/AdminLayout'
+import DashboardPage from './pages/Admin/DashboardPage'
 
 // import { useEffect } from 'react'
 
@@ -40,6 +42,14 @@ const App = () => {
          <Route path="*" element={<Error/>}/>
 
         </Route>
+
+        {/* For Admin */}
+
+        <Route path = "/admin" element ={<AdminLayout/>}>
+        <Route index element={<DashboardPage/>}/>
+
+        </Route>
+
       </Routes>
     </Router>
     
