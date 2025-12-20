@@ -170,7 +170,8 @@ body::-webkit-scrollbar-thumb{
   /* for admin use */
   --color-main-background-color:#F9FAFB;
   --color-navbar-and-sidebar-background-color:#FFFFFF;
-  --border-color:#E5E7EB;
+  --color-border-color:#E5E7EB;
+  --color-icon-text-color:#667085;
 
 
   /* admin texts */
@@ -247,7 +248,7 @@ body::-webkit-scrollbar-thumb{
   }
   .searchbar{
     @apply w-full rounded-xl px-10 py-2  max-lg:border max-lg:border-gray-700 lg:w-[300px] text-font-light-white xl:w-[400px] bg-gray-200 dark:bg-dark-secondary-color lg:dark:bg-dark-search-bar-bg
-    placeholder:text-base placeholder:font-poppins dark:placeholder:text-gray-600 focus:outline-none dark:text-white animate-pulse
+    placeholder:text-base placeholder:font-poppins dark:placeholder:text-gray-600 focus:outline-none dark:text-white 
   }
 
   /* Slides in hero section */
@@ -334,6 +335,14 @@ body::-webkit-scrollbar-thumb{
 }
 
 
+
+/* for adminpage */
+
+.adminNavIconStyle{
+  @apply  text-icon-text-color  bg-navbar-and-sidebar-background-color dark:bg-transparent rounded-full p-2 lg:p-3 text-xl lg:text-2xl border border-border-color cursor-pointer dark:border-gray-800
+  dark:hover:text-font-white hover:text-black active:text-font-white
+  
+}
 
 
   
