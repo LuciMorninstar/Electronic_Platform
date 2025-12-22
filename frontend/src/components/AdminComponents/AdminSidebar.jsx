@@ -20,8 +20,8 @@ import { Link } from 'react-router-dom';
 const AdminSidebar = ({openSidebar}) => {
 
   const adminSidebarItems = [
-    {name:"Dashboard", icon:<LuLayoutDashboard />},
-    {name:"Product",to:"/admin/products", icon:<AiFillProduct />}, /*add, update, delete pages inside it also show all products and feature it*/
+    {name:"Dashboard", to:"/admin", icon:<LuLayoutDashboard />},
+    {name:"Product",to:"/admin/product", icon:<AiFillProduct />}, /*add, update, delete pages inside it also show all products and feature it*/
     {name:"Orders",to:"/admin/orders", icon:<GiCheckMark />}, /* total orders ko card 3 grids slider components change pending completed, ongoing order id arrival dates, departure dates address,of route status see in logistics*/
     {name:"Inventory",to:"/admin/inventory",icon:<MdOutlineProductionQuantityLimits />}, /* Show only stocks available*/
     {name:"Invoice",to:"/admin/invoices", icon:<LiaFileInvoiceSolid />}
@@ -31,7 +31,7 @@ const AdminSidebar = ({openSidebar}) => {
   return (
 
 
-    <div className = "flex flex-col py-7 px-5 items-center justify-between min-h-screen ">
+    <div className = "flex flex-col py-7 px-5 items-center justify-between min-h-screen overflow-hidden ">
 
     <div className = "flex flex-col gap-5 items-center">
 

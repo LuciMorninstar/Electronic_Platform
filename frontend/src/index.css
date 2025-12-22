@@ -148,6 +148,8 @@ body::-webkit-scrollbar-thumb{
   
 }
 
+
+
 .show{
   transform:translateX(0);
   opacity:1
@@ -342,6 +344,38 @@ body::-webkit-scrollbar-thumb{
   @apply  text-icon-text-color  bg-navbar-and-sidebar-background-color dark:bg-transparent rounded-full p-2 lg:p-3 text-xl lg:text-2xl border border-border-color cursor-pointer dark:border-gray-800
   dark:hover:text-font-white hover:text-black active:text-font-white
   
+}
+
+/* add  product form  */
+
+.heading_style{
+  @apply dark:text-text-dark-headings-outlet
+}
+
+
+.admin_form_input_style{
+  
+   @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-[270px] xl:w-[320px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-font-light-white  caret-color-teal-500 text-sm
+
+  
+}
+
+.admin_form_smallest_input_style{
+  
+    @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-[150px] xl:w-[185px] not-only-of-type:lg:w-[150px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-text-dark-color-outlet  caret-color-teal-500 text-sm
+}
+
+.admin_form_small_input_style{
+  
+    @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-[270px] xl:w-[320px] not-only-of-type:lg:w-[150px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-text-dark-color-outlet  caret-color-teal-500 text-sm
+}
+.admin_form_big_input_style{
+  
+    @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-[270px] xl:w-[800px] not-only-of-type:lg:w-[150px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-text-dark-color-outlet  caret-color-teal-500 text-sm
+}
+.admin_form_full_input_style{
+  
+    @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-full bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-font-light-white  caret-color-teal-500 text-sm
 }
 
 

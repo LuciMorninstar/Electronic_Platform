@@ -11,7 +11,7 @@ const [openSidebar, setOpenSidebar] = useState(false);
   return (
     <main className=" w-full min-h-screen flex flex-row ">
 
-      <aside className = {`${openSidebar ? "w-[280px]": "w-[100px]"}   h-screen overflow-y-auto border-r border-r-gray-800 transition-all duration-300 ease-in bg-secondary-color dark:bg-transparent`}>
+      <aside className = {`${openSidebar ? "w-[280px]": "w-[100px]"}   sticky top-0 z-50 h-screen overflow-y-auto shadow-lg dark:border-r  dark:border-r-gray-800 transition-all duration-300 ease-in bg-secondary-color dark:bg-transparent`}>
         <AdminSidebar openSidebar = {openSidebar} />
       </aside>
     <section className="flex flex-1 flex-col gap-5 overflow-hidden">

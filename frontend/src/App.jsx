@@ -13,6 +13,8 @@ import CategoryPage from './pages/CategoryPage'
 import CartPage from './pages/CartPage'
 import AdminLayout from './layouts/AdminLayout'
 import DashboardPage from './pages/Admin/DashboardPage'
+import AdminProductPage from './pages/Admin/AdminProductPage'
+import AddProductPage from './pages/Admin/AddProductPage'
 
 // import { useEffect } from 'react'
 
@@ -39,7 +41,7 @@ const App = () => {
          <Route path="/category" element = {<CategoryPage/>}/>  
          <Route path="/category/categoryname/product" element = {<ProductPage/>}/>  
          <Route path="/cart" element = {<CartPage/>}/>  
-         <Route path="*" element={<Error/>}/>
+        
 
         </Route>
 
@@ -47,8 +49,12 @@ const App = () => {
 
         <Route path = "/admin" element ={<AdminLayout/>}>
         <Route index element={<DashboardPage/>}/>
+        <Route path = "/admin/product" element={<AdminProductPage/>}/>
+        <Route path = "/admin/product/add-product" element={<AddProductPage/>}/>
+       
 
         </Route>
+         <Route path="*" element={<Error/>}/>
 
       </Routes>
     </Router>
