@@ -54,7 +54,7 @@ body::-webkit-scrollbar-thumb{
     @apply text-base sm:text-lg lg:text-xl font-semibold font-poppins
   }
   h6{
-    @apply text-sm sm:text-base lg:text-lg  font-poppins
+    @apply  text-black dark:text-font-white text-sm sm:text-base lg:text-lg  font-poppins
   }
  }
 
@@ -377,6 +377,18 @@ body::-webkit-scrollbar-thumb{
   
     @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-full bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-font-light-white  caret-color-teal-500 text-sm
 }
+
+
+/* invoice styles */
+
+.invoice_smallest_text{
+  @apply text-xs sm:text-sm  dark:text-text-dark-color-outlet
+}
+.invoice_small_text{
+  @apply text-xs sm:text-sm font-semibold dark:text-text-dark-color-outlet
+}
+
+
 
 
   

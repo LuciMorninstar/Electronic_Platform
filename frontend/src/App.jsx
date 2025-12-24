@@ -15,6 +15,7 @@ import AdminLayout from './layouts/AdminLayout'
 import DashboardPage from './pages/Admin/DashboardPage'
 import AdminProductPage from './pages/Admin/AdminProductPage'
 import AddProductPage from './pages/Admin/AddProductPage'
+import InvoicePage from './pages/InvoicePage'
 
 // import { useEffect } from 'react'
 
@@ -41,6 +42,10 @@ const App = () => {
          <Route path="/category" element = {<CategoryPage/>}/>  
          <Route path="/category/categoryname/product" element = {<ProductPage/>}/>  
          <Route path="/cart" element = {<CartPage/>}/>  
+
+         {/* after placing order invoice is made */}
+
+         <Route path = "/invoice" element = {<InvoicePage/>}/>
         
 
         </Route>
