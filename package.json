@@ -1,0 +1,23 @@
+{
+  "name": "techhivee",
+  "version": "1.0.0",
+  "description": "Techhive is a Ecommerce platform comprising of multiple electronic accesssories on sales.",
+  "homepage": "https://github.com/LuciMorninstar/Electronic_Platform#readme",
+  "bugs": {
+    "url": "https://github.com/LuciMorninstar/Electronic_Platform/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuciMorninstar/Electronic_Platform.git"
+  },
+  "license": "ISC",
+  "author": "Bibek Pandit",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"nodemon backend/server.js ",
+    "start":"node backend/server.js"
+
+  }
+}
