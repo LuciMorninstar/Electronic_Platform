@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         trim:true,
         validate:{
             validator: (v)=> v.includes("@"),
-            messsage:"Email must contain @"
+            message:"Email must contain @"
         } 
     },
     password:{
@@ -50,15 +50,15 @@ const userSchema = new mongoose.Schema({
 
 }, {timestamps:true})
 
-userSchema.pre("save", async function(next){
+userSchema.pre("save", async function(){
     if(!this.isModified("password")){
-        return next();
+        return ;
     }
 
     try {
         const salt = await bcrypt.genSalt(10);
         this.password = await bcrypt.hash(this.password, salt);
-        next();
+    
     } catch (error) {
         console.log("Error hashing password",error.message);
         next(error);
