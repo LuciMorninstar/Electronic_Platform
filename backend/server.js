@@ -2,8 +2,10 @@ import express from "express"
 import "dotenv/config";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import authRoutes from "./routes/auth.route.js"
+import productRoutes from "./routes/product.route.js"
 import connectDB from "./utils/connectDB.js";
 import cookieParser from "cookie-parser"
+
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -21,6 +23,7 @@ app.get("/", (req,res)=>{
 
 
 app.use("/api/auth",authRoutes);
+app.use("/api/product",productRoutes);
 
 
 app.use(errorMiddleware);
