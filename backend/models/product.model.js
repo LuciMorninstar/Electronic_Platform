@@ -39,10 +39,12 @@ const productSchema = new mongoose.Schema({
      
         default:"No description"
     },
-    images:{
-        type:[String],
-        default:[]
-    },
+    images:[
+        {
+            url:String,
+            public_id:String  // need for id "ing" the uploaded images in the cloudinary
+        }
+    ],
     price:{
         type:Number,
         default:0

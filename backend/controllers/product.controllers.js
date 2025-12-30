@@ -7,7 +7,7 @@ export const getAllProducts = async (req, res, next) => {
   const products = await Product.find();
 
   try {
-    if (!products) {
+    if ( products.length === 0 ) {
       const err = new Error("No products found!");
       err.statusCode = 400;
       return next(err);
@@ -33,7 +33,7 @@ export const getFeaturedProducts = async(req,res,next)=>{
     if(featuredProducts){
       return res.status(200).json({
         success:true,
-        featureProducts:JSON.parse(featuredProducts), // storing is different from the condesistency
+        featuredProducts:JSON.parse(featuredProducts), // storing is different from the condesistency
       });
       
     }
@@ -87,7 +87,10 @@ export const addProduct = async(req,res,next)=>{
         for(const file of req.files){
           const result = await uploadOnCloudinary(file.path); //uploadOnCloudinary takes the file ko path we send it here and then these paths are being stored in cloudinary and then it is unlinksync and files are deleted from the public/temp folder  which is defined in the uploadonCloudinary function utils
           if(result){
-            imageURLs.push(result.secure_url); // if images are uploaded in cloudinary then push the secure_url of images to teh imageURl so the example of imageURl will be  imageURL:[url1, url2];
+            imageURLs.push({
+              url:result.secure_url,
+              public_id:result.public_id
+            }); // if images are uploaded in cloudinary then push the secure_url of images to teh imageURl so the example of imageURl will be  imageURL:[url1, url2];
           }
         }
       }
@@ -123,5 +126,80 @@ export const addProduct = async(req,res,next)=>{
       next(error);
       
     }
+
+}
+
+
+export const updateProduct = async(req,res,next)=>{
+  const {id} = req.params;
+
+  try {
+
+    if(!id){
+      const err = new Error("No id provided to update");
+      err.statusCode = 400;
+      return next(err);
+    }
+
+
+    const product = await Product.findById(id);
+    if(!product){
+      const err = new Error("No product found with that id");
+      err.statusCode = 404;
+      return next(err);
+    }
+
+    const dataToUpdate = req.body;
+
+    if(!dataToUpdate){
+      const err = new Error("No data proided to update");
+      err.statusCode = 400;
+      return next(err);
+    }
+
+  
+
+    if(req.files && req.files.length >0){
+
+      //delete from cloudinary using public_id
+      // for (const img of product.images){ //product.images to get images
+      //   await cloudinary.uploader.destroy(img.public_id);
+      // }
+
+      
+   //now to upload the new updated images
+        let newImages = [];
+
+      for(const file of req.files){
+        const result = await uploadOnCloudinary(file.path);
+
+        if(result){
+        newImages.push({
+          url:result.secure_url,
+          public_id:result.public_id
+        });
+      }
+      }
+
+      dataToUpdate.images = newImages;  //replaces the data of images array with new images
+
+
+    }
+    
+
+  const updatedProduct = await Product.findByIdAndUpdate(id, dataToUpdate, {new:true});
+
+    return res.status(200).json({
+            success:true,
+            product:updatedProduct
+    })
+
+
+    
+  } catch (error) {
+    console.log("Erorr in the updateProduct controller", error.message);
+    next(error);
+    
+  }
 
 }

@@ -6,7 +6,7 @@ import fs from "fs"
 cloudinary.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
     api_key:process.env.CLOUDINARY_API_KEY,
-    api_secret:process.env.api_secretCLOUDINARY_API_SECRET
+    api_secret:process.env.CLOUDINARY_API_SECRET
 })
 
 
@@ -23,11 +23,16 @@ const uploadOnCloudinary = async(localFilepath)=>{
         }
 
         const response = await cloudinary.uploader.upload(localFilepath,{
-            resource_type:"auto"
+            resource_type:"auto",
+            // background_removal:"cloudinary_ai",
         })
 
         console.log("Successfully uploaded  on cloudinary", response.original_filename);
+        fs.unlinkSync(localFilepath);
+
+
         return response; //provides response to the user
+    
         
     } catch (error) {
     //if there is any error while uploading . We don't want the server to hold the images right in that case we need to delete it use unlinkSync which means it must happen.
