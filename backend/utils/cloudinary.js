@@ -11,6 +11,7 @@ cloudinary.config({
 
 
 
+
 //after a localfile path is provided then upload
 const uploadOnCloudinary = async(localFilepath)=>{
     // a localfilepath of the images stored in server is provided
@@ -44,3 +45,24 @@ const uploadOnCloudinary = async(localFilepath)=>{
 }
 
 export default uploadOnCloudinary;
+
+
+
+export const deleteOnCloudinary = async(public_id)=>{
+
+    try {
+    if(!public_id){
+      return null;
+    }
+
+    const response = await cloudinary.uploader.destroy(public_id);
+    console.log("Successfully Deleted the files on cloudinary", public_id);
+    return response;
+
+        
+    } catch (error) {
+        console.log("Error in the deleteOnCloudinary", error.message);
+        return null;
+    }
+
+}

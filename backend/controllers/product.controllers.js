@@ -1,6 +1,6 @@
 import Product from "../models/product.model.js";
 import redis from "../utils/redis.js";
-import cloudinary from "../utils/cloudinary.js"
+import cloudinary, { deleteOnCloudinary } from "../utils/cloudinary.js"
 import uploadOnCloudinary from "../utils/cloudinary.js";
 
 export const getAllProducts = async (req, res, next) => {
@@ -130,76 +130,143 @@ export const addProduct = async(req,res,next)=>{
 }
 
 
-export const updateProduct = async(req,res,next)=>{
-  const {id} = req.params;
+  export const updateProduct = async(req,res,next)=>{
+    const {id} = req.params;
+
+    try {
+
+      if(!id){
+        const err = new Error("No id provided to update");
+        err.statusCode = 400;
+        return next(err);
+      }
+
+
+      const product = await Product.findById(id);
+      if(!product){
+        const err = new Error("No product found with that id");
+        err.statusCode = 404;
+        return next(err);
+      }
+
+      const dataToUpdate = req.body;
+
+      if(!dataToUpdate){
+        const err = new Error("No data proided to update");
+        err.statusCode = 400;
+        return next(err);
+      }
+
+    
+
+      if(req.files && req.files.length >0){
+
+        // delete from cloudinary using public_id
+        for (const img of product.images){ //product.images to get images
+          await deleteOnCloudinary(img.public_id);
+        }
+
+        // // so instead of this mapping technique for deleting or uploading we can use promise.all for bettery processing
+
+        // if(req.files?.length >0){
+        //   await Promise.all(
+        //     product.images.map(img=> deleteOnCloudinary(img.public_id))
+        //   )
+
+        // }
+
+        
+    //now to upload the new updated images
+          let newImages = [];
+
+        for(const file of req.files){
+          const result = await uploadOnCloudinary(file.path);
+
+          if(result){
+          newImages.push({
+            url:result.secure_url,
+            public_id:result.public_id
+          });
+        }
+        }
+
+        dataToUpdate.images = newImages;  //replaces the data of images array with new images
+
+
+      }
+      
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, dataToUpdate, {new:true});
+
+      return res.status(200).json({
+              success:true,
+              product:updatedProduct
+      })
+
+
+      
+    } catch (error) {
+      console.log("Erorr in the updateProduct controller", error.message);
+      next(error);
+      
+    }
+
+  }
+
+
+export const deleteProduct = async(req,res,next)=>{
 
   try {
 
-    if(!id){
-      const err = new Error("No id provided to update");
-      err.statusCode = 400;
-      return next(err);
-    }
+      const {id} = req.params;
+      if(!id){
+        const err = new Error("No id provided to delete");
+        err.statusCode = 400;
+        return next(err);
+      }
 
+      // if(req.files && req.files.length >0){
+      //   for (const file of req.files){
+      
 
-    const product = await Product.findById(id);
-    if(!product){
-      const err = new Error("No product found with that id");
-      err.statusCode = 404;
-      return next(err);
-    }
+      //   }
+      // }
 
-    const dataToUpdate = req.body;
-
-    if(!dataToUpdate){
-      const err = new Error("No data proided to update");
-      err.statusCode = 400;
-      return next(err);
-    }
+      const product = await Product.findById(id);
 
   
 
-    if(req.files && req.files.length >0){
-
-      //delete from cloudinary using public_id
-      // for (const img of product.images){ //product.images to get images
-      //   await cloudinary.uploader.destroy(img.public_id);
-      // }
-
-      
-   //now to upload the new updated images
-        let newImages = [];
-
-      for(const file of req.files){
-        const result = await uploadOnCloudinary(file.path);
-
-        if(result){
-        newImages.push({
-          url:result.secure_url,
-          public_id:result.public_id
-        });
-      }
+      if(!product){
+        const err = new Error("No product found with that id");
+        err.statusCode = 404;
+        return next(err);
       }
 
-      dataToUpdate.images = newImages;  //replaces the data of images array with new images
+         if(product.images?.length >0 ){
+    for(const img of product.images){
 
+      const response = await deleteOnCloudinary(img.public_id);
+      // return response;
 
     }
+     }
+
+     await Product.findByIdAndDelete(id);
+
     
 
-  const updatedProduct = await Product.findByIdAndUpdate(id, dataToUpdate, {new:true});
-
-    return res.status(200).json({
-            success:true,
-            product:updatedProduct
-    })
-
+      return res.status(200).json({
+        success:true,
+        message:"Successfully Deleted the product"
+        
+      })
 
     
   } catch (error) {
-    console.log("Erorr in the updateProduct controller", error.message);
+    console.log("Error in the deleteProduct controller", error.message);
     next(error);
     
   }
+
 
 }
