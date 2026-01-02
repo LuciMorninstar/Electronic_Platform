@@ -5,16 +5,23 @@ import authRoutes from "./routes/auth.route.js"
 import productRoutes from "./routes/product.route.js"
 import connectDB from "./utils/connectDB.js";
 import cookieParser from "cookie-parser"
+import cors from "cors"
 
 
 const PORT = process.env.PORT || 8000;
 const app = express();
+
+app.use(cors({
+    origin:["http://localhost:5173", "https://techHive.com"],
+    credentials:true  //to send cookies
+}))
 
 
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
+
 
 app.get("/", (req,res)=>{
     res.send("Hello");

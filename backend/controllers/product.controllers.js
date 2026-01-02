@@ -356,3 +356,61 @@ export const searchProductByName = async(req,res,next)=>{
 
 
 }
+
+
+export const toggleFeaturedProduct = async(req,res,next)=>{
+
+  const {id} = req.params;
+
+  try {
+
+    if(!id){
+      const err = new Error("No id provided to toggle featuerd Products");
+      err.statusCode = 400;
+      return next(err);
+    }
+
+    const product = await Product.findById(id);
+    if(!product){
+
+      const err = new Error("Product not found");
+      err.statusCode = 404;
+      return next(err);
+
+    }
+
+      product.isFeatured = !product.isFeatured; // if true false if false true
+      const updatedProduct = await product.save();
+
+      // since product is toggled and saved mongodb is updated . Now we also need to update the redis cache for that
+
+      await updateFeaturedProductsCache(); //this is a function to created
+      res.status(200).json({
+        success:true,
+        product:updatedProduct
+      })
+
+
+
+   
+   
+  } catch (error) {
+
+    console.log("Error in toggleFeaturedProduct controller", error.message);
+    next(error);
+    
+  }
+}
+
+async function updateFeaturedProductsCache(){
+  try {
+
+    const featuredProduct = await Product.find({isFeatured:true}).lean(); //since the mongodb is updated so set this as new redis featured product
+    await redis.set("featured_products", JSON.stringify(featuredProduct));
+    
+  } catch (error) {
+    console.log("Erorr while updating the toggleFeaturedProduct cache in Redis", error.message);
+
+    
+  }
+}

@@ -18,17 +18,17 @@ const commentSchema = new mongoose.Schema({
         trim:true
     },
     like:[
-        {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-      
-        }
+            {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User",
+        
+            }
     ],
     unlike:[
-        {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        }
+            {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User",
+            }
 ]
 
 },{timestamps:true})

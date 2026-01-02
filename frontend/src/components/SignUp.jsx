@@ -7,7 +7,8 @@ import { FaArrowRight } from "react-icons/fa";
 import gsap from "gsap"
 import { useGSAP } from '@gsap/react';
 
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+import { useUserStore } from '../utils/useUserStore';
 
 
 
@@ -55,8 +56,11 @@ const SignUp = () => {
   },[])
 
   const [formData, setFormData] = useState({fullName:"",email:"", password:"", confirmPassword:""});
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   // const [showPasswordToggle, setShowPasswordToggle] = useState(false);
+
+  const {signUp, loading } = useUserStore();
+
 
 
 
@@ -64,6 +68,7 @@ const SignUp = () => {
     e.preventDefault();
 
     console.log("SignUp", formData);
+    signUp(formData);
   
   }
   
@@ -97,9 +102,16 @@ const SignUp = () => {
 
 
             </div>
-            <button type="submit" className = " group w-full rounded-lg p-2 bg-color-teal-400 font-semibold font-poppins cursor-pointer flex flex-row gap-3 items-center justify-center hover:bg-color-teal-300   "><span className = " font-poppins text-font-white">Sign In</span> <FaArrowRight className = "group-hover:translate-x-5 transition-all duration-300ms ease-in-out" />
+            <button type="submit" className = " group w-full rounded-lg p-2 bg-color-teal-400 font-semibold font-poppins cursor-pointer flex flex-row gap-3 items-center justify-center hover:bg-color-teal-300   ">
+              {loading ? <span>loading...</span> :
+              <>
+              <span className = " font-poppins text-font-white">Sign Up</span> <FaArrowRight className = "group-hover:translate-x-5 transition-all duration-300ms ease-in-out" />
+              </>
+              }
+         
 </button>
             <span className = "flex flex-row gap-2 text-font-white">Already have an account? <Link to ="/signUp" className = "text-color-teal-300 hover:text-color-teal-500 "><span className = "font-poppins text-teal-400 hover:text-color-teal-400">Sign In</span></Link></span>
+            
 
             </div>
 

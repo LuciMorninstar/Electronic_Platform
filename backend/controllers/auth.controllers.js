@@ -89,7 +89,7 @@ export const signup = async (req,res,next)=>{
         res.status(201).json({
             success:true,
             message:"New User created Successfully",
-            data:newUser
+            user:newUser
         })
 
         

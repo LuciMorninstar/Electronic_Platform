@@ -8,6 +8,7 @@ import gsap from "gsap"
 import { useGSAP } from '@gsap/react';
 
 import {Link} from "react-router-dom"
+import { useUserStore } from '../utils/useUserStore';
 
 
 
@@ -55,15 +56,18 @@ const SignIn = () => {
   },[])
 
   const [formData, setFormData] = useState({email:"", password:""});
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   // const [showPasswordToggle, setShowPasswordToggle] = useState(false);
 
-
+const {signIn, loading} = useUserStore();
 
   const handleFormSubmit =(e)=>{
     e.preventDefault();
+    signIn(formData);
+
 
     console.log("SignIn", formData);
+
   
   }
   
@@ -95,8 +99,17 @@ const SignIn = () => {
 
 
             </div>
-            <button type="submit" className = " group w-full rounded-lg p-2 bg-color-teal-400 font-semibold font-poppins cursor-pointer flex flex-row gap-3 items-center justify-center hover:bg-color-teal-300   "><span className = " font-poppins">Sign In</span> <FaArrowRight className = "group-hover:translate-x-5 transition-all duration-300ms ease-in-out" />
-</button>
+        
+         
+            <button type="submit" className = " group w-full rounded-lg p-2 bg-color-teal-400 font-semibold font-poppins cursor-pointer flex flex-row gap-3 items-center justify-center hover:bg-color-teal-300   ">
+              {
+                loading? <span>loading...</span>: 
+                <>
+                <span className = " font-poppins">Sign In</span> <FaArrowRight className = "group-hover:translate-x-5 transition-all duration-300ms ease-in-out" />
+                </>
+              }
+            </button>
+               
             <span className = "flex flex-row gap-2">Don't have an account? <Link to ="/signUp" className = "text-color-teal-300 hover:text-color-teal-500 "><span className = "font-poppins text-teal-400 hover:text-color-teal-400">Sign up</span></Link></span>
 
             </div>

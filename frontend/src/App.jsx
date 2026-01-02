@@ -16,6 +16,7 @@ import DashboardPage from './pages/Admin/DashboardPage'
 import AdminProductPage from './pages/Admin/AdminProductPage'
 import AddProductPage from './pages/Admin/AddProductPage'
 import InvoicePage from './pages/InvoicePage'
+import { Toaster } from 'react-hot-toast'
 
 // import { useEffect } from 'react'
 
@@ -29,6 +30,8 @@ const App = () => {
   return (
 
     <Router>
+      <Toaster position='top-right'/>
+      
       <Routes>
 
         <Route path = "/" element = {<MainLayout/>}>
