@@ -4,35 +4,33 @@ import macbook from "../assets/macbook.png"
 import headphones from "../assets/headphones.png"
 import monitor from "../assets/mon-cat.png"
 import mouse from "../assets/mouse-cat.png"
+import phone from "../assets/phone.png"
 import gsap from "gsap"
 import { useGSAP } from '@gsap/react'
 
 const Categories = () => {
 
-    useGSAP(()=>{
+    // useGSAP(()=>{
   
-      gsap.to(".gsapCategories",{
-        x:30,
-        repeat:-1,
-        yoyo:true,
-        duration:1,
-        ease:"power2.in",
-        stagger:0.2
+    //   gsap.to(".gsapCategories",{
+    //     x:30,
+    //     repeat:-1,
+    //     yoyo:true,
+    //     duration:1,
+    //     ease:"power2.in",
+    //     stagger:0.2
   
-      })
+    //   })
   
   
-    },[])
+    // },[])
 
 const categories = [
   {
     name: "Headphones",
     image:headphones
   },
-  {
-    name: "Monitor",
-    image: monitor
-  },
+
   {
     name: "Mouse",
     image: mouse
@@ -49,17 +47,11 @@ const categories = [
     name: "Monitor",
     image: monitor
   },
+
+
   {
-    name: "Mouse",
-    image: mouse
-  },
-  {
-    name: "Motherboard",
-    image: monitor
-  },
-  {
-    name: "Macbook",
-    image: macbook
+    name: "Phone",
+    image: phone
   }
 ];
 

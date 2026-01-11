@@ -9,13 +9,20 @@ import { FaHome } from "react-icons/fa";
 import { IoMdHeart } from "react-icons/io";
 import {Link} from "react-router-dom"
 import { IoMdCart } from "react-icons/io";
+import { MdOutlineLogout } from "react-icons/md";
+import { MdAdminPanelSettings } from "react-icons/md";
+
+
 import Search from "./Search";
 import { useState } from "react";
 import ToggleDarkMode from "./ToggleDarkMode";
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react";
+import { useUserStore } from "../utils/useUserStore";
 
 const Navbar = () => {
+
+  const {signOut} = useUserStore();
 
 
   useGSAP(()=>{
@@ -29,6 +36,8 @@ const Navbar = () => {
     })
 
   },[])
+
+  const {user} = useUserStore();
 
 
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -91,8 +100,11 @@ const Navbar = () => {
       showNumber: true,
     },
 
-    { name: "", link: "", icon: <FiUser />, showNumber: false, onlyIcon: true },
+    { 
+      name: "", link: user?.role === "admin"? "/admin" : user?.role === "user"? "/" : "/signUp", icon:user?.role ==="admin"?<MdAdminPanelSettings /> : user?.role === "user"?
+<MdOutlineLogout />:<FiUser />, showNumber: false, onlyIcon: true,onClick : user?.role === "user" && signOut },
   ];
+  
 
   const smallScreenLinksForBottomNav = [
     {
@@ -223,8 +235,10 @@ const Navbar = () => {
                   )}
 
                   {item.onlyIcon && (
-                    <span className="hover:text-font-light-white cursor-pointer icon-style">{item.icon}</span>
+                    <span onClick={item.onClick ? item.onClick : undefined} className="hover:text-font-light-white cursor-pointer icon-style">{item.icon}</span>
                   )}
+
+                 
                 </Link>
               ))}
 

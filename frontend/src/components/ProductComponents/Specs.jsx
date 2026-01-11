@@ -16,7 +16,7 @@ const Specs = ({product}) => {
           <h5 className = "w-4/12 flex flex-row justify-center items-center">Processor</h5>
           <ul className = "w-8/12 py-3  flex flex-col gap-0">
             {
-               Object.entries(product.specs.cpu).map(([key,value],i)=>(
+               Object.entries(product?.specs?.cpu || {}).map(([key,value],i)=>(
                 <li key={i} className = "list_value_style">
                   <span className = "capitalize">{key}</span>:<span>{value}</span>
                 </li>
@@ -34,7 +34,7 @@ const Specs = ({product}) => {
           <h5 className = "w-4/12 flex flex-row justify-center items-center">Display</h5>
           <ul className = "w-8/12 py-3  flex flex-col gap-0">
             {
-               Object.entries(product.specs.display).map(([key,value],i)=>(
+               Object.entries(product?.specs?.display || {}).map(([key,value],i)=>(
                 <li key={i} className = "list_value_style">
                   <span className = "capitalize">{key}</span>:<span>{value}</span>
                 </li>
@@ -53,7 +53,7 @@ const Specs = ({product}) => {
           <h5 className = "w-4/12 flex flex-row justify-center items-center">Graphics</h5>
           <ul className = "w-8/12 py-3  flex flex-col gap-0">
             {
-               Object.entries(product.specs.gpu).map(([key,value],i)=>(
+               Object.entries(product?.specs?.gpu || {}).map(([key,value],i)=>(
                 <li key={i} className = "list_value_style">
                   <span className = "capitalize">{key}</span>:<span>{value}</span>
                 </li>
@@ -71,7 +71,7 @@ const Specs = ({product}) => {
           <h5 className = "w-4/12 flex flex-row justify-center items-center">Memory</h5>
           <ul className = "w-8/12 py-3  flex flex-col gap-0">
             {
-               Object.entries(product.specs.memory).map(([key,value],i)=>(
+               Object.entries(product?.specs?.memory || {}).map(([key,value],i)=>(
                 <li key={i} className = "list_value_style">
                   <span className = "capitalize">{key}</span>:<span>{value}</span>
                 </li>
@@ -89,7 +89,7 @@ const Specs = ({product}) => {
           <h5 className = "w-4/12 flex flex-row justify-center items-center">Storage</h5>
           <ul className = "w-8/12 py-3  flex flex-col gap-0">
             {
-               Object.entries(product.specs.storage).map(([key,value],i)=>(
+               Object.entries(product?.specs?.storage || {}).map(([key,value],i)=>(
                 <li key={i} className = "list_value_style">
                   <span className = "capitalize">{key}</span>:<span>{value}</span>
                 </li>
@@ -106,7 +106,7 @@ const Specs = ({product}) => {
           <h5 className = "w-4/12 flex flex-row justify-center items-center">Battery</h5>
           <ul className = "w-8/12 py-3  flex flex-col gap-0">
             {
-               Object.entries(product.specs.battery).map(([key,value],i)=>(
+               Object.entries(product?.specs?.battery || {}).map(([key,value],i)=>(
                 <li key={i} className = "list_value_style">
                   <span className = "capitalize">{key}</span>:<span>{value}</span>
                 </li>
@@ -124,7 +124,7 @@ const Specs = ({product}) => {
           <ul className = "w-8/12 py-3  flex flex-row gap-15 items-center">
           <div>
             {
-               product.specs.ports.map((value,i)=>(
+               product?.specs?.ports?.map((value,i)=>(
                 <li key={i} className = "list_value_style">
                  <span>{value}</span>
                 </li>
@@ -134,7 +134,7 @@ const Specs = ({product}) => {
             </div>
           <div>
             {
-               product.specs.connectivity.map((value,i)=>(
+               product?.specs?.connectivity?.map((value,i)=>(
                 <li key={i} className = "list_value_style">
                  <span>{value}</span>
                 </li>
@@ -150,11 +150,11 @@ const Specs = ({product}) => {
 
          {/* Dimensions */}
 
-            <div className ="specs_row_wrapper">
+            {/* <div className ="specs_row_wrapper">
           <h5 className = "w-4/12 flex flex-row justify-center items-center">Dimensions</h5>
           <ul className = "w-8/12 py-3  flex flex-col gap-0">
             {
-               Object.entries(product.specs.dimensions).map(([key,value],i)=>(
+               Object.entries(product?.specs?.dimensions || {}).map(([key,value],i)=>(
                 <li key={i} className = "list_value_style">
                   <span className = "capitalize">{key}</span>:<span>{value}</span>
                 </li>
@@ -163,7 +163,7 @@ const Specs = ({product}) => {
             }
       
           </ul>
-         </div>
+         </div> */}
          {/* /dimensions */}
 
          {/* Weight */}
@@ -173,7 +173,7 @@ const Specs = ({product}) => {
             {
              
                 <li className = "list_value_style">
-                  <span>{product.specs.weightKg}kg</span>
+                  <span>{product?.weightKg}kg</span>
                 </li>
             
             }
@@ -189,7 +189,7 @@ const Specs = ({product}) => {
             {
              
                 <li className = "list_value_style">
-                  <span>{product.specs.os}kg</span>
+                  <span>{product?.operatingSystem}</span>
                 </li>
             
             }
@@ -205,7 +205,7 @@ const Specs = ({product}) => {
           <ul className = "w-8/12 py-3  flex flex-row gap-15 items-center">
       
             {
-               product.colors.map((value,i)=>(
+               product?.colors?.map((value,i)=>(
                 <li key={i} className = "list_value_style">
                  <span>{value}</span>
                 </li>

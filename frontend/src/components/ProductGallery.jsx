@@ -14,20 +14,24 @@ import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
 
-const ProductGallery = () => {
+const ProductGallery = ({images}) => {
 
     // fetch gallery
-    const galleryItems =[gallery5, gallery6, gallery7, gallery8, gallery9]
+    // const galleryItems =[gallery5, gallery6, gallery7, gallery8, gallery9]
 
     
 
       const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+        if (!images || images.length === 0) return null; // fallback
+
 
   return (
     <>
 
     {/* topSwiper */}
 
+    {!images ? "No image here":
          <Swiper
         style={{
           '--swiper-navigation-color': 'white',
@@ -42,10 +46,10 @@ const ProductGallery = () => {
       >
 
         {
-            galleryItems.map((image,i)=>(
+            images?.map((image,i)=>(
                 <SwiperSlide key={i} className = "galleryTopSwiperSlide">
                     <div className = "w-full h-full max-lg:px-6"> 
-                    <img src={image} className = "w-full h-full" alt='image'/>
+                    <img src={image.url} className = "w-full h-full" alt='image'/>
                     </div>
                 </SwiperSlide>
             ))
@@ -56,11 +60,16 @@ const ProductGallery = () => {
   
      
       </Swiper>
+    }
+
+    
 
 
 {/* bottom swiper */}
 
 
+      {
+        !images ? "No image here": 
        <Swiper
           style={{
          
@@ -77,12 +86,12 @@ const ProductGallery = () => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper galleryBottomSwiper"
       >
-        {galleryItems.map((image)=>(
+        {images.map((image)=>(
 
             <SwiperSlide className ="galleryBottomSwiperSlide">
                 <div className = "w-full h-full ">
 
-          <img src={image} className ="w-full h-full" alt="image"  />
+          <img src={image.url} className ="w-full h-full" alt="image"  />
                 </div>
         </SwiperSlide>
 
@@ -90,6 +99,7 @@ const ProductGallery = () => {
       
    
       </Swiper>
+}
 
       </>
 

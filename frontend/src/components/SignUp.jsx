@@ -7,13 +7,16 @@ import { FaArrowRight } from "react-icons/fa";
 import gsap from "gsap"
 import { useGSAP } from '@gsap/react';
 
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useUserStore } from '../utils/useUserStore';
+import { Navigate } from 'react-router-dom';
 
 
 
 
 const SignUp = () => {
+
+  
 
   useGSAP(()=>{
 
@@ -62,13 +65,18 @@ const SignUp = () => {
   const {signUp, loading } = useUserStore();
 
 
+const navigate = useNavigate();
 
-
-  const handleFormSubmit =(e)=>{
+  const handleFormSubmit = async (e) =>{
     e.preventDefault();
 
     console.log("SignUp", formData);
-    signUp(formData);
+    const success = await signUp(formData);
+
+    if(success){
+      navigate("/signIn");
+      
+    }
   
   }
   
@@ -110,7 +118,7 @@ const SignUp = () => {
               }
          
 </button>
-            <span className = "flex flex-row gap-2 text-font-white">Already have an account? <Link to ="/signUp" className = "text-color-teal-300 hover:text-color-teal-500 "><span className = "font-poppins text-teal-400 hover:text-color-teal-400">Sign In</span></Link></span>
+            <span className = "flex flex-row gap-2 text-font-white">Already have an account? <Link to ="/signIn" className = "text-color-teal-300 hover:text-color-teal-500 "><span className = "font-poppins text-teal-400 hover:text-color-teal-400">Sign In</span></Link></span>
             
 
             </div>

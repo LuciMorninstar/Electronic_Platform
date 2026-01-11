@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom"
 import MainLayout from './layouts/MainLayout'
 import HomePage from "./pages/HomePage"
 import Error from './components/Error'
@@ -17,11 +17,15 @@ import AdminProductPage from './pages/Admin/AdminProductPage'
 import AddProductPage from './pages/Admin/AddProductPage'
 import InvoicePage from './pages/InvoicePage'
 import { Toaster } from 'react-hot-toast'
+import { useUserStore } from './utils/useUserStore'
+
 
 // import { useEffect } from 'react'
 
 
 const App = () => {
+
+  const {user} = useUserStore();
 
 
   
@@ -40,10 +44,12 @@ const App = () => {
          <Route path="/privacy-policy" element = {<Privacy/>}/>  
          <Route path="/terms-services" element = {<Terms/>}/>  
          <Route path="/terms-of-use" element = {<TermsOfUse/>}/>    
-         <Route path="/signIn" element = {<SignIn/>}/>  
+         <Route path="/signIn" element = {!user ? <SignIn/> : <Navigate to = "/"/>}/>  
          <Route path="/signUp" element = {<SignUp/>}/>  
          <Route path="/category" element = {<CategoryPage/>}/>  
-         <Route path="/category/categoryname/product" element = {<ProductPage/>}/>  
+         {/* <Route path="/category/categoryname/product" element = {<ProductPage/>}/>   */}
+         <Route path="/product/:id" element = {<ProductPage/>}/>  
+         
          <Route path="/cart" element = {<CartPage/>}/>  
 
          {/* after placing order invoice is made */}
@@ -55,7 +61,7 @@ const App = () => {
 
         {/* For Admin */}
 
-        <Route path = "/admin" element ={<AdminLayout/>}>
+        <Route path = "/admin" element ={user?.role == "admin" &&<AdminLayout/>}>
         <Route index element={<DashboardPage/>}/>
         <Route path = "/admin/product" element={<AdminProductPage/>}/>
         <Route path = "/admin/product/add-product" element={<AddProductPage/>}/>

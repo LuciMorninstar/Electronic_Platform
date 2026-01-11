@@ -34,9 +34,9 @@ const Footer = () => {
 
 const socialMedias = [
   
-  {name:"Instagram", icon:<BsInstagram/>, link:"#"},
-  {name:"X", icon:<BsTwitterX/>,link:"#"},
-  {name:"Tiktok", icon:<FaTiktok/>, link:"#"},
+  {name:"Instagram", icon:<BsInstagram/>, link:"https://www.instagram.com/kpbibek/"},
+  {name:"X", icon:<BsTwitterX/>,link:"https://x.com/stars_winn69101"},
+  {name:"Tiktok", icon:<FaTiktok/>, link:"www.tiktok.com"},
   ]
 
 

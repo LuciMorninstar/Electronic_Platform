@@ -19,6 +19,7 @@ export const useUserStore = create((set,get)=>({
             const response = await axios.post("/auth/signup", {fullName, email, password, confirmPassword});
             set({user:response.data.user, loading:false});
             toast.success("Successfully created an account");
+            
 
             
         } catch (error) {
@@ -40,11 +41,30 @@ export const useUserStore = create((set,get)=>({
             
         } catch (error) {
             set({loading:false});
-            toast.error(error.reponse?.data?.message || "An error occured while logging In");
+            toast.error(error.response?.data?.message || "An error occured while logging In");
             
         }
 
+    },
+
+    signOut : async()=>{
+        set({loading:true})
+
+        try {
+            const response = await axios.post("/auth/logout");
+            set({user:null, loading:false});
+            toast.success("Logged Out Successfully");
+            
+        } catch (error) {
+            set({loading:false});
+            toast.error(error.response?.data?.message || "An error occured while logging out");
+            
+        }
     }
+
+
+
+
 
 
 }))

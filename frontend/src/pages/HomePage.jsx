@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 const HomePage = () => {
     useEffect(()=>{
 
+
     const observer = new IntersectionObserver((entries)=>{
       entries.forEach((entry)=>{
         if(entry.isIntersecting){

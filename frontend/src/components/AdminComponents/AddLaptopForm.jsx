@@ -16,6 +16,7 @@ import { useGSAP } from '@gsap/react';
 
 
 import {Link} from "react-router-dom"
+import { useProductStore } from '../../utils/useProductStore';
 
 
 
@@ -116,12 +117,38 @@ const AddLaptopForm = () => {
 } ,
     weightKg:"", warrantyMonths:"", operatingSystem:"", tags:[], colors:[], stock:"", price:""});
 
-
+const {addProduct} = useProductStore();
 
   const handleFormSubmit =(e)=>{
     e.preventDefault();
 
     console.log("AddLaptopForm", formData);
+
+    const fd = new FormData();
+
+ fd.append("name", formData.name);
+  fd.append("category", formData.category);
+  fd.append("brand", formData.brand);
+  fd.append("releaseDate", formData.releaseDate);
+  fd.append("sku", formData.sku);
+  fd.append("shortDescription", formData.shortDescription);
+  fd.append("weightKg", formData.weightKg);
+  fd.append("warrantyMonths", formData.warrantyMonths);
+  fd.append("operatingSystem", formData.operatingSystem);
+  fd.append("stock", formData.stock);
+  fd.append("price", formData.price);
+
+    fd.append("features", JSON.stringify(formData.features));
+  fd.append("tags", JSON.stringify(formData.tags));
+  fd.append("colors", JSON.stringify(formData.colors));
+  fd.append("specs", JSON.stringify(formData.specs));
+
+    formData.images.forEach((file) => {
+    fd.append("images", file); // must match multer field name
+  });
+
+
+    addProduct(fd);
   
   }
   
@@ -130,7 +157,7 @@ const AddLaptopForm = () => {
 
     <section className = "w-full flex flex-row items-center justify-center">
 
-        <form onSubmit={handleFormSubmit} enctype="multipart/form-data" id="gsapform" className = "  relative z-50 overflow-hidden p-10 bg-secondary-color shadow-xl dark:bg-dark-secondary-color sm:px-20  lg:px-5 xl:px-10 rounded-xl  ">
+        <form onSubmit={handleFormSubmit} encType="multipart/form-data" id="gsapform" className = "  relative z-50 overflow-hidden p-10 bg-secondary-color shadow-xl dark:bg-dark-secondary-color sm:px-20  lg:px-5 xl:px-10 rounded-xl  ">
           {/* <div className ="absolute bg-teal-500 -top-1/2 -translate-y-2/8 left-0 -translate-x-[27px] w-[450px] h-[450px] rounded-full flex flex-row justify-center items-end">
             <span id="gsapImage" className = " w-12 h-12 border-3 mb-5 border-white rounded-full p-2" ><IoMdLaptop className = "w-full h-full"/></span>
 
@@ -148,12 +175,12 @@ const AddLaptopForm = () => {
                   
                     <div className = "flex flex-col gap-1">
                         <span className = "heading_style">Product Name</span>
-                        <input className = "admin_form_input_style " type="text" id="name" name="name " placeholder = "Ex. Asus Rog Strix G15" 
+                        <input className = "admin_form_input_style " type="text" id="name" name="name" placeholder = "Ex. Asus Rog Strix G15" 
                         onChange = {(e)=>setFormData({...formData, name:e.target.value})} value = {formData.name}/>
                     </div>
                     <div className = "flex flex-col gap-1">
                         <span className = "heading_style">Category</span>
-                        <input className = "admin_form_small_input_style " type="text" id="category" name="category " placeholder = "Enter Category" value="laptop" disabled/>
+                        <input className = "admin_form_small_input_style " type="text" id="category" name="category" placeholder = "Enter Category" value="laptop" />
                     </div>
                     <div className = "flex flex-col gap-1">
                         <span className = "heading_style">Brand</span>
@@ -177,7 +204,7 @@ const AddLaptopForm = () => {
                   
                     <div className = "flex flex-col gap-1">
                         <span className = "heading_style">Sku Number</span>
-                        <input className = "admin_form_input_style " type="text" id="sku" name="sku " placeholder = "Ex. SKU123456"  onChange = {(e)=>setFormData({...formData, sku:e.target.value})} value = {formData.sku}
+                        <input className = "admin_form_input_style " type="text" id="sku" name="sku" placeholder = "Ex. SKU123456"  onChange = {(e)=>setFormData({...formData, sku:e.target.value})} value = {formData.sku}
                          />
                     </div>
 
@@ -205,14 +232,14 @@ const AddLaptopForm = () => {
                    
                     <div className = "flex flex-col gap-1">
                         <span>Images</span>
-                        <input className = "admin_form_small_input_style " type="file" id="images" name="images " onChange = {(e)=>setFormData({...formData, images:Array.from(e.target.files)})}   multiple />
+                        <input className = "admin_form_small_input_style " type="file" id="images" name="images" onChange = {(e)=>setFormData({...formData, images:Array.from(e.target.files)})}   multiple />
                     </div>
 
                     {formData.images.length >0 &&
                     <div className = "flex flex-row items-center gap-5">
                         <span className = "text-xs text-gray-600">Preview:</span>
                         {formData.images && formData.images.map((image, i)=>(
-                            <img key = {i}
+                            <img key = {i}  
                             className = "w-16 h-16 object-cover" 
                             src={URL.createObjectURL(image)}
                             alt={image.name}
@@ -507,7 +534,7 @@ const AddLaptopForm = () => {
                      <div className = "flex flex-col gap-1">
                         <span className = "heading_style">Ports</span>
                         <input className = "admin_form_big_input_style " type="text" id="ports" name="ports " placeholder = "Ex. thunderbolt-4, 1*HDMI 2.1"
-                        onChange = {(e)=> setFormData({...formData, specs:{...formData.specs, ports:e.target.value.split(",")}})} value = {formData.specs.ports} />
+                        onChange = {(e)=> setFormData({...formData, specs:{...formData.specs, ports:e.target.value.split(",")}})} value = {formData.specs.ports.join(",")} />
                     </div>
                   
                  

@@ -15,7 +15,7 @@ export const getAllProducts = async (req, res, next) => {
 
     return res.status(200).json({
         success:true,
-        products
+        products:products
     })
 
 
@@ -95,21 +95,27 @@ export const addProduct = async(req,res,next)=>{
         }
       }
 
+          // Parse JSON strings if they come as strings
+      const parsedSpecs = typeof specs === 'string' ? JSON.parse(specs) : specs;
+      const parsedFeatures = typeof features === 'string' ? JSON.parse(features) : features;
+      const parsedTags = typeof tags === 'string' ? JSON.parse(tags) : tags;
+      const parsedColors = typeof colors === 'string' ? JSON.parse(colors) : colors;
+
       const product = await Product.create({
         name,
         category,
         brand,
         releaseDate,
         sku, 
-        features,
+        features:parsedFeatures,
         shortDescription,
         images:imageURLs ,
-        specs,
+        specs:parsedSpecs,
         weightKg,
         warrantyMonths,
         operatingSystem,
-        tags,
-        colors,
+        tags:parsedTags,
+        colors:parsedColors,
         stock,
         price
 
@@ -148,8 +154,23 @@ export const addProduct = async(req,res,next)=>{
         err.statusCode = 404;
         return next(err);
       }
+//cant understand the logic of parsing for string to objects or array
+      const dataToUpdate = {...req.body};
 
-      const dataToUpdate = req.body;
+        // Parse JSON fields if they come as strings
+    const fieldsToParse = ["specs", "features", "tags", "colors"];
+    fieldsToParse.forEach((field) => {
+      if (dataToUpdate[field] && typeof dataToUpdate[field] === "string") {
+        try {
+          dataToUpdate[field] = JSON.parse(dataToUpdate[field]);
+        } catch (err) {
+          // Invalid JSON, you can either ignore or throw error
+          dataToUpdate[field] = dataToUpdate[field]; // keep as is
+        }
+      }
+    });
+
+    // can't under/
 
       if(!dataToUpdate){
         const err = new Error("No data proided to update");
@@ -269,6 +290,37 @@ export const deleteProduct = async(req,res,next)=>{
   }
 
 
+}
+
+export const getProductDetails = async(req,res,next)=>{
+  const {id} = req.params;
+
+  try {
+    if(!id){
+      const err = new Error("No id provided to get details");
+      err.statusCode = 400;
+      return next(err);
+    }
+
+    const product = await Product.findById(id);
+
+    if(!product){
+      const err = new Error("No product found");
+      err.statusCode = 404;
+      return next(err);
+    }
+
+    return res.status(200).json({
+      success:true,
+      product:product
+    })
+
+    
+  } catch (error) {
+    console.log("Erorr in getProductDetails controller", error.message);
+    next(error);
+    
+  }
 }
 
 
