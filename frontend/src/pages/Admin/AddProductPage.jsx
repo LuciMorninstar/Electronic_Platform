@@ -6,6 +6,7 @@ import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
 import { TfiMouse } from "react-icons/tfi";
 import AddLaptopForm from '../../components/AdminComponents/AddLaptopForm';
 import { useState } from 'react';
+import AddMobileForm from '../../components/AdminComponents/AddMobileForm';
 
 
 
@@ -40,6 +41,7 @@ console.log(active);
 
         </div>
              {active === "laptop" &&<AddLaptopForm/>}
+             {active === "mobile" &&<AddMobileForm/>}
         </div>
 
    

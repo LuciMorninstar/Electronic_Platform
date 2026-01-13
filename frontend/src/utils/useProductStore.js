@@ -82,6 +82,21 @@ export const useProductStore = create((set)=>({
             
         }
 
+    },
+
+    getFeaturedProducts : async()=>{
+        set({loading:true})
+
+        try {
+            const response = await axios.get("/product/featured");
+            set({loading:false, featuredProducts:response.data?.featuredProducts || []});
+            // toast.success("Fetched featured Products");
+            
+        } catch (error) {
+            set({loading:false});
+            toast.error(error.response?.data?.message || "Failed to retrieve featured products");
+            
+        }
     }
     
 }))

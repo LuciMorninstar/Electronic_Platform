@@ -6,9 +6,10 @@ import { FaRegBookmark } from "react-icons/fa";
 import gsap from "gsap"
 import {useGSAP} from "@gsap/react"
 import { SplitText } from 'gsap/all';
+import Loading from './loading';
 
 
-const HeroSlide = ({item}) => {
+const HeroSlide = ({item, loading}) => {
 
   
   
@@ -63,12 +64,15 @@ const HeroSlide = ({item}) => {
 
     <>
 
+{
+  loading? <Loading/>:
+
       <div className = "relative  w-full h-full drop-shadow-2xl flex justify-end ">
         
 
         {/* slide image */}
           <div id="image-wrapper" className = " w-full lg:w-10/12 h-full  ">
-          <img className = "w-full h-full object-cover object-center" src={item.image} alt="product-image"/>
+          <img className = "w-full h-full object-cover object-center" src={item.images?.[0]?.url} alt="product-image"/>
           </div>
          {/* blur background on left of big screen */}
           <div className = "bg-black blur-3xl max-lg:hidden lg:block absolute top-0 z-10 left-0 h-full w-5/12 brightness-90 opacity-20 ">
@@ -107,6 +111,7 @@ const HeroSlide = ({item}) => {
         
 
       </div>
+      }
 
     </>
 
