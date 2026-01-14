@@ -35,12 +35,9 @@ const categories = [
     name: "Mouse",
     image: mouse
   },
+
   {
-    name: "Motherboard",
-    image: monitor
-  },
-  {
-    name: "Macbook",
+    name: "Laptop",
     image: macbook
   },
   {

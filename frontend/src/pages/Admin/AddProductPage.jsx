@@ -7,6 +7,9 @@ import { TfiMouse } from "react-icons/tfi";
 import AddLaptopForm from '../../components/AdminComponents/AddLaptopForm';
 import { useState } from 'react';
 import AddMobileForm from '../../components/AdminComponents/AddMobileForm';
+import AddMonitorForm from '../../components/AdminComponents/AddMonitorForm';
+import AddHeadphoneForm from '../../components/AdminComponents/AddHeadphoneForm';
+import AddMouseForm from '../../components/AdminComponents/AddMouseForm';
 
 
 
@@ -42,6 +45,9 @@ console.log(active);
         </div>
              {active === "laptop" &&<AddLaptopForm/>}
              {active === "mobile" &&<AddMobileForm/>}
+             {active === "monitor" &&<AddMonitorForm/>}
+             {active === "headphone" &&<AddHeadphoneForm/>}
+             {active === "mouse" &&<AddMouseForm/>}
         </div>
 
    

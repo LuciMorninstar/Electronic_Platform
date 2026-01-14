@@ -49,7 +49,7 @@ const ProductGallery = ({images}) => {
             images?.map((image,i)=>(
                 <SwiperSlide key={i} className = "galleryTopSwiperSlide">
                     <div className = "w-full h-full max-lg:px-6"> 
-                    <img src={image.url} className = "w-full h-full" alt='image'/>
+                    <img src={image.url} className = "w-full h-full object-cover object-center" alt='image'/>
                     </div>
                 </SwiperSlide>
             ))
