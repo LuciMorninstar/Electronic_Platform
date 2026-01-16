@@ -26,7 +26,7 @@ const HeroSection = () => {
     
   },[]);
 
-  console.log(featuredProducts);
+  // console.log(featuredProducts);
 
   
 //  const featuredProducts = [

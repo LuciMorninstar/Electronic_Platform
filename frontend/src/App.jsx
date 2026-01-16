@@ -18,6 +18,7 @@ import AddProductPage from './pages/Admin/AddProductPage'
 import InvoicePage from './pages/InvoicePage'
 import { Toaster } from 'react-hot-toast'
 import { useUserStore } from './utils/useUserStore'
+import WishlistPage from './pages/WishlistPage'
 
 
 // import { useEffect } from 'react'
@@ -50,6 +51,7 @@ const App = () => {
          {/* <Route path="/category/categoryname/product" element = {<ProductPage/>}/>   */}
          <Route path="/product/:id" element = {<ProductPage/>}/>  
          
+         <Route path="/wishlist/products" element = {user?<WishlistPage/>: <Navigate to = "/" replace/>}/>  
          <Route path="/cart" element = {<CartPage/>}/>  
 
          {/* after placing order invoice is made */}

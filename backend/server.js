@@ -6,6 +6,7 @@ import productRoutes from "./routes/product.route.js"
 import connectDB from "./utils/connectDB.js";
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import userRoutes from "./routes/user.route.js"
 
 
 const PORT = process.env.PORT || 8000;
@@ -28,7 +29,7 @@ app.get("/", (req,res)=>{
 })
 
 
-
+app.use("/api/user",userRoutes);
 app.use("/api/auth",authRoutes);
 app.use("/api/product",productRoutes);
 

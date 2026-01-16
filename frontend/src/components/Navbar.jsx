@@ -19,6 +19,7 @@ import ToggleDarkMode from "./ToggleDarkMode";
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react";
 import { useUserStore } from "../utils/useUserStore";
+import toast from "react-hot-toast"
 
 const Navbar = () => {
 
@@ -49,6 +50,15 @@ const Navbar = () => {
     }
   };
 
+  const handleWishListClick =(e)=>{
+    if(!user){
+      e.preventDefault();
+
+      toast.error(<div className = "flex flex-row gap-0"><span>You must signIn to use Wishlist</span><Link to ="/signIn" className ="underline text-teal-400">Sign In</Link></div>)
+
+    }
+  }
+
   const smallScreenLinksForTopNav = [
     {
       name: "Dashboard",
@@ -64,7 +74,8 @@ const Navbar = () => {
       showNumber: false,
     },
 
-    { name: "User", link: "", icon: <FiUser />, showNumber: false },
+    {  name: "", link: user?.role === "admin"? "/admin" : user?.role === "user"? "/" : "/signUp", icon:user?.role ==="admin"?<MdAdminPanelSettings /> : user?.role === "user"?
+<MdOutlineLogout />:<FiUser />, showNumber: false, onlyIcon: true,onClick : user?.role === "user" && signOut },
   ];
 
   const largeScreenLinksForTopNav = [
@@ -76,9 +87,10 @@ const Navbar = () => {
     },
     {
       name: "Wishlist",
-      link: "",
+      link: "/wishlist/products",
       icon: <IoIosHeart />,
       showNumber: false,
+      onClick:handleWishListClick
     },
     {
       name: "Orders",
@@ -94,7 +106,7 @@ const Navbar = () => {
     },
 
     {
-      name: "Notification",
+      name: "",
       link: "",
       icon: <IoMdNotifications />,
       showNumber: true,
@@ -115,9 +127,11 @@ const Navbar = () => {
     },
     {
       name: "Wishlist",
-      link: "",
+      link: "/wishlist/products",
       icon: <IoMdHeart />,
       showNumber: false,
+      onClick:handleWishListClick
+      
     },
     {
       name: "Cart",
@@ -162,7 +176,7 @@ const Navbar = () => {
                 key={item.name}
               >
                 {item.icon ? (
-                  <span className="icon-style hover:text-font-light-white active:text-font-light-white">{item.icon} </span>
+                  <Link to = {item.link} className="icon-style hover:text-font-light-white active:text-font-light-white">{item.icon} </Link>
                 ) : (
                   "null"
                 )}
@@ -220,13 +234,13 @@ const Navbar = () => {
                 >
                   {/* add the border animation on bottom for the icon names */}
                   {item.name && (
-                    <span className="group lg:text-md xl:text-lg  uppercase text-black hover:text-font-light-white dark:text-font-white dark:hover:text-font-light-white transition-colors duration-300 ease-in-out cursor-pointer  font-poppins">
+                    <span onClick={item.onClick ? item.onClick : undefined} className="group lg:text-md xl:text-lg  uppercase text-black hover:text-font-light-white dark:text-font-white dark:hover:text-font-light-white transition-colors duration-300 ease-in-out cursor-pointer  font-poppins">
                       {item.name}
                     </span>
                   )}
 
                   {item.showNumber && (
-                    <div className="relative flex flex-row">
+                    <div onClick={item.onClick ? item.onClick : undefined} className="relative flex flex-row">
                       <span className=" icon-style  ">{item.icon}</span>
                       <span className="absolute flex flex-row justify-center items-center top-0 right-0 bg-color-teal-500 rounded-full w-4 h-4 text-xs text-white font-semibold">
                         1
@@ -258,10 +272,10 @@ const Navbar = () => {
           {smallScreenLinksForBottomNav.map((item) => ( 
             <Link to ={item.link} key={item.name} className="relative  py-4 sm:py-6 md:py-8  flex-1 flex justify-center items-center">
               {item.icon && (
-                <div className = " relative flex flex-row">
+                <div onClick={item.onClick ? item.onClick : undefined} className = " relative flex flex-row">
                   <span className="icon-style hover:text-font-light-white active:text-font-light-white text-3xl cursor-pointer ">{item.icon}</span>
                   {item.showNumber && (
-                    <span className="absolute flex flex-row justify-center items-center -top-3 -right-3 bg-color-teal-500 rounded-full w-4 h-4 text-xs text-white font-semibold">
+                    <span onClick={item.onClick ? item.onClick : undefined} className="absolute flex flex-row justify-center items-center -top-3 -right-3 bg-color-teal-500 rounded-full w-4 h-4 text-xs text-white font-semibold">
                       1
                     </span>
                   )}

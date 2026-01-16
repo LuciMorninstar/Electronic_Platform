@@ -7,10 +7,21 @@ import gsap from "gsap"
 import {useGSAP} from "@gsap/react"
 import { SplitText } from 'gsap/all';
 import Loading from './loading';
+import { useUserStore } from '../utils/useUserStore';
+
 
 
 const HeroSlide = ({item, loading}) => {
 
+  const {addToWishlist} = useUserStore();
+
+ const addingtoWishlist = (e,id)=>{
+  e.stopPropagation();
+
+  addToWishlist(id);
+
+
+ }
   
   
   
@@ -100,7 +111,7 @@ const HeroSlide = ({item, loading}) => {
                 <span className = "hidden lg:block font-semibold text-lg lg:text-xl xl:2xl p-2">Add to Cart</span>
                 <IoMdCart className = "text-xl lg:text-xl xl:text-2xl focus:hover:rotate-30 active:rotate-30 group-hover:rotate-30 transition-transform duration-300 ease-in-out"/>
                 </button>
-                <button className = "group bg-secondary-color dark:bg-dark-secondary-color p-4 rounded-full cursor-pointer">
+                <button onClick={(e)=>addingtoWishlist(e,item._id)} className = "group bg-secondary-color dark:bg-dark-secondary-color p-4 rounded-full cursor-pointer">
                 <FaRegBookmark className = "text-lg lg:text-xl xl:text-2xl cursor-pointer group-hover:text-yellow-500 transition-colors duration-300 ease-in-out " />
                 </button>
             </div>

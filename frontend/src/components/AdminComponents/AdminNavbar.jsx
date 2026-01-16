@@ -7,18 +7,31 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 import Search from "../Search"
 import ToggleDarkMode from "../ToggleDarkMode"
+import { useUserStore } from '../../utils/useUserStore';
+import { Link } from 'react-router-dom';
+import { MdOutlineLogout } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 const AdminNavbar = ({setOpenSidebar}) => {
 
+  const navigate = useNavigate();
+
+  const {signOut} = useUserStore();
+
+  const handleLogout =()=>{
+    signOut();
+    navigate("/");
+  }
+
 
 
   const adminNavItems = [
-    {name:"Hamburgere", icon:<RxHamburgerMenu />},
-    {name:"Notification", icon:<IoMdNotificationsOutline />},
-    {name:"User", icon:<FiUser />}
+    {name:"Hamburgere",  icon:<RxHamburgerMenu />},
+    {name:"Notification" ,icon:<IoMdNotificationsOutline />},
+    {name:"User", icon:<MdOutlineLogout />,onClick :handleLogout }
     
   ]
 
@@ -43,7 +56,7 @@ const AdminNavbar = ({setOpenSidebar}) => {
 
        {/* for search bar */}
       
-        <Search/> 
+        {/* <Search/>  */}
 
     {/* 2nd part */}
 
@@ -56,7 +69,7 @@ const AdminNavbar = ({setOpenSidebar}) => {
         {
           adminNavItems.slice(1).map((item)=>(
             <div className = "adminNavIconStyle ">
-              <span className = "">{item.icon}</span>
+              <span  onClick={item.onClick? item.onClick:undefined} className = "">{item.icon}</span>
             </div>
 
           ))

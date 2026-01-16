@@ -8,31 +8,43 @@ import { FaStar } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
 import { FiExternalLink } from "react-icons/fi";
 import WidthWrapper from "./WidthWrapper";
-import gsap from "gsap"
-import { useGSAP } from "@gsap/react";
-import { useProductStore } from "../utils/useProductStore";
+
+
 import { Link } from "react-router-dom";
 import { useUserStore } from "../utils/useUserStore";
+import CryingAnimation from "./CryingAnimation";
+import Loading from "./loading";
+import { GiCancel } from "react-icons/gi";
+import { MdCancel } from "react-icons/md";
 
 
 
 
 
 
-const Products = () => {
 
-  const {products, getAllProducts, loading} = useProductStore();
+const WishList = () => {
+
+  const {products, getWishlistProducts, loading} = useUserStore();
 
   useEffect(()=>{
-    getAllProducts();
+    getWishlistProducts();
   },[])
 
-  const {addToWishlist} = useUserStore();
+  const {removeFromWishlist} = useUserStore();
 
-const addingToWishlist = (e,id)=>{
+const removingFromWishlist = async (e,id)=>{
   e.stopPropagation();
-  // console.log("WishlistId", id);
-  addToWishlist(id);
+  // console.log("removeWishlistId", id);
+try {
+    
+  await removeFromWishlist(id);
+  getWishlistProducts();
+
+} catch (error) {
+  console.log("Error removing from wishlist item", error);
+  
+}
 
 }
 
@@ -40,71 +52,38 @@ const addingToWishlist = (e,id)=>{
 
 
 
-  // const productItems = [
-  //   {
-  //     name: "Asus Rog strix g15",
-  //     rating: 4.5,
-  //     category: "laptop",
-  //     brand: "Asus",
-  //     price: 90000,
-  //     image: laptop,
-  //   },
-  //   {
-  //     name: "Lenovo Legion",
-  //     rating: 4.2,
-  //     category: "laptop",
-  //     brand: "Asus",
-  //     price: 90000,
-  //     image: monitor,
-  //   },
-  //   {
-  //     name: "Logitech",
-  //     rating: 4,
-  //     category: "Mouse",
-  //     brand: "Logitech",
-  //     price: 9000,
-  //     image: laptop,
-  //   },
-  //   {
-  //     name: "Asus Rog strix g15",
-  //     rating: 4.5,
-  //     category: "laptop",
-  //     brand: "Asus",
-  //     price: 90000,
-  //     image: monitor,
-  //   },
-  //   {
-  //     name: "Lenovo Legion",
-  //     rating: 4.2,
-  //     category: "laptop",
-  //     brand: "Asus",
-  //     price: 90000,
-  //     image: laptop,
-  //   },
-  //   {
-  //     name: "Logitech",
-  //     rating: 4,
-  //     category: "Mouse",
-  //     brand: "Logitech",
-  //     price: 9000,
-  //     image: monitor,
-  //   },
-  // ];
+ 
 
   return (
    <>
    <WidthWrapper className = "">
     <section className = " section_style">
-    <h3 className = "uppercase ">Products</h3>
+{
+  products?.length >0?
+    <h3 className = "w-full  uppercase ">  Wishlists</h3>:
+    ""
+
+}
+  
+
+
      {/* cards container */}
-     <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4">
+     {
+      loading?
+       (<Loading/>)
+      :
+     
+    
+products?.length > 0 ?
+       (
+       <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4">
       {(products || []).map((item,i) => (
         // card wrapper
         <div key={i} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
  ">
-          {/* <div className="absolute z-10 top-3 right-3">
-            <HiPlus className="card-icon" />
-          </div> */}
+          <div  className="absolute z-10 top-2 right-2">
+            <MdCancel onClick={(e)=>removingFromWishlist(e,item._id)} className="text-2xl sm:text-3xl rounded-lg text-dark-primary-color dark:text-secondary-color  hover:text-red-400 transition-colors duration-300 ease-in-out " />
+          </div>
           {/* first div (image) */}
           <Link to = {`/product/${item._id}`} className="relative  w-full h-[200px] overflow-hidden">
             <img
@@ -131,18 +110,13 @@ const addingToWishlist = (e,id)=>{
       <div className = "w-full  flex flex-row justify-evenly items-center">
      
     
-          <button onClick={(e)=>addingToWishlist(e,item._id)} disabled={loading} className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
-              <span className = "font-semibold text-sm ">Add to Wishlist</span>
-             
-            </button>
+        
           <button className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
-            {loading?
-            <h1>Adding...</h1>:
-            <>
+         
              <span className = "font-semibold text-sm ">Add To Cart</span>
               <IoMdCart className ="text-xl"/>  
-              </>
-            }
+             
+            
              
             </button>
 
@@ -156,7 +130,21 @@ const addingToWishlist = (e,id)=>{
           </div>
         </div>
       ))}
-    </div>
+      </div>
+       )
+       :
+       
+          
+      <div className = "h-screen pb-50 w-full flex flex-col gap-5 justify-center items-center">
+        <h2 className = "">No products added in the wishlist</h2>
+        <CryingAnimation/>
+      </div>
+      
+      
+
+
+     }
+    
     </section>
    </WidthWrapper>
    
@@ -165,4 +153,4 @@ const addingToWishlist = (e,id)=>{
   );
 };
 
-export default Products;
+export default WishList;

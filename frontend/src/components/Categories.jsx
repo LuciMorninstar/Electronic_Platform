@@ -49,7 +49,11 @@ const categories = [
   {
     name: "Phone",
     image: phone
-  }
+  },
+    {
+    name: "Laptop",
+    image: macbook
+  },
 ];
 
 
