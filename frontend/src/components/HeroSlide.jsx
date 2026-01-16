@@ -8,17 +8,26 @@ import {useGSAP} from "@gsap/react"
 import { SplitText } from 'gsap/all';
 import Loading from './loading';
 import { useUserStore } from '../utils/useUserStore';
+import { useCartStore } from '../utils/useCartStore';
 
 
 
 const HeroSlide = ({item, loading}) => {
 
   const {addToWishlist} = useUserStore();
+  const{addToCart} = useCartStore();
 
  const addingtoWishlist = (e,id)=>{
   e.stopPropagation();
 
   addToWishlist(id);
+
+
+ }
+ const addingToCart = (e,id)=>{
+  e.stopPropagation();
+
+  addToCart(id);
 
 
  }
@@ -106,7 +115,7 @@ const HeroSlide = ({item, loading}) => {
             <div className = "flex flex-row gap-5 items-center">
            
            
-              <button className = "group flex flex-row gap-2 items-center  bg-secondary-color dark:bg-dark-secondary-color p-4 max-lg:rounded-full lg:px-4 lg:py-3  rounded-2xl lg:rounded-r-2xl cursor-pointer">
+              <button onClick={(e)=>addingToCart(e,item._id)} className = "group flex flex-row gap-2 items-center  bg-secondary-color dark:bg-dark-secondary-color p-4 max-lg:rounded-full lg:px-4 lg:py-3  rounded-2xl lg:rounded-r-2xl cursor-pointer">
 
                 <span className = "hidden lg:block font-semibold text-lg lg:text-xl xl:2xl p-2">Add to Cart</span>
                 <IoMdCart className = "text-xl lg:text-xl xl:text-2xl focus:hover:rotate-30 active:rotate-30 group-hover:rotate-30 transition-transform duration-300 ease-in-out"/>

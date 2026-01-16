@@ -52,7 +52,8 @@ const App = () => {
          <Route path="/product/:id" element = {<ProductPage/>}/>  
          
          <Route path="/wishlist/products" element = {user?<WishlistPage/>: <Navigate to = "/" replace/>}/>  
-         <Route path="/cart" element = {<CartPage/>}/>  
+         
+         <Route path="/cart" element = {user?<CartPage/>:<Navigate to = "/" replace/>}/>  
 
          {/* after placing order invoice is made */}
 

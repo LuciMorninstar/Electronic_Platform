@@ -13,6 +13,7 @@ import { useGSAP } from "@gsap/react";
 import { useProductStore } from "../utils/useProductStore";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../utils/useUserStore";
+import { useCartStore } from "../utils/useCartStore";
 
 
 
@@ -22,17 +23,29 @@ import { useUserStore } from "../utils/useUserStore";
 const Products = () => {
 
   const {products, getAllProducts, loading} = useProductStore();
+  const {addToWishlist} = useUserStore();
+  const {addToCart} = useCartStore();
+  const {getAllCartProducts} = useCartStore();
 
   useEffect(()=>{
     getAllProducts();
   },[])
 
-  const {addToWishlist} = useUserStore();
 
-const addingToWishlist = (e,id)=>{
+
+const addingToWishlist = async(e,id)=>{
   e.stopPropagation();
-  // console.log("WishlistId", id);
-  addToWishlist(id);
+  // console.log("WishlistId", id);s
+  await addToWishlist(id);
+  
+
+}
+
+const addingToCart =async (e,id)=>{
+  e.stopPropagation();
+  console.log("CartItemId", id);
+  await addToCart(id);
+  getAllCartProducts();
 
 }
 
@@ -135,7 +148,7 @@ const addingToWishlist = (e,id)=>{
               <span className = "font-semibold text-sm ">Add to Wishlist</span>
              
             </button>
-          <button className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
+          <button onClick={(e)=>addingToCart(e,item._id)} className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
             {loading?
             <h1>Adding...</h1>:
             <>

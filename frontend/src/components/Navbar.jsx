@@ -20,10 +20,22 @@ import gsap from "gsap"
 import { useGSAP } from "@gsap/react";
 import { useUserStore } from "../utils/useUserStore";
 import toast from "react-hot-toast"
+import { useCartStore } from "../utils/useCartStore";
+import { useEffect } from "react";
 
 const Navbar = () => {
 
   const {signOut} = useUserStore();
+  
+  const {user} = useUserStore();
+  const {getAllCartProducts, cartItems} = useCartStore();
+
+  useEffect(()=>{
+
+    getAllCartProducts();
+  },[getAllCartProducts])
+  
+
 
 
   useGSAP(()=>{
@@ -38,7 +50,6 @@ const Navbar = () => {
 
   },[])
 
-  const {user} = useUserStore();
 
 
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -55,6 +66,15 @@ const Navbar = () => {
       e.preventDefault();
 
       toast.error(<div className = "flex flex-row gap-0"><span>You must signIn to use Wishlist</span><Link to ="/signIn" className ="underline text-teal-400">Sign In</Link></div>)
+
+    }
+  }
+
+  const handleCartClick =(e)=>{
+    if(!user){
+      e.preventDefault();
+
+      toast.error(<div className = "flex flex-row gap-3"><span>You must signIn to use Cart</span><Link to ="/signIn" className ="underline text-teal-400">Sign In</Link></div>)
 
     }
   }
@@ -103,6 +123,7 @@ const Navbar = () => {
       link: "/cart",
       icon: <IoMdCart />,
       showNumber: true,
+      onClick:handleCartClick
     },
 
     {
@@ -138,6 +159,7 @@ const Navbar = () => {
       link: "/cart",
       icon: <IoMdCart />,
       showNumber: true,
+      onClick:handleCartClick
     },
   ];
 
@@ -243,7 +265,7 @@ const Navbar = () => {
                     <div onClick={item.onClick ? item.onClick : undefined} className="relative flex flex-row">
                       <span className=" icon-style  ">{item.icon}</span>
                       <span className="absolute flex flex-row justify-center items-center top-0 right-0 bg-color-teal-500 rounded-full w-4 h-4 text-xs text-white font-semibold">
-                        1
+                      {item.name === "Cart"? <span>{user?(cartItems?.length || 0) : 0}</span>:<span>1</span>}
                       </span>
                     </div>
                   )}
@@ -276,7 +298,8 @@ const Navbar = () => {
                   <span className="icon-style hover:text-font-light-white active:text-font-light-white text-3xl cursor-pointer ">{item.icon}</span>
                   {item.showNumber && (
                     <span onClick={item.onClick ? item.onClick : undefined} className="absolute flex flex-row justify-center items-center -top-3 -right-3 bg-color-teal-500 rounded-full w-4 h-4 text-xs text-white font-semibold">
-                      1
+                       {item.name === "Cart"? <span>{user?(cartItems?.length || 0) : 0}</span>:<span>1</span>}
+                       {/* if item.name is Cart and is a user and has cartItems.length show that else show 0 and if he is not a user show 0 */}
                     </span>
                   )}
                 </div>

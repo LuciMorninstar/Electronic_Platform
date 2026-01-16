@@ -11,7 +11,7 @@ const Loading = () => {
     //   let [loading, setLoading] = useState(true);
     // const [color, setColor] = useState("#00bba7")
   return (
-    <div className = "flex flex-row h-screen justify-center items-center ">
+    <div className = "flex flex-row h-screen justify-center items-center w-full ">
          <HashLoader
         color="#00bba7"
         loading={true}

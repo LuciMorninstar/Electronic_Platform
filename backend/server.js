@@ -7,6 +7,7 @@ import connectDB from "./utils/connectDB.js";
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import userRoutes from "./routes/user.route.js"
+import cartRoutes from "./routes/cart.route.js"
 
 
 const PORT = process.env.PORT || 8000;
@@ -32,6 +33,7 @@ app.get("/", (req,res)=>{
 app.use("/api/user",userRoutes);
 app.use("/api/auth",authRoutes);
 app.use("/api/product",productRoutes);
+app.use("/api/cart",cartRoutes);
 
 
 app.use(errorMiddleware);
