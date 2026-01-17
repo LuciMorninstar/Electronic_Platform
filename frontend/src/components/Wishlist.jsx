@@ -16,6 +16,7 @@ import CryingAnimation from "./CryingAnimation";
 import Loading from "./loading";
 import { GiCancel } from "react-icons/gi";
 import { MdCancel } from "react-icons/md";
+import { useCartStore } from "../utils/useCartStore";
 
 
 
@@ -25,13 +26,15 @@ import { MdCancel } from "react-icons/md";
 
 const WishList = () => {
 
-  const {products, getWishlistProducts, loading} = useUserStore();
+  const {products, getWishlistProducts, loading,removeFromWishlist} = useUserStore();
+
+  const {addToCart,getAllCartProducts} = useCartStore();
 
   useEffect(()=>{
     getWishlistProducts();
   },[])
 
-  const {removeFromWishlist} = useUserStore();
+
 
 const removingFromWishlist = async (e,id)=>{
   e.stopPropagation();
@@ -47,6 +50,18 @@ try {
 }
 
 }
+
+const addingToCart = async (e, id) => {
+    e.preventDefault();
+  e.stopPropagation();
+  try {
+    await addToCart(id);
+    await getAllCartProducts();
+  } catch (error) {
+    console.log("Error adding to cart:", error);
+  }
+};
+
 
 
 
@@ -77,13 +92,17 @@ try {
 products?.length > 0 ?
        (
        <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4">
-      {(products || []).map((item,i) => (
+      {(products || []).map((item) => (
         // card wrapper
-        <div key={i} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
+        <div key={item._id} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
  ">
+
+  {/* absolute delete */}
           <div  className="absolute z-10 top-2 right-2">
             <MdCancel onClick={(e)=>removingFromWishlist(e,item._id)} className="text-2xl sm:text-3xl rounded-lg text-dark-primary-color dark:text-secondary-color  hover:text-red-400 transition-colors duration-300 ease-in-out " />
           </div>
+
+    {/* absolute delete       */}
           {/* first div (image) */}
           <Link to = {`/product/${item._id}`} className="relative  w-full h-[200px] overflow-hidden">
             <img
@@ -111,7 +130,7 @@ products?.length > 0 ?
      
     
         
-          <button className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
+          <button onClick={(e)=>addingToCart(e,item._id)} className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
          
              <span className = "font-semibold text-sm ">Add To Cart</span>
               <IoMdCart className ="text-xl"/>  

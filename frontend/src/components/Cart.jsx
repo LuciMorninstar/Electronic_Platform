@@ -6,12 +6,44 @@ import { Link } from 'react-router-dom';
 
 
 import Loading from './loading';
+import { useCartStore } from "../utils/useCartStore";
+import { useState } from "react";
 
 
 
 
 const Cart = ({cartItems, loading}) => {
 
+    
+
+
+    const {removeFromCart, getAllCartProducts,incQuantityOfAProductInCart, decQuantityOfAProductInCart} = useCartStore(); 
+
+    const removingFromCart =async (e,id)=>{
+        e.preventDefault();
+       await removeFromCart(id);
+       getAllCartProducts();
+
+
+
+    }
+
+    const increasingQuantityOfAProductInCart =async (e,id)=>{
+        e.preventDefault();
+       await incQuantityOfAProductInCart(id);
+       getAllCartProducts();
+
+
+
+    }
+    const decreasingQuantityOfAProductInCart =async (e,id)=>{
+        e.preventDefault();
+       await decQuantityOfAProductInCart(id);
+       getAllCartProducts();
+
+
+
+    }
 
 
 
@@ -83,7 +115,7 @@ const Cart = ({cartItems, loading}) => {
         <div className = "w-1/2">
             <span className = "uppercase">Product Details</span>
         </div>
-        <div className = "w-1/2 flex flex-row gap-10 justify-center">
+        <div className = "w-1/2 flex flex-row gap-10 pr-12 justify-center">
             <span className = "uppercase">quantity</span>
             <span className = "uppercase">price</span>
             <span className = "uppercase">Total</span>
@@ -98,9 +130,9 @@ const Cart = ({cartItems, loading}) => {
                 // card
                 <div key={i} className = "relative overflow-hidden group w-full rounded-xl flex flex-row items-center shadow-md bg-tertiary-color dark:bg-dark-secondary-color ">
                     {/* absolute delete */}
-                  <Link to ="api/:id" className ="absolute top-3 right-3 cursor-pointer hover:text-red-500 active:text-red-500">
+                  <button onClick={(e)=>removingFromCart(e,item.product?._id)} className ="absolute top-3 right-3 cursor-pointer hover:text-red-500 active:text-red-500">
                   <AiOutlineDelete className = "text-base lg:text-xl" />
-                  </Link>
+                  </button>
 
                       {/* left div   */}
                     <div className = " w-1/2  flex flex-row gap-3 items-center">
@@ -120,13 +152,13 @@ const Cart = ({cartItems, loading}) => {
                     <div className = "flex flex-row gap-5 items-center">
                         {/* for quantity */}
                         <div className='flex flex-row gap-0'>
-                        <button className = "px-3 py-2 text-xl cursor-pointer">
+                        <button onClick = {(e)=>decreasingQuantityOfAProductInCart(e,item.product?._id)} className = "px-3 py-2 text-xl cursor-pointer">
                             <RiSubtractFill/>
                         </button>
 
-                        <input className = " text-sm border-2 border-font-light-white w-8 h-8 text-center rounded-lg" type="text" id="quantity" onChange={(e)=>e.target.value} value={item.quantity} disabled/>
+                        <input className = " text-sm border-2 border-font-light-white w-8 h-8 text-center rounded-lg" type="text" id="quantity" onChange={(e)=>e.target.value } value={item.quantity} />
                        
-                        <button  className = "px-3 py-2 text-xl cursor-pointer">
+                        <button onClick={(e)=>increasingQuantityOfAProductInCart(e,item.product?._id)}  className = "px-3 py-2 text-xl cursor-pointer">
                             <IoAdd/>
                         </button>
                         </div>

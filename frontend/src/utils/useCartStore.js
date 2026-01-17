@@ -42,7 +42,68 @@ export const useCartStore = create((set)=>({
                 
             
         }
+    },
+
+        removeFromCart : async(id)=>{
+        set({loading:true});
+
+        try {
+            const response = await axios.delete(`/cart/${id}`);
+            set({loading:false});
+            toast.success("Successfully deleted cart product");
+            
+        } catch (error) {
+             set({loading:false});
+                toast.error(error.response?.data?.message || "Failed to delete the cart product");
+                
+            
+        }
+
+     
+
+    },
+
+    
+        incQuantityOfAProductInCart : async(id)=>{
+        set({loading:true});
+
+        try {
+            const response = await axios.patch(`/cart/increment/${id}`);
+            set({loading:false});
+            toast.success("Increased Quantity");
+            
+        } catch (error) {
+             set({loading:false});
+                toast.error(error.response?.data?.message || "Failed to increase the quantity");
+                
+            
+        }
+
+     
+
+    },
+
+    decQuantityOfAProductInCart : async(id)=>{
+        set({loading:true});
+
+        try {
+            const response = await axios.patch(`/cart/decrement/${id}`);
+            set({loading:false});
+            toast.success("Decreased Quantity");
+            
+            
+        } catch (error) {
+              set({loading:false});
+                toast.error(error.response?.data?.message || "Failed to decrease the quantity");
+            
+        }
     }
+
+    
+
+    
+
+
 
     
 }))

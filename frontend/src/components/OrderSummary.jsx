@@ -1,4 +1,5 @@
 import React from 'react'
+import Loading from './loading';
 
 const OrderSummary = ({cartItems, loading}) => {
 
@@ -6,6 +7,8 @@ const grandTotal = cartItems?.reduce(
   (total, item) => total + (item.product?.price || 0) * item.quantity,
   0
 );
+
+const totalQuantity = cartItems?.reduce((sum,item)=> sum + item.quantity , 0);
      // 0 is initial value here total is an accumulator
 
 //     // start
@@ -18,8 +21,8 @@ const grandTotal = cartItems?.reduce(
 // total = previousTotal + (price * quantity)
 
   
-  return (
-       <aside className = "w-4/10 flex flex-col gap-y-7 rounded-lg  items-center ">
+  return   loading? <Loading/> :(
+       <aside className = " w-full  lg:w-4/10 flex flex-col gap-y-7 rounded-lg  items-center  max-lg:px-4 ">
         
         <div className = "w-full  flex flex-row justify-between  border-b-1 py-5 border-gray-500 ">
             <h4>Order Summary</h4>
@@ -28,11 +31,16 @@ const grandTotal = cartItems?.reduce(
             {/* card */}
         <div className = "w-full flex flex-col gap-5 px-10 py-5 bg-tertiary-color shadow-md dark:bg-dark-secondary-color rounded-lg">
           <div className = "flex flex-row justify-between items-center border-b-1 border-font-light-white py-2">
+            <span>Total Quantity</span>
+            <span>{totalQuantity}</span>
+
+          </div>
+
+          <div className = "flex flex-row justify-between items-center border-b-1 border-font-light-white py-2">
             <span>Original Price</span>
             <span>{grandTotal}</span>
 
           </div>
-
           <div className = "flex flex-row justify-between items-center border-b-1 border-font-light-white py-2">
             <span>Total Price</span>
             <span>{grandTotal}</span>

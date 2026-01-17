@@ -9,8 +9,8 @@
     router.get("/",  getAllProducts);
     router.get("/featured",  getFeaturedProducts);
     router.post("/", protectRoute, adminRoute, upload.array("images",10), addProduct);
-    router.get("/:id", getProductDetails);
     router.get("/search", searchProductByName);
+    router.get("/:id", getProductDetails);
     router.patch("/:id", protectRoute, adminRoute, upload.array("images",10), updateProduct);
     router.delete("/:id", protectRoute, adminRoute, deleteProduct);
     router.get("/category/:category", getProductsByCategory);

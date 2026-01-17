@@ -113,3 +113,164 @@ export const getAllCartProducts = async(req,res,next)=>{
     }
 
 }
+
+export const removeFromCart = async(req,res,next)=>{
+    const {id:productID} = req.params;
+    const userId = req.user._id;
+
+    try {
+        if(!productID){
+            const err = new Error("No product id provided to remove");
+            err.statusCode = 400;
+            return next(err);
+        }
+
+        const user = await User.findById(userId);
+
+        const ProductExistInCart = user.cartItems.find(item=>
+            item.product.toString() === productID
+        )
+
+        if(!ProductExistInCart){
+            const err = new Error("No product in the cart that matchces the id");
+            err.statusCode = 404;
+            return next(err);
+        }
+
+      await User.findByIdAndUpdate(userId,
+        {$pull:{cartItems:{product:productID}}},
+        {new:true}
+      );
+
+      res.status(200).json({
+        success:true,
+        message:"Product removed from cart"
+      })
+
+
+        
+    } catch (error) {
+        console.log("Error in the removeFromCart controller", error.message);
+        next(error);
+        
+    }
+
+} 
+
+export const incQuantityOfAProductInCart = async(req,res,next)=>{
+    const {id:productID} = req.params;
+    const userId = req.user._id;
+    // const {quantity} = req.body;
+    
+
+    try {
+
+        if(!productID){
+            const err = new Error("No productId provided to increase");
+            err.statusCode = 400;
+            return next(err);
+        }
+
+        const user = await User.findById(userId);
+
+        const productExist = user.cartItems.find(item=>item.product.toString() === productID);
+
+        if(!productExist){
+            const err = new Error("No product found in the cart with that id");
+            err.statusCode = 404;
+            return next(err);
+        }
+
+        // if(quantity && quantity < 0){
+        //     const err = new Error('Quantity cant be less than 0' );
+        //     err.statusCode = 400;
+        //     return next(err);
+        // }
+
+
+        await User.findOneAndUpdate(
+            {_id:userId, "cartItems.product":productID},
+            {$inc:{"cartItems.$.quantity":1}},
+            // {$inc:{"cartItems.$.quantity":quantity ? quantity:1}},
+            {new:true}
+            // yedi quantity xa vani quantity haldeu navaye 1 le increment gara
+        )
+
+
+        return res.status(200).json({
+            success:true,
+            message:"Cart quantity updated"
+        })
+
+
+
+        
+    } catch (error) {
+        console.log("Error in the incQuantityOfAProductInCart controller", error.message);
+        next(error);
+        
+    }
+
+
+}
+
+
+export const decQuantityOfAProductInCart = async(req,res,next)=>{
+    
+    const {id:productID} = req.params;
+    const userId = req.user._id;
+
+    try {
+
+        if(!productID){
+            const err = new Error("No id provided to decrease the quantity");
+            err.statusCode = 400;
+            return next(err);
+        }
+
+        const user = await User.findById(userId);
+
+        const productExist = user.cartItems.find(item=> item.product.toString() === productID);
+
+        if(!productExist){
+            const err = new Error("No product found in the art with that id");
+            err.statusCode = 404;
+            return next(err);
+        }
+
+        if(productExist.quantity === 1){
+            await User.findByIdAndUpdate(userId,{
+                $pull:{cartItems:{product:productID}}
+            })
+
+            return res.status(200).json({
+            success:true,
+            message:"Product removed from the cart"
+        })
+        }
+
+ 
+        //this is for since this is a funtion to decrease the quantity if a product has a quantity of 1 then it is going to decrease the quantity to 0 which should not happen and should be deleted if 0 
+
+        await User.findOneAndUpdate(
+            {_id:userId, "cartItems.product":productID},
+            {$inc:{"cartItems.$.quantity":-1}},
+            {new:true}
+
+        )
+
+        return res.status(200).json({
+            success:true,
+            message:"Cart quantity updated"
+        })
+
+
+        
+        
+    } catch (error) {
+        console.log("Error in the decQuantityOfAProductInCart controller", error.message);
+        next(error);
+        
+    }
+
+}

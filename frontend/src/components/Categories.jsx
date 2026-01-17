@@ -7,6 +7,7 @@ import mouse from "../assets/mouse-cat.png"
 import phone from "../assets/phone.png"
 import gsap from "gsap"
 import { useGSAP } from '@gsap/react'
+import { Link } from 'react-router-dom'
 
 const Categories = () => {
 
@@ -27,31 +28,31 @@ const Categories = () => {
 
 const categories = [
   {
-    name: "Headphones",
+    name: "headphone",
     image:headphones
   },
 
   {
-    name: "Mouse",
+    name: "mouse",
     image: mouse
   },
 
   {
-    name: "Laptop",
+    name: "laptop",
     image: macbook
   },
   {
-    name: "Monitor",
+    name: "monitor",
     image: monitor
   },
 
 
   {
-    name: "Phone",
+    name: "mobile",
     image: phone
   },
     {
-    name: "Laptop",
+    name: "refrigerator",
     image: macbook
   },
 ];
@@ -76,10 +77,10 @@ const categories = [
                         <img className = "w-full h-full  object-center object-contain" src={category.image} alt="categories_image"/>
                     </div>
 
-                    <span className = "text-lg sm:text-xl lg:text-2xl xl:text-3xl font text-dark-primary-color font-poppins ">{category.name}</span>
-                    <button className = "category_button_style ">
+                    <span className = "text-lg sm:text-xl lg:text-2xl xl:text-3xl font text-dark-primary-color font-poppins ">{category.name.charAt(0).toUpperCase()+ category.name.slice(1)}</span>
+                    <Link to ={`/category/${category.name}`} className = "category_button_style ">
                         <span className= "font-poppins font-semibold "> Shop Now</span>
-                    </button>
+                    </Link>
                     </div>
                    
 

@@ -47,7 +47,7 @@ const App = () => {
          <Route path="/terms-of-use" element = {<TermsOfUse/>}/>    
          <Route path="/signIn" element = {!user ? <SignIn/> : <Navigate to = "/"/>}/>  
          <Route path="/signUp" element = {<SignUp/>}/>  
-         <Route path="/category" element = {<CategoryPage/>}/>  
+         <Route path="/category/:category" element = {<CategoryPage/>}/>  
          {/* <Route path="/category/categoryname/product" element = {<ProductPage/>}/>   */}
          <Route path="/product/:id" element = {<ProductPage/>}/>  
          

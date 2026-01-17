@@ -1,11 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import gallery5 from "../assets/gallery5.png"
-import gallery6 from "../assets/gallery6.png"
-import gallery7 from "../assets/gallery7.png"
-import gallery8 from "../assets/gallery8.png"
-import gallery9 from "../assets/gallery9.png"
+
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
@@ -91,7 +87,7 @@ const ProductGallery = ({images}) => {
             <SwiperSlide className ="galleryBottomSwiperSlide">
                 <div className = "w-full h-full ">
 
-          <img src={image.url} className ="w-full h-full" alt="image"  />
+          <img src={image.url} className ="w-full h-full object-cover object-center" alt="image"  />
                 </div>
         </SwiperSlide>
 

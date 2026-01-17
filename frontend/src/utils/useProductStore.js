@@ -4,6 +4,7 @@ import {toast} from "react-hot-toast"
 
 export const useProductStore = create((set)=>({
     loading:false,
+    isSearching:false,
 
     addProduct: async(formData)=>{
         set({loading:true})
@@ -97,6 +98,45 @@ export const useProductStore = create((set)=>({
             toast.error(error.response?.data?.message || "Failed to retrieve featured products");
             
         }
+    },
+
+    searchProductByName : async(productName)=>{
+
+        set({isSearching:true})
+
+        try {
+            const response = await axios.get(`/product/search?productName=${productName}`);
+            set({isSearching:false, products:response.data?.products || []})
+            
+        } catch (error) {
+              set({isSearching:false});
+            toast.error(error.response?.data?.message || "Failed to retrieve products");
+
+            
+        }
+        
+
+    },
+
+    getProductsByCategory : async(category)=>{
+        set({loading:true, products:[]}) 
+        // products:[] so that old data are cleared
+
+        try {
+            const response = await axios.get(`/product/category/${category}`);
+            set({loading:false, products:response.data?.products || []})
+
+            
+        } catch (error) {
+            set({loading:false, products:[]}) 
+            // here products:[] clears products on error
+            toast.error(error.response?.data?.message || `Failed to retrieve ${category} products`)
+            
+        }
+
+
     }
+
+
     
 }))

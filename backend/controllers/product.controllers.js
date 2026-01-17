@@ -368,12 +368,6 @@ export const searchProductByName = async(req,res,next)=>{
 
   try {
 
-      if(!name){
-    const err = new Error("No Product Name provided to search ");
-    err.statusCode = 400;
-    return next(err);
-
-  }
 
   const productBySearch = await Product.find({name:{$regex:name, $options:"i"}});  //so it will search where name let's say Asus is the name tehn regex helps in pattern. if user searches asus instead of Asus it shows still because of regex no need to match exact word and options:"i" make it case insensitive that is A to a no difference.
   
@@ -466,3 +460,4 @@ async function updateFeaturedProductsCache(){
     
   }
 }
+

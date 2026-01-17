@@ -37,6 +37,24 @@ body::-webkit-scrollbar-thumb{
  @apply bg-teal-500 rounded-full;
  
 }
+#searchBar::-webkit-scrollbar{
+  width:3px;
+
+}
+
+#searchBar::-webkit-scrollbar-track{
+  @apply bg-transparent
+}
+
+#searchBar::-webkit-scrollbar-thumb{
+ @apply bg-teal-500 rounded-full;
+ 
+}
+
+
+
+
+
  @layer base{
   h1{
     @apply text-2xl sm:text-4xl lg:text-5xl   font-semibold dark:text-primary-color font-poppins
