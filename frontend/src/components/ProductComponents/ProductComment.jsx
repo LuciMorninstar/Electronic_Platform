@@ -9,13 +9,15 @@
   import { IoMdSend } from 'react-icons/io';
 import toast from 'react-hot-toast';
 import CryingAnimation from '../CryingAnimation.jsx';
+import { MdDelete } from 'react-icons/md';
+import { FiDelete } from 'react-icons/fi';
 
   const ProductComment = () => {
 
     const {id:productId} = useParams(); 
     // console.log("id is coming",productId );
 
-    const {getAllComments, loading,comments,addComment, addLike,addunLike} = useCommentStore(); 
+    const {getAllComments, loading,comments,addComment, removeComment, addLike,addunLike} = useCommentStore(); 
 
     useEffect(()=>{
      try {
@@ -54,6 +56,20 @@ import CryingAnimation from '../CryingAnimation.jsx';
 
     }
 
+      const removingFunction = async(e,productId, commentId)=>{
+      e.stopPropagation();
+          e.preventDefault();
+        
+      if(!commentId || !productId) return;
+
+     await removeComment(productId,commentId);
+     
+        await getAllComments(productId);
+        toast.success("Deleted");
+
+    
+    }
+
 
     // for like value store
 
@@ -84,6 +100,8 @@ import CryingAnimation from '../CryingAnimation.jsx';
     
 
     }
+
+  
 
     // to submit comment by user
 
@@ -141,9 +159,12 @@ import CryingAnimation from '../CryingAnimation.jsx';
             <FaUser className="text-lg lg:text-xl" />
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-black dark:text-primary-color max-lg:text-sm text-base">
-              {comment?.user?.fullName || "user"}
-            </span>
+          
+              <span className="text-black dark:text-primary-color max-lg:text-sm text-base">
+                {comment?.user?.fullName || "user"}
+              </span>
+            
+       
             <span className="text-font-light-white text-xs">
               P{comment?.date ? new Date(comment.date).toLocaleDateString() : ""}
             </span>
@@ -165,6 +186,13 @@ import CryingAnimation from '../CryingAnimation.jsx';
                 className="cursor-pointer"
               />
               <p className="text-xs text-font-light-white">{comment?.unlike?.length}</p>
+            </span>
+            <span className="flex flex-row gap-2 items-center justify-center">
+              <FiDelete
+                onClick={(e) =>removingFunction(e, productId, comment?._id)}
+                className="cursor-pointer"
+              />
+            
             </span>
           </div>
         </div>

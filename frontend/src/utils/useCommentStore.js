@@ -6,6 +6,8 @@ import {toast} from "react-hot-toast"
 export const useCommentStore = create((set)=>({
 
     loading:false,
+    comments:[],
+    
 
 
     addComment : async(productId,text)=>{
@@ -45,14 +47,14 @@ export const useCommentStore = create((set)=>({
     },
 
      getAllComments : async(productId)=>{
-        set({loading:true})
+        set({loading:true, comments:[]})
 
         try {
             const response = await axios.get(`/comment/${productId}`);
-            set({loading:false, comments:response.data.comments});
+            set({loading:false, comments:response.data.comments || []});
             
         } catch (error) {
-            set({loading:false});
+            set({loading:false, comments:[]});
             toast.error(error.response?.data?.message || "Failed to fetch all comments");
 
             
