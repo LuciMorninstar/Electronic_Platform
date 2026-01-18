@@ -50,6 +50,19 @@ body::-webkit-scrollbar-thumb{
  @apply bg-teal-500 rounded-full;
  
 }
+#commentSection::-webkit-scrollbar{
+  width:3px;
+
+}
+
+#commentSection::-webkit-scrollbar-track{
+  @apply bg-transparent
+}
+
+#commentSection::-webkit-scrollbar-thumb{
+ @apply bg-teal-500 rounded-full;
+ 
+}
 
 
 

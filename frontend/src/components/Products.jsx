@@ -14,6 +14,7 @@ import { useProductStore } from "../utils/useProductStore";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../utils/useUserStore";
 import { useCartStore } from "../utils/useCartStore";
+import { Loader } from "lucide-react";
 
 
 
@@ -145,12 +146,14 @@ const addingToCart =async (e,id)=>{
      
     
           <button onClick={(e)=>addingToWishlist(e,item._id)} disabled={loading} className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
+            {loading? <Loader/> :
               <span className = "font-semibold text-sm ">Add to Wishlist</span>
+            }
              
             </button>
           <button onClick={(e)=>addingToCart(e,item._id)} className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
             {loading?
-            <h1>Adding...</h1>:
+            <Loader/>:
             <>
              <span className = "font-semibold text-sm ">Add To Cart</span>
               <IoMdCart className ="text-xl"/>  

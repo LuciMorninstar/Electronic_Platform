@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import userRoutes from "./routes/user.route.js"
 import cartRoutes from "./routes/cart.route.js"
+import commentRoutes from "./routes/comment.route.js"
 
 
 const PORT = process.env.PORT || 8000;
@@ -34,6 +35,7 @@ app.use("/api/user",userRoutes);
 app.use("/api/auth",authRoutes);
 app.use("/api/product",productRoutes);
 app.use("/api/cart",cartRoutes);
+app.use("/api/comment",commentRoutes);
 
 
 app.use(errorMiddleware);
