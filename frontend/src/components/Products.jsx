@@ -4,7 +4,7 @@ import monitor from "../assets/monitor.webp"
 
 import { HiPlus } from "react-icons/hi2";
 import { IoIosHeart } from "react-icons/io";
-import { FaStar } from "react-icons/fa6";
+import { FaRegBookmark, FaStar } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
 import { FiExternalLink } from "react-icons/fi";
 import WidthWrapper from "./WidthWrapper";
@@ -111,7 +111,7 @@ const addingToCart =async (e,id)=>{
     <section className = " section_style">
     <h3 className = "uppercase ">Products</h3>
      {/* cards container */}
-     <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4">
+     <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 sm:gap-3 xl:gap-x-2 gap-y-4">
       {(products || []).map((item,i) => (
         // card wrapper
         <div key={i} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
@@ -143,14 +143,15 @@ const addingToCart =async (e,id)=>{
             <span className = "">NRs.{item.price}</span>
 
       <div className = "w-full  flex flex-row justify-evenly items-center">
-     
-    
-          <button onClick={(e)=>addingToWishlist(e,item._id)} disabled={loading} className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
+
+            <button onClick={(e)=>addingToWishlist(e,item._id)} disabled={loading} className = " card-button rounded-full flex flex-row  items-center gap-2 cursor-pointer ">
             {loading? <Loader/> :
-              <span className = "font-semibold text-sm ">Add to Wishlist</span>
+              <span className = "font-semibold text-md "><FaRegBookmark/></span>
             }
              
             </button>
+     
+    
           <button onClick={(e)=>addingToCart(e,item._id)} className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
             {loading?
             <Loader/>:
@@ -161,6 +162,9 @@ const addingToCart =async (e,id)=>{
             }
              
             </button>
+
+            
+      
 
       </div>
           

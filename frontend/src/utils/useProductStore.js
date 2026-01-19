@@ -5,6 +5,9 @@ import {toast} from "react-hot-toast"
 export const useProductStore = create((set)=>({
     loading:false,
     isSearching:false,
+    recommendations:[],
+    similarProducts:[],
+    topRatedRecentProducts:[],
 
     addProduct: async(formData)=>{
         set({loading:true})
@@ -135,6 +138,63 @@ export const useProductStore = create((set)=>({
         }
 
 
+    },
+    getRecommendationProducts : async()=>{
+        set({loading:true, recommendations:[]}) 
+        // products:[] so that old data are cleared
+
+        try {
+            const response = await axios.get("/product/recommendations");
+                console.log("API response for recommendations:", response.data); 
+
+            set({loading:false, recommendations:response.data || []})
+
+            
+        } catch (error) {
+              console.log("Recommendation API error:", error);
+            set({loading:false, recommendations:[]}) 
+            // here products:[] clears products on error
+            toast.error(error.response?.data?.message || `Failed to retrieve recommendation products`)
+            
+        }
+
+
+    },
+
+      getSimilarProducts : async(productId)=>{
+        set({loading:true, similarProducts:[]}) 
+        // products:[] so that old data are cleared
+
+        try {
+            const response = await axios.get(`/product/similar/${productId}`);
+                console.log("API response for similar Products:", response.data?.similarProducts); 
+
+            set({loading:false, similarProducts:response.data?.similarProducts || []})
+
+            
+        } catch (error) {
+              console.log("Similar Products API error:", error);
+            set({loading:false, similarProducts:[]}) 
+            // here products:[] clears products on error
+            toast.error(error.response?.data?.message || `Failed to retrieve similar products`)
+            
+        }
+
+
+    },
+
+    getTopRatedRecentProducts: async()=>{
+        set({loading:false, topRatedRecentProducts:[]});
+        try {
+            const response = await axios.get("/product/topRatedRecentProducts");
+            set({loading:false, topRatedRecentProducts:response.data?.topRatedRecentProducts || []})
+
+            
+        } catch (error) {
+            set({loading:false, topRatedRecentProducts:[]})
+              toast.error(error.response?.data?.message || `Failed to retrieve top products`)
+            
+        }
     }
 
 

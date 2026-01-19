@@ -15,6 +15,7 @@ import ProductComment from '../components/ProductComponents/ProductComment';
 import { useProductStore } from '../utils/useProductStore';
 import Loading from '../components/loading';
 import { useCartStore } from '../utils/useCartStore';
+import SimilarProducts from '../components/SimilarProducts';
 
 const ProductPage = () => {
 
@@ -145,6 +146,9 @@ x
    {product?.specs && <Specs product = {product}/>}
 
    {/* /specs section */}
+
+
+   {/* <SimilarProducts/> */}
 
 
 {/* comment section */}

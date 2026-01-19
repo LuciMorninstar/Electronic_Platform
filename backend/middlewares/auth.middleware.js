@@ -68,3 +68,33 @@ export const adminRoute = (req,res,next)=>{  //no need of async since not dealin
         
     }
 }
+
+export const optionalAuth = async(req,res,next)=>{
+
+    const accessToken = req.cookies.accessToken || req.headers.authorization?.split(" ")[1];
+
+    if(!accessToken){
+        req.user = null;
+        return next();
+    }
+
+    try {
+        const decoded = jwt.verify(accessToken,process.env.ACCESS_TOKEN_SECRET_KEY);
+
+        const user = await User.findById(decoded.userId).select("-password");
+
+        req.user = user || null;
+
+
+        
+        
+    } catch (error) {
+        req.user = null;
+        
+    }
+
+    next(); //next here because even though error is being catched i want the guest user to be used
+
+ 
+
+}

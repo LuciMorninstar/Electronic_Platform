@@ -2,6 +2,7 @@ import Product from "../models/product.model.js";
 import redis from "../utils/redis.js";
 import cloudinary, { deleteOnCloudinary } from "../utils/cloudinary.js"
 import uploadOnCloudinary from "../utils/cloudinary.js";
+import User from "../models/user.model.js";
 
 export const getAllProducts = async (req, res, next) => {
   const products = await Product.find();
@@ -404,6 +405,7 @@ export const searchProductByName = async(req,res,next)=>{
 }
 
 
+//toggleFeatured Product starts
 export const toggleFeaturedProduct = async(req,res,next)=>{
 
   const {id} = req.params;
@@ -460,4 +462,247 @@ async function updateFeaturedProductsCache(){
     
   }
 }
+
+//toggleFeatured Product ends
+
+
+//  save these to redis with userId along with it 
+// Logged-in user with wishlist or cartItems
+//  recommend based on his wishlist + cartItems
+
+// Logged-in user without both
+//  recommend based on all users’ wishlists
+
+// Guest user
+//  recommend based on all users’ wishlists
+
+export const getRecommendationProducts = async(req,res,next)=>{
+
+
+  try {
+      const LIMIT = 10;
+      const userId = req.user?._id;
+
+      
+    // for redis
+      const redisKey = userId ? `recommendations:${userId}`:`recommendations:guest`
+
+      // fetching from redis if any
+      const redisData = await redis.get(redisKey);
+      if(redisData){
+        return res.status(200).json(JSON.parse(redisData));
+      }
+
+      // fetch from mongodb database
+
+      let recommendations = []; 
+      // let because every user has different products recommendations
+
+      // if user is logged in
+
+      if(userId){
+        const user = await User.findById(userId)
+        .populate("wishlist").populate("cartItems.product"); 
+        // turning them into readable mongodb document
+        // no dealing with cartItems.quantity 
+
+        // check if user has wishlist or any cart products if he has show the products based on those wihlist or cart products categories and brands if user doesnt have any wishlist or any cart products then show products based on all users wishlist or cart products
+
+        const hasData = user.wishlist.length >0 || user.cartItems.length>0;
+          // user has data starts
+        if(hasData){
+          const categories = new Set();
+          const brands = new Set();
+          const excludingProductIds = new Set();
+          // this is to not show the user the same product that he has in his cart or wishlist 
+
+        // for wishlist
+        user.wishlist.forEach(product=>{
+          categories.add(product.category);
+          brands.add(product.brand);
+          excludingProductIds.add(product._id);
+        })
+
+        //for cartItems
+
+        user.cartItems.forEach(item=>{
+          categories.add(item.product.category);
+          brands.add(item.product.brand);
+          excludingProductIds.add(item.product._id)
+        })
+
+
+        
+        // now for recommending products to the user who has wishlist or cart items
+
+        recommendations = await Product.find(
+          {$or:[
+            {category:{$in:[...categories]}},
+            {brand:{$in:[...brands]}}
+          ],
+          _id:{$nin:[...excludingProductIds]}
+        }
+        ).limit(LIMIT);
+
+        
+
+        
+
+        }
+
+        // user has data ends
+
+        // if user doesnt have data then show based on all users
+
+        else{
+
+          recommendations = await getGlobalWishlistBasedProducts(LIMIT);
+
+        }
+
+
+      }
+
+      // user logged in finished
+
+      // now for those who are not user or signed in
+
+      else{
+        recommendations = await getGlobalWishlistBasedProducts(LIMIT);
+
+      }
+
+      // now to store those in redis for 10 minutes
+
+      await redis.set(redisKey,JSON.stringify(recommendations),"EX",600);
+
+      return res.status(200).json({
+        success:true,
+        recommendations:recommendations
+      }
+      );
+
+
+      
+  } catch (error) {
+    console.log("Error in the getRecommendationProducts controller", error.message);
+    next(error);
+    
+  }
+
+
+}
+
+
+// now here for global using only wishlist no carts
+const getGlobalWishlistBasedProducts = async(LIMIT)=>{
+  return await User.aggregate(
+      [
+        {$unwind:"$wishlist"},  //kholeko  $ means it is a field
+
+        {
+          $group:{
+            _id:"$wishlist",  //grouping them by _id
+            count:{$sum:1}   // adding how many wishlists
+          }
+        },
+
+        {$sort:{count:-1}},
+        {$limit:LIMIT},
+
+        {
+          $lookup:{
+            from:"products",   //doing left join user with the        products (products because collection name in mongodb)
+            localField:"_id", //the name of column from user which is used to connect
+            foreignField:"_id", //the name which is going to be joint with products
+            as:"product"  //naming it as product field
+
+          }
+        },
+
+        {$unwind:"$product"},
+        {$replaceRoot:{newRoot:"$product"}}
+
+
+      ]
+  )
+}
+
+
+export const getSimilarProducts = async(req,res,next)=>{
+  const {productId} = req.params;
+
+  try {
+
+    const clickedProduct = await Product.findById(productId);
+
+    if(!clickedProduct){
+      const err = new Error("Product Not Found");
+      err.statusCode = 404;
+      return next(err);
+    }
+
+    const similarProducts = await Product.find(
+      {category:clickedProduct.category, _id:{$ne:productId}}
+      //to exclude the clickedProduct
+    ).limit(6);
+
+    res.status(200).json({
+      success:true,
+      similarProducts:similarProducts
+    })
+
+
+    
+  } catch (error) {
+    console.log("Error in the getSimilarProducts",error.message);
+    next(error);
+    
+  }
+
+
+}
+
+
+export const getTopRatedRecentProducts = async(req,res,next)=>{
+  try {
+
+    const redisData = await redis.get("topRatedRecentProducts");
+    if(redisData){
+      return res.status(200).json({
+        success:true,
+        topRatedRecentProducts:JSON.parse(redisData),
+        
+      })
+
+    }
+
+
+    const topRatedRecentProducts = await Product.find().sort(
+      {rating:-1, createdAt:-1} //new first
+    ).limit(10);
+
+    await redis.set("topRatedRecentProducts",JSON.stringify(topRatedRecentProducts),"EX",86400)
+
+    return res.status(200).json({
+      success:true,
+      topRatedRecentProducts:topRatedRecentProducts
+
+    })
+
+    
+  } catch (error) {
+    console.log("Error in the getTopRatedRecentProducts controller", error.message);
+    next(error);
+    
+  }
+}
+
+
+
+
+
+
+
+
 

@@ -4,6 +4,8 @@ import Products from '../components/Products'
 import Categories from '../components/Categories'
 import Partners from '../components/Partners'
 import { useEffect } from 'react'
+import Recommendations from '../components/Recommendations'
+import TopProducts from '../components/TopProducts'
 
 
 const HomePage = () => {
@@ -36,8 +38,17 @@ const HomePage = () => {
     <>
       <HeroSection/>
   <Categories/>
-  <Products/>
+  <div className = "flex flex-row w-full ">
+ <Products/>
+ <TopProducts className ="max-xl:hidden "  />
+  </div>
+ 
+  <Recommendations/>
   <Partners/>
+  <div className = "px-5">
+   <TopProducts className = "xl:hidden" />
+   </div>
+
   </>
 
   )

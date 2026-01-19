@@ -286,11 +286,21 @@ body::-webkit-scrollbar-thumb{
 
   /* Slides in hero section */
   .heroSwiper{
-    @apply w-full h-[350px] lg:h-[690px]
+    @apply w-full h-[350px] lg:h-[690px] 
   }
+
   .heroSwiperSlide{
-    @apply   w-full h-full 
+    @apply   w-full h-full  
   }
+
+  .recommendationSwiper{
+    @apply w-full h-[380px]
+  }
+  
+  .recommendationSwiperSlide{
+    @apply   h-full 
+  }
+
 
   /* Slides for product gallery */
 
@@ -327,7 +337,8 @@ body::-webkit-scrollbar-thumb{
   }
 
   .card-button{
-    @apply bg-tertiary-color dark:bg-dark-tertiary-color px-4 py-4  hover:text-secondary-color dark:hover:text-color-teal-300 transition-all duration-200 ease-in-out shadow-xl 
+    @apply bg-tertiary-color dark:bg-dark-tertiary-color px-4 py-4
+      hover:text-secondary-color dark:hover:text-color-teal-300 transition-all duration-200 ease-in-out shadow-xl 
   }
 
   /* signup */
