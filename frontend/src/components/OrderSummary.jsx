@@ -1,5 +1,6 @@
 import React from 'react'
 import Loading from './loading';
+import { Link } from 'react-router-dom';
 
 const OrderSummary = ({cartItems, loading}) => {
 
@@ -41,16 +42,17 @@ const totalQuantity = cartItems?.reduce((sum,item)=> sum + item.quantity , 0);
             <span>{grandTotal}</span>
 
           </div>
+       
           <div className = "flex flex-row justify-between items-center border-b-1 border-font-light-white py-2">
             <span>Total Price</span>
             <span>{grandTotal}</span>
 
           </div>
 
-          <button className = "w-full outline-none bg-color-teal-500 hover:bg-teal-600 transition-colors duration-200 ease-in cursor-pointer text-font-white px-3 py-3 rounded-lg">
+          <Link to ="/checkout" className = "w-full outline-none bg-color-teal-500 hover:bg-teal-600 transition-colors duration-200 ease-in cursor-pointer text-font-white text-center px-3 py-3 rounded-lg">
             Proceed to Checkout
 
-          </button>
+          </Link>
 
        
         </div>

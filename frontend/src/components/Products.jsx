@@ -114,7 +114,7 @@ const addingToCart =async (e,id)=>{
      <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 sm:gap-3 xl:gap-x-2 gap-y-4">
       {(products || []).map((item,i) => (
         // card wrapper
-        <div key={i} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
+        <div key={i} className=" relative group flex flex-col w-full rounded-sm bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
  ">
           {/* <div className="absolute z-10 top-3 right-3">
             <HiPlus className="card-icon" />

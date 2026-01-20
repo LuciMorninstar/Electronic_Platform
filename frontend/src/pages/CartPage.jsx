@@ -3,6 +3,7 @@ import Cart from '../components/Cart'
 import OrderSummary from '../components/OrderSummary'
 import { useEffect } from 'react';
 import { useCartStore } from '../utils/useCartStore';
+import CryingAnimation from '../components/CryingAnimation';
 
 
 
@@ -21,9 +22,20 @@ const CartPage = () => {
 
 
       
+{
+  !cartItems || cartItems.length === 0 ?
+  <div className = "w-full h-screen flex flex-col gap-10 justify-center items-center pb-60">
+    <CryingAnimation/>
+    <h3>No cart items yet!</h3>
+    </div>:
 
+  <>
         <Cart cartItems={cartItems} loading = {loading}/>
         <OrderSummary cartItems={cartItems} loading={loading}/>
+        </>
+
+}
+        
 
 
 

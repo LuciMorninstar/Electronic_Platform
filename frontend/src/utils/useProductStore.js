@@ -139,49 +139,41 @@ export const useProductStore = create((set)=>({
 
 
     },
-    getRecommendationProducts : async()=>{
-        set({loading:true, recommendations:[]}) 
-        // products:[] so that old data are cleared
+    getRecommendationProducts: async () => {
+    set({ loading: true });
 
-        try {
-            const response = await axios.get("/product/recommendations");
-                console.log("API response for recommendations:", response.data); 
+    try {
+      const response = await axios.get("/product/recommendations");
 
-            set({loading:false, recommendations:response.data || []})
+      // Ensure recommendations is always an array
+      const recommendationsArray = response.data?.recommendations || [];
 
-            
-        } catch (error) {
-              console.log("Recommendation API error:", error);
-            set({loading:false, recommendations:[]}) 
-            // here products:[] clears products on error
-            toast.error(error.response?.data?.message || `Failed to retrieve recommendation products`)
-            
-        }
+      set({
+        loading: false,
+        recommendations: recommendationsArray,
+      });
 
+    //   toast.success("Recommendations fetched successfully");
+    } catch (error) {
+      set({ loading: false });
+      toast.error(
+        error.response?.data?.message || "Failed to fetch recommendations"
+      );
+    }
+  },
 
-    },
+   getSimilarProducts: async (productId) => {
+  set({ loading: true, similarProducts: [] });
 
-      getSimilarProducts : async(productId)=>{
-        set({loading:true, similarProducts:[]}) 
-        // products:[] so that old data are cleared
-
-        try {
-            const response = await axios.get(`/product/similar/${productId}`);
-                console.log("API response for similar Products:", response.data?.similarProducts); 
-
-            set({loading:false, similarProducts:response.data?.similarProducts || []})
-
-            
-        } catch (error) {
-              console.log("Similar Products API error:", error);
-            set({loading:false, similarProducts:[]}) 
-            // here products:[] clears products on error
-            toast.error(error.response?.data?.message || `Failed to retrieve similar products`)
-            
-        }
-
-
-    },
+  try {
+    const response = await axios.get(`/product/similar/${productId}`);
+    console.log("API response for similar Products:", response.data?.similarProducts);
+    set({ loading: false, similarProducts: response.data?.similarProducts || [] });
+  } catch (error) {
+    console.log("Error fetching similar products:", error);
+    set({ loading: false, similarProducts: [] });
+  }
+},
 
     getTopRatedRecentProducts: async()=>{
         set({loading:false, topRatedRecentProducts:[]});

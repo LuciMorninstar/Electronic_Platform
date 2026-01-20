@@ -52,6 +52,19 @@ const userSchema = new mongoose.Schema({
 
         }
         
+    ],
+
+    notifications:[
+        {
+            message:{type:String, required:true},
+            type:{
+                type:String,
+                enum:["order","promotion","other"],
+                default:"order"
+            },
+            createdAt:{type:Date, default:Date.now},
+            link:{type:String}
+        }
     ]
 
 

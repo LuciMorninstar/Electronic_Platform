@@ -571,10 +571,15 @@ export const getRecommendationProducts = async(req,res,next)=>{
         recommendations = await getGlobalWishlistBasedProducts(LIMIT);
 
       }
+//so here in recommendationProducts i was getting error of sometime getting data in recommendations:[{},{}] sometimes without recommendations: just [{}.{}] array of objects and that was due to the redis data was stored without recommendations name give so reponsedata is built and sent to the  as response of redis so same (.map error)
+      const responseData ={
+        recommendations:recommendations,
+        success:true,
+      }
 
       // now to store those in redis for 10 minutes
 
-      await redis.set(redisKey,JSON.stringify(recommendations),"EX",600);
+      await redis.set(redisKey,JSON.stringify(responseData),"EX",600);
 
       return res.status(200).json({
         success:true,
@@ -662,6 +667,7 @@ export const getSimilarProducts = async(req,res,next)=>{
 
 
 }
+
 
 
 export const getTopRatedRecentProducts = async(req,res,next)=>{

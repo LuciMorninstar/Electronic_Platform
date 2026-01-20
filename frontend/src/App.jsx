@@ -19,6 +19,9 @@ import InvoicePage from './pages/InvoicePage'
 import { Toaster } from 'react-hot-toast'
 import { useUserStore } from './utils/useUserStore'
 import WishlistPage from './pages/WishlistPage'
+import CheckoutPage from './components/CheckoutPage'
+import OrderPage from './pages/OrderPage'
+import NotificationPanel from './components/NotificationPanel'
 
 
 // import { useEffect } from 'react'
@@ -57,8 +60,11 @@ const App = () => {
 
          {/* after placing order invoice is made */}
 
-         <Route path = "/invoice" element = {<InvoicePage/>}/>
-        
+         <Route path = "/checkout" element = {user?<CheckoutPage/>:<Navigate to="/" replace/>}/>
+         <Route path = "/myOrders" element = {user?<OrderPage/>:<Navigate to ="/" replace/>}/>
+         <Route path = {`/invoice/:id`} element = {<InvoicePage/>}/>
+         {/* <Route path = {"/notification"} element = {<NotificationPanel/>}/>
+         */}
 
         </Route>
 

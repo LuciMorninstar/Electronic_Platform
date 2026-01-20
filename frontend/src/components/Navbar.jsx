@@ -22,8 +22,18 @@ import { useUserStore } from "../utils/useUserStore";
 import toast from "react-hot-toast"
 import { useCartStore } from "../utils/useCartStore";
 import { useEffect } from "react";
+import NotificationPanel from "./NotificationPanel";
 
 const Navbar = () => {
+
+  //notificationsPanel
+
+  const [showNotificationPanel, setShowNotificationPanel] = useState(false);
+
+  const toggleNotificationPanel = ()=>{
+    setShowNotificationPanel((prev)=>!prev);
+  }
+
 
   const {signOut} = useUserStore();
   
@@ -114,7 +124,7 @@ const Navbar = () => {
     },
     {
       name: "Orders",
-      link: "",
+      link: "/myOrders",
       icon: <IoIosHeart />,
       showNumber: false,
     },
@@ -131,6 +141,7 @@ const Navbar = () => {
       link: "",
       icon: <IoMdNotifications />,
       showNumber: true,
+      onClick:toggleNotificationPanel
     },
 
     { 
@@ -216,6 +227,11 @@ const Navbar = () => {
         )}
       </nav>
 
+      {/* absolute of notificationPanel */}
+
+      <NotificationPanel state = {showNotificationPanel} />
+
+
       {/* for large screen lg and up(1024px and up) */}
 
       <nav className="gsapNav absolute top-7 w-full z-50 max-lg:hidden opacity-95  ">
@@ -266,6 +282,7 @@ const Navbar = () => {
                       <span className=" icon-style  ">{item.icon}</span>
                       <span className="absolute flex flex-row justify-center items-center top-0 right-0 bg-color-teal-500 rounded-full w-4 h-4 text-xs text-white font-semibold">
                       {item.name === "Cart"? <span>{user?(cartItems?.length || 0) : 0}</span>:<span>1</span>}
+                     
                       </span>
                     </div>
                   )}
