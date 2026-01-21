@@ -23,6 +23,7 @@ import CheckoutPage from './components/CheckoutPage'
 import OrderPage from './pages/OrderPage'
 import NotificationPanel from './components/NotificationPanel'
 import FilterPage from './pages/FilterPage'
+import ComparePage from './pages/ComparePage'
 
 
 // import { useEffect } from 'react'
@@ -67,6 +68,7 @@ const App = () => {
          {/* <Route path = {"/notification"} element = {<NotificationPanel/>}/>
          */}
          <Route path = "/filter" element={<FilterPage/>}/>
+         <Route path = "/compare/:id" element={<ComparePage/>}/>
 
         </Route>
 

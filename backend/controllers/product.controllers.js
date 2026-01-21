@@ -750,6 +750,45 @@ export const filterProducts = async (req, res, next) => {
 };
 
 
+//for the compareTo
+
+export const compareTo = async(req,res,next)=>{
+  try {
+    const {id} = req.params;
+
+    if(!id){
+      const err = new Error("No id provided");
+      err.statusCode = 400;
+      return next(err);
+    }
+
+    const product = await Product.findById(id);
+
+    if(!product ){
+      const err = new Error("No product found");
+      err.statusCode = 404;
+      return next(err);
+    }
+
+    return res.status(200).json({
+      success:true,
+      compareToProduct:product
+    })
+
+
+
+
+
+    
+  } catch (error) {
+    console.log("Error in the compareTo controller", error.message);
+    next(error);
+    
+  }
+
+}
+
+
 
 
 

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import laptop from "../assets/laptop.webp";
 import monitor from "../assets/monitor.webp"
-import { FaHtml5, FaStar, FaUser } from "react-icons/fa6";
-import { useParams } from 'react-router-dom';
+import { FaCodeCompare, FaHtml5, FaStar, FaUser } from "react-icons/fa6";
+import { Link, useParams } from 'react-router-dom';
 
 
 
@@ -82,7 +82,13 @@ console.log(product)
           <div className="w-full  lg:w-1/2 " >
           {/* first part */}
           <div className = "flex flex-col  border-b-2 border-gray-500  py-5  gap-3">
+           <div className = "flex flex-row justify-between">
             <h4 className = "text-teal-400">Fuel Your Future, Power Your Passions.</h4>
+            <Link to = {`/compare/${product?._id}`} className = "group relative flex flex-col bg-color-teal-500 items-center p-3 rounded-full cursor-pointer">
+              <FaCodeCompare/>
+              <span className=' group-hover:block hidden absolute -bottom-8 text-xs px-2 py-1 bg-secondary-color dark:bg-dark-search-bar-bg rounded-xl'>Compare</span>
+              </Link>
+            </div> 
            
             <h1>{product?.name}</h1>
 

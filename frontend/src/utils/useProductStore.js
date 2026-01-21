@@ -10,6 +10,7 @@ export const useProductStore = create((set)=>({
     topRatedRecentProducts:[],
     filteredProducts:[],
     filtering:false,
+    comparing:false,
 
     addProduct: async(formData)=>{
         set({loading:true})
@@ -204,6 +205,36 @@ export const useProductStore = create((set)=>({
             
         }
     },
+
+  compareTo: async (id) => {
+  set({
+    comparing: true,
+    compareToId: id,        
+    compareToProduct: null 
+  });
+
+  try {
+    const response = await axios.get(`/product/compareTo/${id}`);
+
+    set({
+      comparing: false,
+      compareToProduct: response.data?.compareToProduct || null
+    });
+
+    toast.success("Compare product fetched");
+  } catch (error) {
+    set({
+      comparing: false,
+      compareToProduct: null
+    });
+
+    toast.error(
+      error.response?.data?.message || "Failed to get compare product"
+    );
+  }
+},
+
+//just some err
 
 
     
