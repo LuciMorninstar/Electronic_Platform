@@ -22,6 +22,7 @@ import WishlistPage from './pages/WishlistPage'
 import CheckoutPage from './components/CheckoutPage'
 import OrderPage from './pages/OrderPage'
 import NotificationPanel from './components/NotificationPanel'
+import FilterPage from './pages/FilterPage'
 
 
 // import { useEffect } from 'react'
@@ -65,6 +66,7 @@ const App = () => {
          <Route path = {`/invoice/:id`} element = {<InvoicePage/>}/>
          {/* <Route path = {"/notification"} element = {<NotificationPanel/>}/>
          */}
+         <Route path = "/filter" element={<FilterPage/>}/>
 
         </Route>
 

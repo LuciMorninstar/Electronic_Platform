@@ -10,6 +10,7 @@ import { useGSAP } from '@gsap/react';
 import {Link, useNavigate} from "react-router-dom";
 import { useUserStore } from '../utils/useUserStore';
 import { Navigate } from 'react-router-dom';
+import { Loader } from 'lucide-react';
 
 
 
@@ -111,7 +112,7 @@ const navigate = useNavigate();
 
             </div>
             <button type="submit" className = " group w-full rounded-lg p-2 bg-color-teal-400 font-semibold font-poppins cursor-pointer flex flex-row gap-3 items-center justify-center hover:bg-color-teal-300   ">
-              {loading ? <span>loading...</span> :
+              {loading ? <span><Loader/></span> :
               <>
               <span className = " font-poppins text-font-white">Sign Up</span> <FaArrowRight className = "group-hover:translate-x-5 transition-all duration-300ms ease-in-out" />
               </>

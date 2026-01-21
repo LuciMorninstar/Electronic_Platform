@@ -706,6 +706,52 @@ export const getTopRatedRecentProducts = async(req,res,next)=>{
 
 
 
+export const filterProducts = async (req, res, next) => {
+  try {
+    const { category, brand, minPrice, maxPrice, rating } = req.query;
+
+    let filter = {};
+
+    // Case-insensitive match for category
+    if (category) {
+      filter.category = { $regex: new RegExp(`^${category}$`, "i") };
+    }
+
+    // Case-insensitive match for brand
+    if (brand) {
+      filter.brand = { $regex: new RegExp(`^${brand}$`, "i") };
+    }
+
+    // Rating filter (>=)
+    if (rating) {
+      filter.rating = { $gte: Number(rating) };
+    }
+
+    // Price filter
+    if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice) filter.price.$gte = Number(minPrice);
+      if (maxPrice) filter.price.$lte = Number(maxPrice);
+    }
+
+    // Fetch products from DB
+    const filteredProducts = await Product.find(filter).sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      count: filteredProducts.length,
+      filteredProducts
+    });
+
+  } catch (error) {
+    console.log("Error in filterProducts controller:", error.message);
+    next(error);
+  }
+};
+
+
+
+
 
 
 

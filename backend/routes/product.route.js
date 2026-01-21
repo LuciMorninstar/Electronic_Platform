@@ -1,6 +1,6 @@
     import express from "express"
     import { adminRoute, protectRoute, optionalAuth } from "../middlewares/auth.middleware.js";
-    import { addProduct, deleteProduct, getAllProducts, getFeaturedProducts, getProductDetails, getProductsByCategory, getRecommendationProducts, getSimilarProducts, getTopRatedRecentProducts, searchProductByName, toggleFeaturedProduct, updateProduct } from "../controllers/product.controllers.js";
+    import { addProduct, deleteProduct,  filterProducts, getAllProducts, getFeaturedProducts, getProductDetails, getProductsByCategory, getRecommendationProducts, getSimilarProducts, getTopRatedRecentProducts, searchProductByName, toggleFeaturedProduct, updateProduct } from "../controllers/product.controllers.js";
     import upload from "../middlewares/multer.middleware.js"
 
 
@@ -11,6 +11,7 @@
     router.post("/", protectRoute, adminRoute, upload.array("images",10), addProduct);
     router.get("/recommendations",optionalAuth,getRecommendationProducts);
     router.get("/topRatedRecentProducts", getTopRatedRecentProducts );
+ router.get("/filter",filterProducts);
       //here optionalAuth used so as to not be blocked if user is not logged in and show him recommendations
     router.get("/similar/:productId",getSimilarProducts);
   
@@ -20,6 +21,7 @@
     router.delete("/:id", protectRoute, adminRoute, deleteProduct);
     router.get("/category/:category", getProductsByCategory);
     router.patch("/toggle-featured/:id",protectRoute, adminRoute, toggleFeaturedProduct );
+ 
     
  
 

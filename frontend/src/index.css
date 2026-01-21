@@ -77,6 +77,18 @@ body::-webkit-scrollbar-thumb{
  
 }
 
+@keyframes notification {
+  from {
+    transform: translateY(-50px); /* start slightly up */
+  }
+  to {
+    transform: translateY(10px); /* end slightly down */
+  }
+}
+.notification {
+  animation: notification 0.7s ease forwards;
+}
+
 .hide-number-spin::-webkit-inner-spin-button,
 .hide-number-spin::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -426,6 +438,11 @@ body::-webkit-scrollbar-thumb{
     @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-[150px] xl:w-[185px] not-only-of-type:lg:w-[150px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-text-dark-color-outlet  caret-color-teal-500 text-sm
 }
 
+.filter_input_style{
+    @apply w-[220px] sm:w-[250px] md:w-[350spx] lg:w-[250px] xl:w-[250px]  bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-text-dark-color-outlet  caret-color-teal-500 text-sm
+
+}
+
 .admin_form_small_input_style{
   
     @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-[270px] xl:w-[320px] not-only-of-type:lg:w-[150px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-text-dark-color-outlet  caret-color-teal-500 text-sm
@@ -448,6 +465,7 @@ body::-webkit-scrollbar-thumb{
 .invoice_small_text{
   @apply text-xs sm:text-sm font-semibold dark:text-text-dark-color-outlet
 }
+
 
 
 

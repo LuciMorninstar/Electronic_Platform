@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from './loading';
 import { Loader } from 'lucide-react';
+import { FaFilter } from "react-icons/fa";
+
 
 
 
@@ -37,10 +39,20 @@ useEffect(()=>{
   return (
 
     <div className='relative'>
+      
         <span className = "text-xl dark:text-white  absolute top-1/2 -translate-y-1/2 left-3 "><FiSearch/></span>
         <input className = "searchbar" type="text" placeholder='Search Products' name="search" id="search"
         value={searchTerm} 
         onChange={(e)=>setSearchTerm(e.target.value)}/>
+
+        {/* absolute filter */}
+
+        <Link to ="/filter" className = "absolute top-1/2 -translate-y-1/2 right-3 flex items-center justify-center gap-1 ">
+          <FaFilter className='text-sm' />
+          <span className='text-sm'>FILTER</span>
+
+        </Link>
+          {/* absolute filter ends */}
 
 
         

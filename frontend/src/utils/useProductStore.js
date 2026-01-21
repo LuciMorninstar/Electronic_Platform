@@ -8,6 +8,8 @@ export const useProductStore = create((set)=>({
     recommendations:[],
     similarProducts:[],
     topRatedRecentProducts:[],
+    filteredProducts:[],
+    filtering:false,
 
     addProduct: async(formData)=>{
         set({loading:true})
@@ -187,8 +189,24 @@ export const useProductStore = create((set)=>({
               toast.error(error.response?.data?.message || `Failed to retrieve top products`)
             
         }
-    }
+    },
+
+     filterProducts: async(filters)=>{
+        set({filtering:true, filteredProducts:[]});
+        try {
+            const response = await axios.get("/product/filter",{params:filters});
+            set({filtering:false, filteredProducts:response.data?.filteredProducts || []})
+
+            
+        } catch (error) {
+            set({filtering:false, filteredProducts:[]})
+              toast.error(error.response?.data?.message || `Failed to filter Products`)
+            
+        }
+    },
 
 
     
 }))
+
+
