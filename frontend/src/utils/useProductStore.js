@@ -5,6 +5,7 @@ import {toast} from "react-hot-toast"
 export const useProductStore = create((set)=>({
     loading:false,
     isSearching:false,
+    products:[],
     recommendations:[],
     similarProducts:[],
     topRatedRecentProducts:[],
@@ -105,6 +106,47 @@ export const useProductStore = create((set)=>({
             
         }
     },
+    toggleFeaturedProduct : async(id)=>{
+        set({loading:true})
+
+        try {
+            const response = await axios.patch(`/product/toggle-featured/${id}`);
+            const updatedProduct = response.data?.toggledProduct;
+
+            set((state)=>({
+                loading:false,
+                products:state.products.map((product)=>
+                product._id === id? {...product, isFeatured:updatedProduct.isFeatured}:product
+            ),
+            }));
+            toast.success("Toggled featured product successfully");
+
+       
+            
+        } catch (error) {
+            set({loading:false});
+            toast.error(error.response?.data?.message || "Failed to  toggle featured product");
+            
+        }
+    },
+
+    
+    isFeaturedProduct : async(id)=>{
+        set({loading:true})
+
+        try {
+            const response = await axios.get(`/product/isFeaturedProduct/${id}`);
+            set({loading:false, isFeaturedProduct:response.data?.isFeaturedProduct || []});
+            toast.success("Is featured Product");
+            
+        } catch (error) {
+            set({loading:false});
+            toast.error(error.response?.data?.message || "Is featured product check failed");
+            
+        }
+    },
+
+
 
     searchProductByName : async(productName)=>{
 

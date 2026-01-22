@@ -1,6 +1,87 @@
 
+import Order from "../models/order.model.js";
 import Product from "../models/product.model.js";
 import User from "../models/user.model.js";
+
+
+export const getAllUsers = async(req,res,next)=>{
+    try {
+        const users = await User.find();
+
+        if(!users){
+            const err = new Error("No users found");
+            err.statusCode = 404;
+            return next(err);
+        }
+        return res.status(200).json({
+            success:true,
+            users:users
+
+        })
+        
+    } catch (error) {
+        console.log("Error in getAllUsers controller", error.message);
+        next(error);
+        
+    }
+
+}
+
+export const getPaidUsers = async(req,res,next)=>{
+    try {
+        const paidOrders = await Order.find({"payment.status":"completed"}).populate("userId");
+
+    const paidUsers = paidOrders
+            .filter(order => order.userId) // remove orders with null users
+            .map(order => ({
+                userId: order.userId._id,
+                name: order.userId.fullName || order.userId.name || "N/A",
+                email: order.userId.email || "N/A",
+                amountPaid: order.payment.amountPaid || 0,
+                paidAt: order.payment.paidAt || null,
+                method: order.payment.method || "N/A",
+                fullName: order.deliveryDetails?.fullName || "N/A",
+                phoneNo: order.deliveryDetails?.phoneNo || "N/A",
+                fullAddress: order.deliveryDetails
+                    ? `${order.deliveryDetails.houseNo}, ${order.deliveryDetails.colony}, ${order.deliveryDetails.area}, ${order.deliveryDetails.city}, ${order.deliveryDetails.region}`
+                    : "N/A",
+                orderNo: order.orderNo
+            }));
+
+        return res.status(200).json({
+            success:true,
+            paidUsers:paidUsers
+        })
+        
+    } catch (error) {
+        console.log("Error in getPaidUsers controller", error.message);
+        next(error);
+        
+    }
+}
+
+export const deleteUser = async(req,res,next)=>{
+    const {id:userId} = req.params;
+
+    try {
+        const user = await User.findByIdAndDelete(userId);
+
+        if(!user){
+            const err = new Error("User not found");
+            err.statusCode = 404;
+            return next(err);
+        }
+        return res.status(200).json({
+            success:true,
+            message:"User deleted successfully"
+        })
+        
+    } catch (error) {
+        console.log("Error in deleteUser controller", error.message);
+        next(error);
+        
+    }
+}
 
 export const addToWishlist = async(req,res,next)=>{
     const {id:productID} = req.params;

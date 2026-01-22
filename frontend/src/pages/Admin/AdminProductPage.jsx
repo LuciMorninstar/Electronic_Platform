@@ -26,11 +26,21 @@ const AdminProductPage = () => {
 
   const {products, getAllProducts, loading} = useProductStore();
   const { updateProduct, deleteProduct, product} = useProductStore();
+  const {toggledProduct,toggleFeaturedProduct} = useProductStore();
+  // const {isFeaturedProduct} = useProductStore();
 
   useEffect(()=>{
     getAllProducts();
 
   },[])
+
+
+  const togglingFeaturedProduct = async(id)=>{
+    await toggleFeaturedProduct(id);
+
+
+    
+  }
 
 
 
@@ -131,9 +141,14 @@ const AdminProductPage = () => {
           <span className = "text-sm  lg:text-base">{product.category}</span>
         </td>
         <td className = "px-10">
-          <div className = "p-2 w-max rounded-full cursor-pointer bg-white hover:bg-yellow-500 active:bg-yellow-500 transition-all duration">
-          <MdOutlineStarBorder className = "text-2xl text-black" />
-          </div>
+        <div
+        onClick={() => togglingFeaturedProduct(product._id)}
+        className={`p-2 w-max rounded-full cursor-pointer transition-all duration-300
+          ${product.isFeatured ? "bg-yellow-500" : "bg-white hover:bg-yellow-500"}
+        `}
+      >
+    <MdOutlineStarBorder className="text-2xl text-black" />
+  </div>
         </td>
         <td className = "">
           <div className = "flex flex-row gap-5 items-center px-2">

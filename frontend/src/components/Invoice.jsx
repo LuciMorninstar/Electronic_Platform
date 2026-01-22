@@ -25,7 +25,7 @@ const Invoice = ({ loading, order }) => {
   });
 
   return (
-    <section className="max-w-7xl mx-auto py-10 px-5 flex flex-col gap-8 items-center min-h-screen">
+    <section className="max-w-7xl mx-auto  px-5 flex flex-col gap-8 items-center min-h-screen">
       <div ref={printRef} className="w-full bg-primary-color dark:bg-dark-secondary-color min-h-screen rounded-xl">
         {/* Invoice Header */}
         <div className="flex flex-row justify-between items-center px-5 py-5 border-b border-gray-200 dark:border-gray-800">

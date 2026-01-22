@@ -1,6 +1,7 @@
 
 import Order from "../models/order.model.js";
 import User from "../models/user.model.js";
+import Product from "../models/product.model.js";
 // import { axiosInstance as axios } from "./axios.js";
 
 
@@ -24,7 +25,19 @@ export const cashOnDelivery = async(req,res,next)=>{
             err.statusCode = 400;
             return next(err);
         }
+        
          //if there are cartItems then i will need to add them to items of order model  (check the getAllCart items to understand if not understandable . Basically each product has a quanityt and product object with id inside so product.price and quantity has just cartItem.quantity)
+
+//  1️⃣ Check stock availability
+    for (const cartItem of cartItems) {
+      if (cartItem.quantity > cartItem.product.stock) {
+        const err = new Error(
+          `Not enough stock for ${cartItem.product.name}. Available: ${cartItem.product.stock}`
+        );
+        err.statusCode = 400;
+        return next(err);
+      }
+    }
 
          const items = cartItems.map(cartItem=>({
             productId:cartItem.product._id,
@@ -59,6 +72,13 @@ export const cashOnDelivery = async(req,res,next)=>{
           
         });
 
+        
+    for (const item of items) {
+      await Product.findByIdAndUpdate(item.productId, {
+        $inc: { stock: -item.quantity }, // decrement stock
+      });
+    }
+
         await User.findByIdAndUpdate(userId,{cartItems:[]});//clear
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -75,11 +95,24 @@ export const cashOnDelivery = async(req,res,next)=>{
         { new: true, useFindAndModify: false } // ensures updated document is returned
     );
 
+        // also need to send the notification to the admins right
+
+        const admins = await User.find({role:"admin"});
+
+        for(const admin of admins){
+            await User.findByIdAndUpdate(admin._id,
+                {$push:{
+                    notifications:{
+                        message:`A new order ${order.orderNo} has been placed by ${user.name || user.email}`,
+                        type:"order",
+                        link:`/admin/invoice/${order._id}`
+                    }
+                }},
+                {new:true}
+            )
+        }
+
 console.log("Updated User Notifications:", updatedUser.notifications);
-
-
-
-
 
         return res.status(201).json({
             success:true,
@@ -151,6 +184,63 @@ try {
 }
 
 }
+
+export const getAllOrders = async(req,res,next)=>{
+    try {
+        const orders = await Order.find().sort({createdAt:-1});
+
+        if(!orders){
+            const err = new Error("No orders found");
+            err.statusCode = 404;
+            return next(err);
+        }
+        return res.status(200).json({
+            success:true,
+            orders:orders
+        })
+        
+    } catch (error) {
+        console.log("Error in the getAllOrders controller", error.message);
+        next(error);
+        
+    }
+}
+
+export const getInvoiceByOrderId = async(req,res,next)=>{
+
+    const {orderId} = req.params;
+
+    try {
+        if(!orderId){
+            const err = new Error("No order id provided");
+            err.statusCode = 400;
+            return next(err);
+        }
+
+        const order = await Order.findOne({_id:orderId});
+        if(!order){
+            const err = new Error("No order found");
+            err.statusCode = 404;
+            return next(err);
+        }
+        return res.status(200).json({
+            success:true,
+            orderDetailsByInvoice:order
+        })
+
+        
+        
+    } catch (error) {
+        console.log("Error in getInvoiceByOrderId controller", error.message);
+        next(error);
+        
+    }
+
+
+} 
+
+
+
 
 
 // export const KhaltiPaymentInit = async(req,res,next)=>{

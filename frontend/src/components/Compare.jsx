@@ -30,7 +30,7 @@ const Compare = () => {
 
 
            {/* left div  */}
-        <div className=' w-full xl:w-7/15'>
+        <div className=' w-full xl:w-7/15 transition-all duration-300 ease-in'>
             {loading ? <Loading/>:
 
 
@@ -88,7 +88,7 @@ const Compare = () => {
             
                           <h6 className = "font-semibold">Powerful Features at a glance !</h6>
             
-                        <div className = "grid sm:grid-cols-2 gap-y-1 gap-x-2 ">
+                        <div className = "grid grid-cols-1 gap-y-1 gap-x-2 ">
                           {product?.features?.map((feature,i)=>(
                            <div key={i} className ="overflow-hidden shadow-md dark:text-font-white   text-black  relative text-sm  px-5 py-2 rounded-xl before:content-[''] before:absolute before:top-1/2 before:-translate-1/2 before:left-0 before:h-10 before:w-5 before:rounded-full before:bg-teal-500">
                             {feature}
@@ -198,7 +198,7 @@ const Compare = () => {
         
                         <h6 className = "font-semibold">Powerful Features at a glance !</h6>
         
-                    <div className = "grid sm:grid-cols-2 gap-y-1 gap-x-2 ">
+                    <div className = "grid grid-cols-1 gap-y-1 gap-x-2 ">
                         {compareToProduct?.features?.map((feature,i)=>(
                         <div key={i} className ="overflow-hidden shadow-md dark:text-font-white   text-black  relative text-sm  px-5 py-2 rounded-xl before:content-[''] before:absolute before:top-1/2 before:-translate-1/2 before:left-0 before:h-10 before:w-5 before:rounded-full before:bg-teal-500">
                         {feature}

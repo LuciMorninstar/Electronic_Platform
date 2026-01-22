@@ -17,7 +17,7 @@ const NotificationPanel = ({state}) => {
   // putting the state of open in dependency array whenever state chnages getNotificationsById  runs
 
   return (
-    <section className={`${state ? " notification absolute top-25 z-50 right-10 block w-[300px] h-[300px] overflow-auto px-5 py-5 bg-primary-color dark:bg-dark-secondary-color rounded-xl transition-all duration-200 ease-in " : "hidden"}`}>
+    <section className={`${state ? " notification absolute top-25 z-50 right-10 block w-[300px] h-[310px] overflow-auto px-5 py-5 bg-primary-color dark:bg-dark-secondary-color rounded-xl transition-all duration-200 ease-in flex flex-col gap-2 " : "hidden"}`}>
       <h4 className = "pb-2">Notifications</h4>
       {loading && <Loading/>}
       {(notifications || []).map((notification) => (

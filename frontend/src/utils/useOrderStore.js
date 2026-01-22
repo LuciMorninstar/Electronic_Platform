@@ -8,6 +8,8 @@ export const useOrderStore = create((set)=>({
     loading:false,
     order:null,
     placingOrder: false,
+    orders:[],
+    gettingAllOrders:false,
 
     cashOnDelivery: async({formData,shippingCharges})=>{
         set({loading:true});
@@ -60,6 +62,37 @@ export const useOrderStore = create((set)=>({
             set({loading:false});
             toast.error(error.response?.data?.message || "Failed to get details of order");
 
+            
+        }
+
+
+    },
+
+    getAllOrders: async()=>{
+        set({gettingAllOrders:true});
+
+        try {
+            const response = await axios.get("/order/all-orders");
+            set({gettingAllOrders:false, orders:response.data?.orders || []});
+            
+        } catch (error) {
+            set({gettingAllOrders:false});
+            toast.error(error.response?.data?.message || "Failed to fetch all orders");
+            
+        }
+    },
+
+    getInvoiceByOrderId: async(orderId)=>{
+        set({loading:true})
+
+        try {
+            const response = await axios.get(`/order/admin/invoice/${orderId}`);
+            set({loading:false, orderDetailsByInvoice:response.data?.orderDetailsByInvoice || null});
+            toast.success("fetched invoice details of order");
+            
+        } catch (error) {
+            set({loading:false});
+            toast.error(error.response?.data?.message || "Failed to get invoice details of order");
             
         }
 

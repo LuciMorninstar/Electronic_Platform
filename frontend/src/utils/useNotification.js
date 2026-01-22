@@ -16,7 +16,7 @@ export const useNotificationStore = create((set)=>({
         try {
             const response = await axios.get("/notification");
             set({loading:false, notifications:response.data?.notifications || []});
-            toast.success("Successfully fetched notifications");
+            // toast.success("Successfully fetched notifications");
             
         } catch (error) {
              set({loading:false});

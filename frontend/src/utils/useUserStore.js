@@ -3,7 +3,10 @@ import {create} from "zustand"
 import {toast} from "react-hot-toast"
 
 
+
 export const useUserStore = create((set,get)=>({
+    gettingUsers:false,
+    users:[],
     user:null,
     loading:false,
     checkingAuth:true,
@@ -62,6 +65,61 @@ export const useUserStore = create((set,get)=>({
             
         }
     },
+
+
+    getAllUsers:async()=>{
+        set({gettingUsers:true})
+
+        try {
+            const response = await axios.get("/user/all-users");
+            set({users:response.data?.users, gettingUsers:false});
+            // toast.success("Successfully fetched all users");
+            
+        } catch (error) {
+            set({gettingUsers:false});
+            toast.error(error.response?.data?.message || "Failed to fetch users");
+            
+        }
+
+
+
+    },
+
+    deleteUser:async(id)=>{
+        set({deletingUser:true});
+
+        try {
+            await axios.delete(`/user/delete-user/${id}`);
+            set({deletingUser:false});
+            toast.success("User deleted successfully");
+            get().getAllUsers();
+            
+            
+        } catch (error) {
+            set({deletingUser:false});
+            toast.error(error.response?.data?.message || "Failed to delete user");
+            
+        }
+    },
+
+    getPaidUsers:async()=>{
+        set({gettingPaidUsers:true, paidUsers:[]})
+
+        try {
+            const response = await axios.get("/user/paid-users");
+            set({paidUsers:response.data?.paidUsers || [], gettingPaidUsers:false});
+            // toast.success("Successfully fetched all paidUsers");
+            
+        } catch (error) {
+            set({gettingPaidUsers:false});
+            toast.error(error.response?.data?.message || "Failed to fetch paid users");
+            
+        }
+
+
+
+    },
+
 
     addToWishlist: async(id)=>{
             set({loading:true})

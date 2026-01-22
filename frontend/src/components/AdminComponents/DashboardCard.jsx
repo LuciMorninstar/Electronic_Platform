@@ -10,7 +10,7 @@ const DashboardCard = ({adminCards}) => {
 
   
   return (
-      <div className= " grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <div className= " grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-center justify-center ">
 
         {adminCards.map((card)=>(
             <div key ={card.name} className = "flex flex-col gap-4 lg:gap-7 items-center justify-center bg-tertiary-color dark:bg-dark-secondary-color shadow-md dark:border-gray-800 rounded-2xl p-8">

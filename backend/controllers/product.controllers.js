@@ -435,7 +435,7 @@ export const toggleFeaturedProduct = async(req,res,next)=>{
       await updateFeaturedProductsCache(); //this is a function to created
       res.status(200).json({
         success:true,
-        product:updatedProduct
+        toggledProduct:updatedProduct
       })
 
 
@@ -475,6 +475,39 @@ async function updateFeaturedProductsCache(){
 
 // Guest user
 //  recommend based on all users’ wishlists
+
+
+export const isFeaturedProduct = async(req,res,next)=>{
+  const {id} = req.params;
+  try {
+    if(!id){
+      const err = new Error("No id provided to check featured status");
+      err.statusCode = 400;
+      return next(err);
+    }
+    const product = await Product.findById(id);
+
+    if(!product){
+      const err = new Error("No product found");
+      err.statusCode = 404;
+      return next(err);
+    }
+
+    return res.status(200).json({
+      success:true,
+      isFeaturedProduct:product
+    })
+
+    
+
+  
+    
+  } catch (error) {
+    console.log("Error in the isFeaturedProduct controller", error.message);
+    next(error);
+    
+  }
+}
 
 export const getRecommendationProducts = async(req,res,next)=>{
 

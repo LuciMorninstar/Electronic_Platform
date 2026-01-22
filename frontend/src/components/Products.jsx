@@ -23,14 +23,12 @@ import { Loader } from "lucide-react";
 
 const Products = () => {
 
-  const {products, getAllProducts, loading} = useProductStore();
+  const {products, loading} = useProductStore();
   const {addToWishlist} = useUserStore();
   const {addToCart} = useCartStore();
   const {getAllCartProducts} = useCartStore();
 
-  useEffect(()=>{
-    getAllProducts();
-  },[])
+
 
 
 

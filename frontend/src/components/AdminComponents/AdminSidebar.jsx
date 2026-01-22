@@ -23,7 +23,7 @@ const AdminSidebar = ({openSidebar}) => {
     {name:"Dashboard", to:"/admin", icon:<LuLayoutDashboard />},
     {name:"Product",to:"/admin/product", icon:<AiFillProduct />}, /*add, update, delete pages inside it also show all products and feature it*/
     {name:"Orders",to:"/admin/orders", icon:<GiCheckMark />}, /* total orders ko card 3 grids slider components change pending completed, ongoing order id arrival dates, departure dates address,of route status see in logistics*/
-    {name:"Inventory",to:"/admin/inventory",icon:<MdOutlineProductionQuantityLimits />}, /* Show only stocks available*/
+    {name:"Users",to:"/admin/users",icon:<MdOutlineProductionQuantityLimits />}, /* Show only stocks available*/
     {name:"Invoice",to:"/admin/invoices", icon:<LiaFileInvoiceSolid />}
     
   ]

@@ -11,6 +11,7 @@ import { useUserStore } from '../../utils/useUserStore';
 import { Link } from 'react-router-dom';
 import { MdOutlineLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 
 
@@ -26,11 +27,17 @@ const AdminNavbar = ({setOpenSidebar}) => {
     navigate("/");
   }
 
+    const [showNotificationPanel, setShowNotificationPanel] = useState(false);
+
+    const toggleNotificationPanel = ()=>{
+        setShowNotificationPanel(prev => !prev);
+    }
+
 
 
   const adminNavItems = [
     {name:"Hamburgere",  icon:<RxHamburgerMenu />},
-    {name:"Notification" ,icon:<IoMdNotificationsOutline />},
+    {name:"Notification"  ,icon:<IoMdNotificationsOutline />, onClick:toggleNotificationPanel },
     {name:"User", icon:<MdOutlineLogout />,onClick :handleLogout }
     
   ]
@@ -45,6 +52,8 @@ const AdminNavbar = ({setOpenSidebar}) => {
         {adminNavItems.slice(0,1).map((item)=>(
           <div onClick={()=>setOpenSidebar(prev => !prev)} className = "text-icon-text-color  bg-navbar-and-sidebar-background-color dark:bg-transparent rounded-lg p-2 text-xl lg:text-2xl border border-border-color cursor-pointer dark:border-gray-800 dark:hover:text-font-white hover:text-black active:text-font-white"> 
             <span className = "" >{item.icon}</span>
+
+            
           </div>
         ))}
 
@@ -68,9 +77,12 @@ const AdminNavbar = ({setOpenSidebar}) => {
       <div className = "flex flex-row gap-2 sm:gap-4 lg:gap-5">
         {
           adminNavItems.slice(1).map((item)=>(
-            <div className = "adminNavIconStyle ">
+            <div  className = "adminNavIconStyle ">
               <span  onClick={item.onClick? item.onClick:undefined} className = "">{item.icon}</span>
+
+              
             </div>
+            
 
           ))
         }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom"
 import MainLayout from './layouts/MainLayout'
 import HomePage from "./pages/HomePage"
@@ -24,6 +24,12 @@ import OrderPage from './pages/OrderPage'
 import NotificationPanel from './components/NotificationPanel'
 import FilterPage from './pages/FilterPage'
 import ComparePage from './pages/ComparePage'
+import { useProductStore } from './utils/useProductStore'
+import { useOrderStore } from './utils/useOrderStore'
+import AdminOrdersPage from './pages/Admin/AdminOrdersPage'
+import AdminInvoicePage from './pages/AdminInvoicePage'
+import AdminUsersPage from './pages/Admin/AdminUsersPage'
+
 
 
 // import { useEffect } from 'react'
@@ -31,11 +37,26 @@ import ComparePage from './pages/ComparePage'
 
 const App = () => {
 
+  // getting  allusers,allproducts,allorders, all paidUsers here so that we do not have to fetch on each page or component and also no need for refresh when data is updated
+
   const {user} = useUserStore();
 
+  const getAllUsers = useUserStore((state)=> state.getAllUsers);
+  const getAllProducts = useProductStore((state) => state.getAllProducts);
+  const getAllOrders = useOrderStore((state)=>state.getAllOrders);
+  const getPaidUsers = useUserStore(state=>state.getPaidUsers);
 
+  useEffect(()=>{
+    getAllUsers();
+    getAllProducts();
+    getAllOrders();
+    getPaidUsers();
+
+  },[])
   
-  
+
+
+
 
   return (
 
@@ -78,6 +99,10 @@ const App = () => {
         <Route index element={<DashboardPage/>}/>
         <Route path = "/admin/product" element={<AdminProductPage/>}/>
         <Route path = "/admin/product/add-product" element={<AddProductPage/>}/>
+        <Route path = "/admin/orders" element={<AdminOrdersPage/>}/>
+        <Route path = "/admin/invoice/:orderId" element={<AdminInvoicePage/>}/>
+
+        <Route path = "/admin/users" element={<AdminUsersPage/>}/>
        
 
         </Route>

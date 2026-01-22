@@ -1,6 +1,6 @@
     import express from "express"
     import { adminRoute, protectRoute, optionalAuth } from "../middlewares/auth.middleware.js";
-    import { addProduct, compareTo, deleteProduct,  filterProducts, getAllProducts, getFeaturedProducts, getProductDetails, getProductsByCategory, getRecommendationProducts, getSimilarProducts, getTopRatedRecentProducts, searchProductByName, toggleFeaturedProduct, updateProduct } from "../controllers/product.controllers.js";
+    import { addProduct, compareTo, deleteProduct,  filterProducts, getAllProducts, getFeaturedProducts, getProductDetails, getProductsByCategory, getRecommendationProducts, getSimilarProducts, getTopRatedRecentProducts, isFeaturedProduct, searchProductByName, toggleFeaturedProduct, updateProduct } from "../controllers/product.controllers.js";
     import upload from "../middlewares/multer.middleware.js"
 
 
@@ -15,13 +15,15 @@
       //here optionalAuth used so as to not be blocked if user is not logged in and show him recommendations
     router.get("/similar/:productId",getSimilarProducts);
     router.get("/compareTo/:id",compareTo)
-  
+    
     router.get("/search", searchProductByName);
+    router.patch("/toggle-featured/:id",protectRoute, adminRoute, toggleFeaturedProduct );
+    router.get("/isFeaturedProduct/:id",protectRoute, adminRoute,isFeaturedProduct );
+
     router.get("/:id", getProductDetails);
     router.patch("/:id", protectRoute, adminRoute, upload.array("images",10), updateProduct);
     router.delete("/:id", protectRoute, adminRoute, deleteProduct);
     router.get("/category/:category", getProductsByCategory);
-    router.patch("/toggle-featured/:id",protectRoute, adminRoute, toggleFeaturedProduct );
  
     
  
