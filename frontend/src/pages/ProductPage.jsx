@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import laptop from "../assets/laptop.webp";
 import monitor from "../assets/monitor.webp"
 import { FaCodeCompare, FaHtml5, FaStar, FaUser } from "react-icons/fa6";
@@ -18,6 +18,14 @@ import { useCartStore } from '../utils/useCartStore';
 import SimilarProducts from '../components/SimilarProducts';
 
 const ProductPage = () => {
+
+  // for rating
+
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  console.log("rating", rating);
+
+  const {rateProduct } = useProductStore();
 
 
 
@@ -47,8 +55,6 @@ console.log(product)
 
 
  }
-
-
 
 
 
@@ -98,12 +104,50 @@ console.log(product)
             ))}
           </div>
 
-            <div className = "flex flex-row gap-2 items-center ">
+            {/* <div className = "flex flex-row gap-2 items-center ">
               <IoMdStar className = "text-2xl"/>
               <span>{product?.rating}</span>
+            </div> */}
+
+                    {/* Rating Stars */}
+          <div className="flex flex-col gap-1 mt-2">
+            <div className="flex flex-row gap-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={`transition-all duration-300 ease-in ${
+                    star <= (hover || rating) ? "text-yellow-500" : "text-gray-300"
+                  }`}
+                  onMouseEnter={() => setHover(star)}
+                  onMouseLeave={() => setHover(0)}
+                  onClick={async () => {
+              
+                    setRating(star);
+
+              
+                    const updated = await rateProduct(product._id, star);
+
+                    if (updated) {
+              
+                      setRating(updated.myRating || star);
+                    }
+                  }}
+                >
+                  <IoMdStar className="text-2xl cursor-pointer" />
+                </span>
+              ))}
             </div>
 
-            <p>Stocks Left : <span className = "text-red-500">{product?.stock}</span> </p>
+            {/* Average rating display */}
+            <div className="flex flex-row items-center gap-2 text-sm mt-1">
+              <span className="font-semibold">Rating:</span>
+              <span>{product?.averageRating?.toFixed(1) || 0} / 5</span>
+              <span>({product?.ratings?.length || 0} users)</span>
+            </div>
+          </div>
+
+
+            <p>Stocks Left : <span className ={`${product?.stock < 5 ? "text-red-500" : "text-color-teal-500" }`}>{product?.stock}</span> </p>
 
             <div className = "flex flex-col gap-2 font-semibold">
               <span className = "">Starting at</span>

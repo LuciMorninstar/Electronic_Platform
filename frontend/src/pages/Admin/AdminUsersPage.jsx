@@ -105,13 +105,13 @@ export default function AdminUsersPage() {
                                 </tr>
                             ) : (
                                 filteredUsers.map((user) => (
-                                    <tr key={user._id} className="shadow-sm dark:even:bg-dark-search-bar-bg dark:odd:bg-dark-tertiary-color transition-all duration-300 ease-in">
-                                        <td className="px-5 py-3 text-left">{user._id}</td>
-                                        <td className="px-5 py-3 text-left">{user?.fullName || "N/A"}</td>
-                                        <td className="px-5 py-3 text-left">{user?.email || "N/A"}</td>
+                                    <tr key={user._id} className="group shadow-sm dark:even:bg-dark-search-bar-bg dark:odd:bg-dark-tertiary-color transition-all duration-300 ease-in">
+                                        <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">{user._id}</td>
+                                        <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">{user?.fullName || "N/A"}</td>
+                                        <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">{user?.email || "N/A"}</td>
                                     
                                       
-                                        <td className="px-5 py-3 text-left">
+                                        <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">
                                             <span className={`px-3 py-1 rounded-full text-white text-xs font-medium ${
                                                 user?.role === "user"
                                                     ? "bg-teal-500"
@@ -123,8 +123,8 @@ export default function AdminUsersPage() {
                                             </span>
                                         </td>
                                     
-                                        <td className="px-5 py-3 text-left">{new Date(user.createdAt).toLocaleDateString()}</td>
-                                        <td className="px-5 py-3 text-left">
+                                        <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">{new Date(user.createdAt).toLocaleDateString()}</td>
+                                        <td className="px-5 py-3 text-left group-hover:text-red-500 duration-200 ease-in transition-all">
 
                                         {
                                         deletingUser? <Loader/>:

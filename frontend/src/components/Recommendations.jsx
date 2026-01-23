@@ -100,7 +100,7 @@ const Recommendations = () => {
                   />
                   <div className="absolute bottom-0 right-0 flex items-center gap-1 border-t shadow-lg border-white rounded-xl px-2 py-1 cursor-auto bg-black/50">
                     <FaStar className="text-yellow-500" />
-                    <span className="text-xs text-white">{item.rating}</span>
+                    <span className="text-xs text-white">{item.averageRating}</span>
                   </div>
                 </Link>
 

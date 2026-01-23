@@ -66,7 +66,7 @@ const SearchForCompare = () => {
                     {/* absolute */}
                   <div className ="absolute bottom-2 right-1 flex justify-end  pr-3 w-full flex-row gap-1 items-center">
                     <FaStar className = "text-yellow-500 text-sm"/>
-                  <span className = "  overflow-hidden text-sm font-poppins">{item.rating}</span>
+                  <span className = "  overflow-hidden text-sm font-poppins">{item.averageRating}</span>
                   </div>
                   {/* absolute */}
 

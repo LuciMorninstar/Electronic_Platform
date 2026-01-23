@@ -718,10 +718,10 @@ export const getTopRatedRecentProducts = async(req,res,next)=>{
 
 
     const topRatedRecentProducts = await Product.find().sort(
-      {rating:-1, createdAt:-1} //new first
+      {averageRating:-1, createdAt:-1} //new first
     ).limit(10);
 
-    await redis.set("topRatedRecentProducts",JSON.stringify(topRatedRecentProducts),"EX",86400)
+    await redis.set("topRatedRecentProducts",JSON.stringify(topRatedRecentProducts),"EX",300)
 
     return res.status(200).json({
       success:true,
@@ -815,6 +815,72 @@ export const compareTo = async(req,res,next)=>{
     
   } catch (error) {
     console.log("Error in the compareTo controller", error.message);
+    next(error);
+    
+  }
+
+}
+
+
+export const rateProduct = async(req,res,next)=>{
+  
+  const {id:productId} = req.params;
+  const {rating} = req.body;
+  const userId = req.user?._id;
+
+  try {
+
+    const product = await Product.findById(productId);
+    if(!product){
+      const err = new Error("No product found to rate");
+      err.statusCode = 404;
+      return next(err);
+    }
+
+    if (!product.ratings) product.ratings = [];
+    // checking if user already rated the product
+    
+
+    const existingRating = product.ratings.find(r=> r.userId.toString() === userId.toString());
+
+    if(existingRating){
+      // update the rating
+      existingRating.value = rating;
+    }
+    else{
+      product.ratings.push({userId, value:Number(rating)})
+    }
+
+    //calculating the average ratings of all users and putting in averageRating field
+
+    const totalRating = product.ratings.reduce((sum, rating)=>
+    sum + rating.value,0);
+
+   product.averageRating =
+  product.ratings.length > 0
+    ? Number((totalRating / product.ratings.length).toFixed(1))
+    : 0;
+  await product.save();
+
+const myRatingObj = product.ratings.find(r => r.userId.toString() === userId.toString());
+const myRating = myRatingObj ? myRatingObj.value : 0;
+
+return res.status(200).json({
+  success: true,
+  message: `You have rated ${rating} stars`,
+  averageRating: product.averageRating,
+  totalRatings: product.ratings.length,
+  ratings: product.ratings,
+  myRating
+});
+
+
+
+
+
+    
+  } catch (error) {
+    console.log("Error in the rateProduct controller", error.message);
     next(error);
     
   }

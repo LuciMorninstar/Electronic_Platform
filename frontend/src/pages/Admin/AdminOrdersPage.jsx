@@ -71,12 +71,12 @@ const AdminOrdersPage = () => {
                             </tr>
                         ) : (
                             filteredOrders.map((order) => (
-                                <tr key={order._id} className="shadow-sm dark:even:bg-dark-search-bar-bg dark:odd:bg-dark-tertiary-color transition-all duration-300 ease-in">
-                                    <td className="px-5 py-3 text-left">{order.orderNo}</td>
-                                    <td className="px-5 py-3 text-left">{order.deliveryDetails?.fullName || "N/A"}</td>
-                                    <td className="px-5 py-3 text-left">{order.deliveryDetails?.phoneNo || "N/A"}</td>
-                                    <td className="px-5 py-3 text-left">Rs {(order.payment?.amountPaid || 0).toLocaleString()}</td>
-                                    <td className="px-5 py-3 text-left">
+                                <tr key={order._id} className=" group shadow-sm dark:even:bg-dark-search-bar-bg dark:odd:bg-dark-tertiary-color transition-all duration-300 ease-in">
+                                    <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">{order.orderNo}</td>
+                                    <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">{order.deliveryDetails?.fullName || "N/A"}</td>
+                                    <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">{order.deliveryDetails?.phoneNo || "N/A"}</td>
+                                    <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">Rs {(order.payment?.amountPaid || 0).toLocaleString()}</td>
+                                    <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">
                                         {order.payment?.method === "Cash On Delivery" ? "COD" : order.payment?.method === "khalti" ? "khalti" : "N/A"}
                                     </td>
                                     <td className="px-5 py-3 text-left">
@@ -103,8 +103,8 @@ const AdminOrdersPage = () => {
                                             {order.status || "N/A"}
                                         </span>
                                     </td>
-                                    <td className="px-5 py-3 text-left">{new Date(order.createdAt).toLocaleDateString()}</td>
-                                    <td className="relative px-5 py-3 text-left text-color-teal-500 cursor-pointer">
+                                    <td className="px-5 py-3 text-left group-hover:text-color-teal-500 duration-200 ease-in transition-all">{new Date(order.createdAt).toLocaleDateString()}</td>
+                                    <td className="relative px-5 py-3 text-left text-blue-500 cursor-pointer">
                                         <Link to={`/admin/invoice/${order._id}`}>
                                             <Info />
                                         </Link>

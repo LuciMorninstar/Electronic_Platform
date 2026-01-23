@@ -41,18 +41,41 @@ const App = () => {
 
   const {user} = useUserStore();
 
+  const admin = user?.role === "admin";
+
   const getAllUsers = useUserStore((state)=> state.getAllUsers);
   const getAllProducts = useProductStore((state) => state.getAllProducts);
   const getAllOrders = useOrderStore((state)=>state.getAllOrders);
   const getPaidUsers = useUserStore(state=>state.getPaidUsers);
+  const currentUser = useUserStore((state)=> state.currentUser);
+  const getCurrentUser = useUserStore((state)=>state.getCurrentUser);
+
+
+  
 
   useEffect(()=>{
-    getAllUsers();
-    getAllProducts();
-    getAllOrders();
-    getPaidUsers();
+    getCurrentUser();
 
   },[])
+
+  // first get the currentUser so we need to fetch the getcurrentUser
+
+  useEffect(()=>{
+
+    // only if you are admin then fetch these otherwise if you are not then getAllProducts() only
+
+    if(currentUser?.role === "admin"){
+      getAllOrders();
+    getPaidUsers();
+    getAllUsers();
+
+    }
+    getAllProducts();
+
+
+  },[currentUser])
+
+
   
 
 
@@ -97,12 +120,12 @@ const App = () => {
 
         <Route path = "/admin" element ={user?.role == "admin" &&<AdminLayout/>}>
         <Route index element={<DashboardPage/>}/>
-        <Route path = "/admin/product" element={<AdminProductPage/>}/>
-        <Route path = "/admin/product/add-product" element={<AddProductPage/>}/>
-        <Route path = "/admin/orders" element={<AdminOrdersPage/>}/>
-        <Route path = "/admin/invoice/:orderId" element={<AdminInvoicePage/>}/>
+        <Route path = "/admin/product" element={admin ?<AdminProductPage/>:<Navigate to="/"/>}/>
+        <Route path = "/admin/product/add-product" element={admin ?<AddProductPage/>:<Navigate to="/"/>}/>
+        <Route path = "/admin/orders" element={admin?<AdminOrdersPage/>:<Navigate to="/"/>}/>
+        <Route path = "/admin/invoice/:orderId" element={admin?<AdminInvoicePage/>:<Navigate to="/"/>}/>
 
-        <Route path = "/admin/users" element={<AdminUsersPage/>}/>
+        <Route path = "/admin/users" element={admin?<AdminUsersPage/>:<Navigate to="/"/>}/>
        
 
         </Route>

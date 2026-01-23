@@ -2,7 +2,7 @@ import { axiosInstance as axios } from "./axios";
 import {create} from "zustand"
 import {toast} from "react-hot-toast"
 
-export const useProductStore = create((set)=>({
+export const useProductStore = create((set,get)=>({
     loading:false,
     isSearching:false,
     products:[],
@@ -276,7 +276,27 @@ export const useProductStore = create((set)=>({
   }
 },
 
-//just some err
+rateProduct: async (id, rating) => {
+  set({ ratingLoading: true });
+
+  try {
+    const { data } = await axios.post(`/product/${id}`, { rating });
+    set({ ratingLoading: false });
+    
+    toast.success("Product rated successfully");
+
+    // Update product in your store so UI reflects new rating
+    // Assuming you have a product state in the store:
+    set({ product: { ...get().product, ...data } });
+
+    return data; // optionally return for immediate frontend use
+  } catch (error) {
+    set({ ratingLoading: false });
+    toast.error(error.response?.data?.message || "Failed to rate product");
+  }
+}
+
+
 
 
     

@@ -120,6 +120,22 @@ export const useUserStore = create((set,get)=>({
 
     },
 
+        getCurrentUser:async()=>{
+
+            try {
+                const response = await axios.get("/user/getCurrentUser");
+                set({ user:response.data?.user ,currentUser:response.data?.user});
+
+                //so to make the user not get null (looks like user is logout but we set cookie for the accessToken so user is still there but after refreshing the user gets erased from zustand memeory and gets null value so what we are doing here is that in app.jsx i am fetching the getCurrentUser in useEffect on app mount to get the currentUser right. so that user is then stored in the user: to get the user, hence solves the user logout problem )
+                
+            } catch (error) {
+                console.log("No logged-in user or error fetching",error.message);
+                set({user:null, currentUser: null });
+                
+            }
+
+        },
+
 
     addToWishlist: async(id)=>{
             set({loading:true})

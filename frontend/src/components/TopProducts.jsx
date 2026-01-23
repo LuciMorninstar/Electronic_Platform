@@ -45,7 +45,7 @@ const TopProducts = ({className}) => {
                     {/* absolute of rating */}
                   <div className ="absolute bottom-2 left-1 flex justify-center pl-10   w-full flex-row gap-1 items-center">
                     <FaStar className = "text-yellow-500 text-sm"/>
-                  <span className = "  overflow-hidden text-sm font-poppins">{item.rating}</span>
+                  <span className = "  overflow-hidden text-sm font-poppins">{item.averageRating}</span>
                   </div>
                   {/* absolute of raing ends */}
 

@@ -127,7 +127,7 @@ const addingToCart =async (e,id)=>{
             {/* rating */}
             <div className = "absolute bottom-0 right-0 flex flex-row items-center justify-center gap-1 border-t  shadow-lg  border-white rounded-xl px-2 py-2 cursor-auto">
               <FaStar className = "text-yellow-500"/>
-              <span className = "text-xs">{item.rating}</span>
+              <span className = "text-xs">{item.averageRating}</span>
               </div>
           </Link>
           {/* 2nd div (descriptions) */}

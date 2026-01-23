@@ -67,7 +67,7 @@ const Compare = () => {
             
                         <div className = "flex flex-row gap-2 items-center ">
                           <IoMdStar className = "text-2xl"/>
-                          <span>{product?.rating}</span>
+                          <span>{product?.averageRating}</span>
                         </div>
             
                         <p>Stocks Left : <span className = "text-red-500">{product?.stock}</span> </p>
@@ -177,7 +177,7 @@ const Compare = () => {
         
                     <div className = "flex flex-row gap-2 items-center ">
                         <IoMdStar className = "text-2xl"/>
-                        <span>{compareToProduct?.rating}</span>
+                        <span>{compareToProduct?.averageRating}</span>
                     </div>
         
                     <p>Stocks Left : <span className = "text-red-500">{compareToProduct?.stock}</span> </p>

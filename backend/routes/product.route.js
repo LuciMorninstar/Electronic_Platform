@@ -1,6 +1,6 @@
     import express from "express"
     import { adminRoute, protectRoute, optionalAuth } from "../middlewares/auth.middleware.js";
-    import { addProduct, compareTo, deleteProduct,  filterProducts, getAllProducts, getFeaturedProducts, getProductDetails, getProductsByCategory, getRecommendationProducts, getSimilarProducts, getTopRatedRecentProducts, isFeaturedProduct, searchProductByName, toggleFeaturedProduct, updateProduct } from "../controllers/product.controllers.js";
+    import { addProduct, compareTo, deleteProduct,  filterProducts, getAllProducts, getFeaturedProducts, getProductDetails, getProductsByCategory, getRecommendationProducts, getSimilarProducts, getTopRatedRecentProducts, isFeaturedProduct, rateProduct, searchProductByName, toggleFeaturedProduct, updateProduct } from "../controllers/product.controllers.js";
     import upload from "../middlewares/multer.middleware.js"
 
 
@@ -19,6 +19,8 @@
     router.get("/search", searchProductByName);
     router.patch("/toggle-featured/:id",protectRoute, adminRoute, toggleFeaturedProduct );
     router.get("/isFeaturedProduct/:id",protectRoute, adminRoute,isFeaturedProduct );
+
+    router.post("/:id", protectRoute, rateProduct );
 
     router.get("/:id", getProductDetails);
     router.patch("/:id", protectRoute, adminRoute, upload.array("images",10), updateProduct);
