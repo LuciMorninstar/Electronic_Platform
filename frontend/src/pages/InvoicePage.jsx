@@ -24,7 +24,7 @@ useEffect(() => {
 
 
   return (
-    <div className="mt-20">
+    <div className="mt-28">
       <Invoice order={order} loading={loading}/>
     </div>
   )

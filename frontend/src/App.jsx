@@ -29,6 +29,7 @@ import { useOrderStore } from './utils/useOrderStore'
 import AdminOrdersPage from './pages/Admin/AdminOrdersPage'
 import AdminInvoicePage from './pages/AdminInvoicePage'
 import AdminUsersPage from './pages/Admin/AdminUsersPage'
+import OrderTrackerPage from './pages/OrderTrackerPage'
 
 
 
@@ -113,13 +114,14 @@ const App = () => {
          */}
          <Route path = "/filter" element={<FilterPage/>}/>
          <Route path = "/compare/:id" element={<ComparePage/>}/>
+         <Route path = "/track-order/:id" element={<OrderTrackerPage/>}/>
 
         </Route>
 
         {/* For Admin */}
 
         <Route path = "/admin" element ={user?.role == "admin" &&<AdminLayout/>}>
-        <Route index element={<DashboardPage/>}/>
+        <Route index element={admin?<DashboardPage/>: <Navigate to ="/"/>}/>
         <Route path = "/admin/product" element={admin ?<AdminProductPage/>:<Navigate to="/"/>}/>
         <Route path = "/admin/product/add-product" element={admin ?<AddProductPage/>:<Navigate to="/"/>}/>
         <Route path = "/admin/orders" element={admin?<AdminOrdersPage/>:<Navigate to="/"/>}/>

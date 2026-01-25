@@ -34,8 +34,23 @@
             paidAt:Date
         },
 
-        status:{
+        statusHistory:[
+            {
+                state:{
+                    type:String,
+                    enum:["processing", "approved", "outForDelivery", "delivered","cancelled"],
+                    default:"processing"
+                },
+                at:{
+                    type:Date,
+                    default:Date.now
+                }
+            }
+        ],
+
+        currentStatus:{
             type:String,
+            enum:["processing", "approved", "outForDelivery","delivered","cancelled"],
             default:"processing"
         },
 

@@ -757,7 +757,7 @@ export const filterProducts = async (req, res, next) => {
 
     // Rating filter (>=)
     if (rating) {
-      filter.rating = { $gte: Number(rating) };
+      filter.averageRating  = { $gte: Number(rating) };
     }
 
     // Price filter

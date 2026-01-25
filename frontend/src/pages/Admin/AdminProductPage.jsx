@@ -116,6 +116,7 @@ const AdminProductPage = () => {
       <th className = "text-left py-3 px-6">Product</th>
       <th className = "text-left py-3 px-6">Price</th>
       <th className = "text-left py-3 px-6">Category</th>
+      <th className = "text-left py-3 px-6">Stocks</th>
       <th className = "text-left py-3 px-6">Featured</th>
       <th className = "text-left py-3 px-6">Actions</th>
     </tr>
@@ -139,6 +140,13 @@ const AdminProductPage = () => {
 
         <td className = "text-start px-8">
           <span className = "text-sm  lg:text-base">{product.category}</span>
+        </td>
+        <td className = "text-start px-8">
+          <span className = {`${product.stock < 5 ? "text-red-500" :"text-black dark:text-white"} text-sm  lg:text-base`}>
+            
+            {product.stock}
+
+            </span>
         </td>
         <td className = "px-10">
         <div

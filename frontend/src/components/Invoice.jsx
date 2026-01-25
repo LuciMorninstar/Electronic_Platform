@@ -57,9 +57,11 @@ const Invoice = ({ loading, order }) => {
               {order?.deliveryDetails?.houseNo || ""}, {order?.deliveryDetails?.address || ""}
             </span>
             <span className="invoice_small_text">Due On:</span>
-            <span className="invoice_smallest_text">
-              {new Date(order?.createdAt).toLocaleDateString()}
-            </span>
+           <span className="invoice_smallest_text">
+            {order?.createdAt
+              ? new Date(new Date(order.createdAt).getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString()
+              : ""}
+          </span>
           </div>
         </div>
 
@@ -104,7 +106,7 @@ const Invoice = ({ loading, order }) => {
             </div>
             <div className="flex justify-between pt-1">
               <span className="invoice_small_text">Order Status:</span>
-              <span className="font-semibold">{order?.status}</span>
+              <span className="font-semibold">{order?.currentStatus}</span>
             </div>
           </div>
         </div>

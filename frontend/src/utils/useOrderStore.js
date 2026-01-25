@@ -4,7 +4,7 @@ import {toast} from "react-hot-toast"
 import { useNotificationStore } from "./useNotification";
 
 
-export const useOrderStore = create((set)=>({
+export const useOrderStore = create((set,get)=>({
     loading:false,
     order:null,
     placingOrder: false,
@@ -98,6 +98,34 @@ export const useOrderStore = create((set)=>({
 
 
     },
+
+    updateOrderStatus: async(id,status)=>{
+        set({updatingStatus:true})
+
+        try {
+            const response = await axios.patch(`/order/status/${id}`,
+                {status}
+            );
+            const updatedOrder = response.data?.order;
+
+            const orders = get().orders.map(order=>
+                order._id === id? updatedOrder:order
+            );
+
+            // get().orders takes the current state value of orders and if orderid matches chnage just that thing in the orders
+
+            set({orders:orders, updatingStatus:false});
+            toast.success(`Updated order status to ${status} `);
+
+            
+        } catch (error) {
+            set({ updatingStatus: false });
+            toast.error(error.response?.data?.message || "Failed to get invoice details of order");
+            
+        }
+        
+
+    }
 
 
     

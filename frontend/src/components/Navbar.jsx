@@ -111,7 +111,7 @@ const Navbar = () => {
   const largeScreenLinksForTopNav = [
     {
       name: "dashboard",
-      link: "",
+      link: "/track-order",
       icon: <RxHamburgerMenu />,
       showNumber: false,
     },
@@ -244,7 +244,7 @@ const Navbar = () => {
               {largeScreenLinksForTopNav.slice(0, 1).map((item) => (
                 <div className=" group icon-wrapper" key={item.name}>
                   {item.icon ? (
-                    <span className="icon-style">{item.icon}</span>
+                    <Link to ={item.link} className="icon-style">{item.icon}</Link>
                   ) : (
                     "null"
                   )}

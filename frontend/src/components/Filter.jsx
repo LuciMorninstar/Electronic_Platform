@@ -145,7 +145,7 @@ const Filter = () => {
                                     <div className="flex flex-row gap-5">
                                         <div className="w-max flex flex-row items-center justify-center gap-1 border shadow-lg border-gray-300 dark:border-gray-800 rounded-xl px-4 py-1 cursor-auto">
                                             <FaStar className="text-yellow-500" />
-                                            <span className="text-xs">{item.rating}</span>
+                                            <span className="text-xs">{item.averageRating}</span>
                                         </div>
 
                                         <div className="w-max flex flex-row items-center justify-center gap-1 border shadow-lg border-gray-800 rounded-xl px-4 py-1 cursor-auto">

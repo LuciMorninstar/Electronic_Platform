@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import NotificationPanel from '../NotificationPanel';
 
 
 
@@ -32,6 +33,7 @@ const AdminNavbar = ({setOpenSidebar}) => {
     const toggleNotificationPanel = ()=>{
         setShowNotificationPanel(prev => !prev);
     }
+
 
 
 
@@ -80,7 +82,10 @@ const AdminNavbar = ({setOpenSidebar}) => {
             <div  className = "adminNavIconStyle ">
               <span  onClick={item.onClick? item.onClick:undefined} className = "">{item.icon}</span>
 
-              
+          
+
+                <NotificationPanel state={showNotificationPanel}/>
+      
             </div>
             
 

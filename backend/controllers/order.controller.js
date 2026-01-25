@@ -64,7 +64,14 @@ export const cashOnDelivery = async(req,res,next)=>{
                 paidAt:null,  //because this is cash on delivery
             },
 
-            status:"processing",
+            statusHistory:[
+                {
+                    state:"processing"
+                }
+
+            ],    
+
+            currentStatus:"processing",
             
             deliveryDetails:formData
 
@@ -238,6 +245,81 @@ export const getInvoiceByOrderId = async(req,res,next)=>{
 
 
 } 
+
+export const updateOrderStatus = async(req,res,next)=>{
+
+    const {id:orderId} = req.params;
+    const {status} = req.body;
+
+    try {
+        if(!orderId){
+            const err = new Error("No orderId found");
+            err.statusCode = 400;
+            return next(err);
+        }
+
+        if(!status){
+            const err = new Error("No status found to update");
+            err.statusCode = 400;
+            return next(err);
+        }
+
+        const order = await Order.findById(orderId);
+
+        if(!order){
+            const err = new Error("No order found with this id");
+            err.statusCode = 404;
+            return next(err);
+        }
+
+        // to prevent duplicate status updates we need to check the prev element in the array for statusHistory
+
+        const lastStatus = order.statusHistory.at(-1)?.state; //checking the state of prev statusHistory if any
+        if(lastStatus === status){
+            const err = new Error("Order already exists in this status");
+            err.statusCode = 400;
+            return next(err);
+        }
+
+
+
+        // change the history of status
+        order.statusHistory.push({
+            state:status,
+            at:Date.now()
+        })
+        // also change the currentOrder Status
+
+        order.currentStatus = status;
+
+        // also if the order is delivered and orderpaymentmethod is cash on delivery then change the status to completed
+
+        if(status === "delivered" && order.payment.method === "Cash On Delivery"){
+            order.payment.status = "completed";
+            order.payment.paidAt = new Date();
+
+        }
+
+        await order.save();
+
+        return res.status(200).json({
+            success:true,
+            message:"Order status successfully updated",
+            order:order
+        });
+
+    
+
+        
+    } catch (error) {
+        next(error);
+        console.log("Error in the updateOrderStatus controller", error.message);
+        
+    }
+
+
+
+}
 
 
 

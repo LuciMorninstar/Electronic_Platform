@@ -81,7 +81,7 @@ const cashingOnDelivery =async(e,formData,shippingCharges)=>{
 
 
   await cashOnDelivery({formData,shippingCharges});
-  navigate("/");
+  navigate("/myOrders");
 
 
 

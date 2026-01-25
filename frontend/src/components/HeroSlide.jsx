@@ -101,10 +101,23 @@ const HeroSlide = ({item, loading}) => {
            {/* slide details */}
           <div  className = " pb-5 lg:pb-7 xl:pb-25 absolute   left-1/2 max-lg:-translate-x-1/2 bottom-0 lg:bottom-0 lg:left-0 flex flex-col  lg:gap-2 max-lg:items-center content-center w-full lg:w-1/2 px-5 lg:px-10 z-20 ">
             <h1 className = " title ">{item.name}</h1>
-            <span className ="flex flex-row gap-2 items-center">
-              <FaStar className = "text-yellow-500" />
-              <span>{item.rating}/5</span>
+            {/* rating */}
+                <div className='flex flex-row gap-2 items-center'>
+                  <span className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <FaStar
+                      key={star}
+                      className={`${
+                        star <= Math.round(item.averageRating) ? "text-yellow-500" : "text-gray-300"
+                      }`}
+                    />
+                  ))}
               </span>
+              <span className='text-sm max-sm:hidden'>{item.ratings?.length} reviews</span>
+            </div>
+
+            {/* /rating */}
+
               <div className = "hidden lg:block">
                 <p className = "description text-xs lg:text-lg line-clamp-2 lg:line-clamp-3 text-font-light-white">{item.description}</p>
               </div>
