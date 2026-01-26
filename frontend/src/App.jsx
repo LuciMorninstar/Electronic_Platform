@@ -18,7 +18,7 @@ import AddProductPage from './pages/Admin/AddProductPage'
 import InvoicePage from './pages/InvoicePage'
 import { Toaster } from 'react-hot-toast'
 import { useUserStore } from './utils/useUserStore'
-import WishlistPage from './pages/WishlistPage'
+import WishListPage from "./pages/WishListPage"
 import CheckoutPage from './components/CheckoutPage'
 import OrderPage from './pages/OrderPage'
 import NotificationPanel from './components/NotificationPanel'
@@ -101,7 +101,7 @@ const App = () => {
          {/* <Route path="/category/categoryname/product" element = {<ProductPage/>}/>   */}
          <Route path="/product/:id" element = {<ProductPage/>}/>  
          
-         <Route path="/wishlist/products" element = {user?<WishlistPage/>: <Navigate to = "/" replace/>}/>  
+         <Route path="/wishlist/products" element = {user?<WishListPage/>: <Navigate to = "/" replace/>}/>  
          
          <Route path="/cart" element = {user?<CartPage/>:<Navigate to = "/" replace/>}/>  
 
