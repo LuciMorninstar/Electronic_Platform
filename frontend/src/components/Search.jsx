@@ -4,8 +4,8 @@ import { FiSearch } from "react-icons/fi";
 import { useProductStore } from '../utils/useProductStore';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Loading from './loading';
-import { Loader } from 'lucide-react';
+
+
 import { FaFilter } from "react-icons/fa";
 
 
