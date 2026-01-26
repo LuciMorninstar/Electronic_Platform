@@ -132,7 +132,7 @@ const Compare = () => {
 
 <div className="w-full xl:w-7/15">
   {comparing ? (
-    <Loading />
+    <Loader />
   ) : (
 
     <div className="w-full  flex justify-center items-center">
