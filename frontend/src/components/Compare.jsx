@@ -3,7 +3,8 @@ import ProductPage from '../pages/ProductPage'
 import { useProductStore } from '../utils/useProductStore';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Loader } from 'lucide-react';
+
+import Loading from "./Loading"
 import ProductGallery from './ProductGallery';
 import { IoMdStar } from 'react-icons/io';
 import Specs from './ProductComponents/Specs';
@@ -31,7 +32,7 @@ const Compare = () => {
 
            {/* left div  */}
         <div className=' w-full xl:w-7/15 transition-all duration-300 ease-in'>
-            {loading ? <Loader/>:
+            {loading ? <Loading/>:
 
 
             // gallery upto features
@@ -132,7 +133,7 @@ const Compare = () => {
 
 <div className="w-full xl:w-7/15">
   {comparing ? (
-    <Loader />
+    <Loading />
   ) : (
 
     <div className="w-full  flex justify-center items-center">

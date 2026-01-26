@@ -15,6 +15,7 @@ import ProductComment from '../components/ProductComponents/ProductComment';
 import { useProductStore } from '../utils/useProductStore';
 // import Loading from "../components/Loading"
 import { Loader } from 'lucide-react';
+import Loading from "../components/Loading"
 import { useCartStore } from '../utils/useCartStore';
 import SimilarProducts from '../components/SimilarProducts';
 
@@ -67,7 +68,7 @@ console.log(product)
     
     <section className = " mt-16 lg:mt-20 ">
 
-      {loading? <Loader/>:
+      {loading? <Loading/>:
    
       <ProductWidthWrapper>
 

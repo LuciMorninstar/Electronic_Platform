@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 import CryingAnimation from "./CryingAnimation";
 import { Loader } from "lucide-react";
+import Loading from "./Loading"
 
 import { useEffect } from "react";
 
@@ -94,7 +95,7 @@ const {category} = useParams();
      {/* cards container */}
      {
       loading?
-       (<Loader/>)
+       (<Loading/>)
       :
      
     

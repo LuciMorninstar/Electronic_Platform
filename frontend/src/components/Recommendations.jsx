@@ -9,6 +9,7 @@ import { Pagination, Autoplay, Navigation, EffectFade } from "swiper/modules";
 import { FaStar } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
 import { Loader } from "lucide-react";
+import Loading from "./Loading"
 import { Link } from "react-router-dom";
 
 import { useProductStore } from "../utils/useProductStore";
@@ -46,7 +47,7 @@ const Recommendations = () => {
         <section className="section_style">
           <h3 className="uppercase">Recommendations</h3>
           <div className="flex justify-center items-center h-[200px]">
-            <Loader className="animate-spin text-3xl" />
+            <Loading className="animate-spin text-3xl" />
           </div>
         </section>
       </WidthWrapper>

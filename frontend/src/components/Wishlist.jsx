@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { useUserStore } from "../utils/useUserStore";
 import CryingAnimation from "./CryingAnimation";
 import { Loader } from "lucide-react";
+import Loading from "./Loading";
 import { GiCancel } from "react-icons/gi";
 import { MdCancel } from "react-icons/md";
 import { useCartStore } from "../utils/useCartStore";
@@ -85,7 +86,7 @@ const addingToCart = async (e, id) => {
      {/* cards container */}
      {
       loading?
-       (<Loader/>)
+       (<Loading/>)
       :
      
     

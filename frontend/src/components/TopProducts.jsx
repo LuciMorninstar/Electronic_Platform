@@ -7,6 +7,7 @@ import { FaStar } from 'react-icons/fa6';
 import { Trophy } from 'lucide-react';
 import claw from "../assets/clawteal2.png"
 import { Loader } from 'lucide-react';
+import Loading from './Loading';
 
 const TopProducts = ({className}) => {
 
@@ -33,7 +34,7 @@ const TopProducts = ({className}) => {
                 </div>
 
                 {loading?
-                <Loader/>:
+                <Loading/>:
                 
         <div className = "flex flex-col gap-2">     
             {

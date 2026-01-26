@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useUserStore } from "../utils/useUserStore";
 import { useCartStore } from "../utils/useCartStore";
 import { Loader } from "lucide-react";
+import Loading from "./Loading"
 
 
 
@@ -143,7 +144,7 @@ const addingToCart =async (e,id)=>{
       <div className = "w-full  flex flex-row justify-evenly items-center">
 
             <button onClick={(e)=>addingToWishlist(e,item._id)} disabled={loading} className = " card-button rounded-full flex flex-row  items-center gap-2 cursor-pointer ">
-            {loading? <Loader/> :
+            {loading? <Loading/> :
               <span className = "font-semibold text-md "><FaRegBookmark/></span>
             }
              
@@ -152,7 +153,7 @@ const addingToCart =async (e,id)=>{
     
           <button onClick={(e)=>addingToCart(e,item._id)} className = " card-button rounded-xl flex flex-row  items-center gap-2 cursor-pointer ">
             {loading?
-            <Loader/>:
+            <Loading/>:
             <>
              <span className = "font-semibold text-sm ">Add To Cart</span>
               <IoMdCart className ="text-xl"/>  

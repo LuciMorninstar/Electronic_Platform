@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaFeatherAlt } from 'react-icons/fa';
 import { useProductStore } from '../utils/useProductStore';
-import { Loader } from 'lucide-react';
+import Loading from "./Loading"
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa6';
 import CryingAnimation from './CryingAnimation';
@@ -24,7 +24,7 @@ const Filter = () => {
         <section className="max-w-7xl">
 
             {filtering ? (
-                <Loader />
+                <Loading />
             ) : (
                 <div className="w-full space-y-5 flex flex-col gap-5">
 

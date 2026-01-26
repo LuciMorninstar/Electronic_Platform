@@ -6,7 +6,7 @@ import { FaRegBookmark } from "react-icons/fa";
 import gsap from "gsap"
 import {useGSAP} from "@gsap/react"
 import { SplitText } from 'gsap/all';
-import { Loader } from 'lucide-react';
+import Loading from './Loading';
 import { useUserStore } from '../utils/useUserStore';
 import { useCartStore } from '../utils/useCartStore';
 
@@ -85,7 +85,7 @@ const HeroSlide = ({item, loading}) => {
     <>
 
 {
-  loading? <Loader/>:
+  loading? <Loading/>:
 
       <div className = "relative  w-full h-full drop-shadow-2xl flex justify-end ">
         
