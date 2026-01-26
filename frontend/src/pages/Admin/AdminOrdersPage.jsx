@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useOrderStore } from "../../utils/useOrderStore";
-import Loading from "../../components/loading";
+import { Loader } from "lucide-react";
 import { Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
@@ -80,7 +80,7 @@ const AdminOrdersPage = () => {
       </div>
 
       {gettingAllOrders ? (
-        <Loading />
+        <Loader />
       ) : (
         <table className="w-full">
           <thead>

@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import Loading from '../../components/loading';
-import { FaDeleteLeft } from "react-icons/fa6";
 import { Loader } from 'lucide-react';
+import { FaDeleteLeft } from "react-icons/fa6";
+
 
 
 export default function AdminUsersPage() {
@@ -86,7 +86,7 @@ export default function AdminUsersPage() {
                 </div>
     
                 {gettingUsers ? (
-                    <Loading />
+                    <Loader />
                 ) : (
                     <table className="w-full">
                         <thead>

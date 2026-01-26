@@ -13,7 +13,7 @@ import WidthWrapper from "./WidthWrapper";
 import { Link } from "react-router-dom";
 
 import CryingAnimation from "./CryingAnimation";
-import Loading from "./loading";
+import { Loader } from "lucide-react";
 
 import { useEffect } from "react";
 
@@ -94,7 +94,7 @@ const {category} = useParams();
      {/* cards container */}
      {
       loading?
-       (<Loading/>)
+       (<Loader/>)
       :
      
     

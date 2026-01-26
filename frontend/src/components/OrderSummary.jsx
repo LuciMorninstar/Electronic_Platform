@@ -1,5 +1,5 @@
 import React from 'react'
-import Loading from './loading';
+import { Loader } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const OrderSummary = ({cartItems, loading}) => {
@@ -22,7 +22,7 @@ const totalQuantity = cartItems?.reduce((sum,item)=> sum + item.quantity , 0);
 // total = previousTotal + (price * quantity)
 
   
-  return   loading? <Loading/> :(
+  return   loading? <Loader/> :(
        <aside className = " w-full  lg:w-4/10 flex flex-col gap-y-7 rounded-lg  items-center  max-lg:px-4 ">
         
         <div className = "w-full  flex flex-row justify-between  border-b-1 py-5 border-gray-500 ">

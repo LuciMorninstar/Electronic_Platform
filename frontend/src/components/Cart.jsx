@@ -5,7 +5,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 
 
-import Loading from './loading';
+import { Loader } from "lucide-react";
 import { useCartStore } from "../utils/useCartStore";
 import { useState } from "react";
 
@@ -100,7 +100,7 @@ const Cart = ({cartItems, loading}) => {
     //   ];
   return (
 
-    loading? ( <Loading/>):
+    loading? ( <Loader/>):
     (
     
     <aside className = " w-full xl:w-6/10  flex flex-col gap-y-7 rounded-lg ">

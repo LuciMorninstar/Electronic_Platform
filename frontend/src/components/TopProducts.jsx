@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa6';
 import { Trophy } from 'lucide-react';
 import claw from "../assets/clawteal2.png"
-import Loading from './loading';
+import { Loader } from 'lucide-react';
 
 const TopProducts = ({className}) => {
 
@@ -33,7 +33,7 @@ const TopProducts = ({className}) => {
                 </div>
 
                 {loading?
-                <Loading/>:
+                <Loader/>:
                 
         <div className = "flex flex-col gap-2">     
             {

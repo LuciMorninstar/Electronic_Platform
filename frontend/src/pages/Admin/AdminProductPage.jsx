@@ -13,7 +13,7 @@ import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import { MdOutlineStarBorder } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
-import Loading from '../../components/loading';
+import { Loader } from 'lucide-react';
 
 
 
@@ -108,7 +108,7 @@ const AdminProductPage = () => {
 
 
 {
-  loading? <Loading/> :
+  loading? <Loader/> :
 
  <table className = "w-full">
   <thead className = "">
