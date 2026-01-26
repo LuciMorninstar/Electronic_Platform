@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNotificationStore } from '../utils/useNotification';
-import Loading from './loading';
+import Loading from "../components/loading"
 import { Link } from 'react-router-dom';
 
 const NotificationPanel = ({state}) => {
