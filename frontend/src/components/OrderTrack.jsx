@@ -1,7 +1,7 @@
 import React from 'react'
 import accept from "../assets/accept.png"
 import cancelled from "../assets/cancelled.png"
-import outForDelivery from "../assets/outFordelivery.webp"
+import outForDelivery from "../assets/outfordelivery.webp"
 import delivered from "../assets/delivered.png"
 import ordered from "../assets/ordered.png"
 import { Check } from 'lucide-react'
