@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNotificationStore } from '../utils/useNotification';
-import Loading from "../components/loading"
+import { Loader } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const NotificationPanel = ({state}) => {
@@ -19,7 +19,7 @@ const NotificationPanel = ({state}) => {
   return (
     <section className={`${state ? " notification absolute top-25 z-50 right-10 block w-[300px] h-[310px] overflow-auto px-5 py-5 bg-primary-color dark:bg-dark-secondary-color rounded-xl transition-all duration-200 ease-in flex flex-col gap-2 " : "hidden"}`}>
       <h4 className = "pb-2">Notifications</h4>
-      {loading && <Loading/>}
+      {loading && <Loader/>}
       {(notifications || []).map((notification) => (
         <Link to ={notification?.link} className = "relative bg-secondary-color dark:bg-dark-outlet-background-over rounded-2xl ">
           <div key={notification._id} className="px-4 py-5 border-b border-gray-300 dark:border-gray-700 flex flex-col gap-1 items-center dark:bg-dark-search-bar-bg rounded-2xl">

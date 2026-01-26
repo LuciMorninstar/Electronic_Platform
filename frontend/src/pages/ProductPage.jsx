@@ -13,7 +13,8 @@ import ProductGallery from '../components/ProductGallery';
 import Specs from '../components/ProductComponents/Specs';
 import ProductComment from '../components/ProductComponents/ProductComment';
 import { useProductStore } from '../utils/useProductStore';
-import Loading from '../components/loading';
+// import Loading from "../components/Loading"
+import { Loader } from 'lucide-react';
 import { useCartStore } from '../utils/useCartStore';
 import SimilarProducts from '../components/SimilarProducts';
 
@@ -66,7 +67,7 @@ console.log(product)
     
     <section className = " mt-16 lg:mt-20 ">
 
-      {loading? <Loading/>:
+      {loading? <Loader/>:
    
       <ProductWidthWrapper>
 
