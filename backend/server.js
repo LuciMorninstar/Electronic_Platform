@@ -46,13 +46,13 @@ app.use("/api/order",orderRoutes)
 app.use("/api/notification", notificationRoutes)
 
 
-if(process.env.NODE_ENV === "production"){
+
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
    app.use((req, res) => {
         res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
     });
-}
+
 
 
 app.use(errorMiddleware);
