@@ -1,5 +1,6 @@
 import express from "express"
 import "dotenv/config";
+import path from "path"
 import errorMiddleware from "./middlewares/error.middleware.js";
 import authRoutes from "./routes/auth.route.js"
 import productRoutes from "./routes/product.route.js"
@@ -15,6 +16,9 @@ import notificationRoutes from "./routes/notification.route.js"
 
 const PORT = process.env.PORT || 8000;
 const app = express();
+
+const __dirname = path.resolve();
+console.log("directory name", __dirname);
 
 app.use(cors({
     origin:["http://localhost:5173", "https://techHive.com"],
@@ -40,6 +44,15 @@ app.use("/api/cart",cartRoutes);
 app.use("/api/comment",commentRoutes);
 app.use("/api/order",orderRoutes)
 app.use("/api/notification", notificationRoutes)
+
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+    app.get("*", (req,res)=>{
+        res.sendFile(path.resolve(__dirname,"frontend","dist","index.html"))
+    });
+}
 
 
 app.use(errorMiddleware);
