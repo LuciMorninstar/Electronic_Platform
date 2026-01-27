@@ -1,16 +1,45 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Link} from "react-router-dom"
 import { FiPhoneCall } from "react-icons/fi";
 import { MdEmail, MdOutlineLocationOn } from "react-icons/md";
 import { FaFacebook, FaTiktok } from 'react-icons/fa6';
 import { BsInstagram, BsTwitterX } from "react-icons/bs";
+import { useRef } from 'react';
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-
-
+gsap.registerPlugin(ScrollTrigger); // ✅ register ScrollTrigger
 
 
 
 const Footer = () => {
+
+  const linkRefs = useRef([]);
+
+  const addToRefs = (el)=>{
+    if(el && !linkRefs.current.includes(el)){
+      linkRefs.current.push(el);
+    }
+  }
+
+useEffect(()=>{
+ linkRefs.current.forEach((link) => {
+  gsap.fromTo(
+    link,
+    { opacity: 0, y: 40 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      scrollTrigger: {
+        trigger: link,
+        start: "top 85%",
+        // scrub:true
+      }
+    }
+  );
+});
+})
 
   const footerItems = [
     {topic:"Reach Us",
@@ -51,7 +80,7 @@ const socialMedias = [
   <div className = "grid grid-cols-2 gap-15 sm:gap-20 md:gap-30 lg:gap-40 xl:gap-60 w-full sm:w-max  mx-auto  ">
 {
   footerItems.map((item,i)=>(
-    <div  key ={i} className = "  flex flex-col gap-5">
+    <div ref={addToRefs}  key ={i} className = "  flex flex-col gap-5">
       <h4>{item.topic}</h4>
       {item.links.map((link,i)=>(
         <div key={i} className = " group flex flex-row gap-2 items-center">

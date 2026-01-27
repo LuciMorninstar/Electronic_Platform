@@ -159,7 +159,7 @@ const Navbar = () => {
     },
     {
       name: "Wishlist",
-      link: "/wishlist",
+      link: "/wishlist/products",
       icon: <IoMdHeart />,
       showNumber: false,
       onClick:handleWishListClick

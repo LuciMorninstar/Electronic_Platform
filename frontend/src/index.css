@@ -131,6 +131,22 @@ body::-webkit-scrollbar-thumb{
 }
 
 
+@keyframes clawFloat {
+  0% {
+    transform: translate(0, 0);
+    filter: brightness(0.6);
+  }
+  50% {
+    transform: translate(-20px, 20px);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: translate(0, 0);
+    filter: brightness(0.6);
+  }
+}
+
+
 
 
 

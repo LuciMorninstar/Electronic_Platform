@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import WidthWrapper from "../components/WidthWrapper"
 import macbook from "../assets/macbook.png"
 import headphones from "../assets/headphones.png"
@@ -8,23 +8,15 @@ import phone from "../assets/phone.png"
 import gsap from "gsap"
 import { useGSAP } from '@gsap/react'
 import { Link } from 'react-router-dom'
+import { useRef } from 'react'
 
 const Categories = () => {
 
-    // useGSAP(()=>{
+
+
+
   
-    //   gsap.to(".gsapCategories",{
-    //     x:30,
-    //     repeat:-1,
-    //     yoyo:true,
-    //     duration:1,
-    //     ease:"power2.in",
-    //     stagger:0.2
-  
-    //   })
-  
-  
-    // },[])
+
 
 const categories = [
   {
@@ -70,7 +62,7 @@ const categories = [
             <div className = " group animation-loop duration-400 infinite linear  gap-5 flex flex-row ">
             {categories.map((category,i)=>(
                 // card wrapper (z-5 to show under the text and over the blurry white also fixed height and fixed width)
-                <div key={i} className ="gsapCategories shrink-0 overflow-hidden relative w-[280px] h-[350px] flex flex-col items-center justify-center gap-5 rounded-3xl bg-teal-500  py-8 z-5 cursor-pointer">
+                <div  key={i} className ="gsapCategories shrink-0 overflow-hidden relative w-[280px] h-[350px] flex flex-col items-center justify-center gap-5 rounded-3xl bg-teal-500  py-8 z-5 cursor-pointer">
                     {/* absoluting the details so to get over the blurry bg */}
                     <div className = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10  flex flex-col items-center justify-center gap-5">
                      <div className = "w-full h-[150px]  ">

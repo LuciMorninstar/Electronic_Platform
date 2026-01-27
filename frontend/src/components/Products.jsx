@@ -9,16 +9,17 @@ import { IoMdCart } from "react-icons/io";
 import { FiExternalLink } from "react-icons/fi";
 import WidthWrapper from "./WidthWrapper";
 import gsap from "gsap"
-import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
 import { useProductStore } from "../utils/useProductStore";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../utils/useUserStore";
 import { useCartStore } from "../utils/useCartStore";
 import { Loader } from "lucide-react";
 import Loading from "./Loading"
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 
-
+gsap.registerPlugin(ScrollTrigger); // ✅ register ScrollTrigger
 
 
 
@@ -50,59 +51,49 @@ const addingToCart =async (e,id)=>{
 }
 
 
+  const cardRefs = useRef([]);
+
+  // attach each card ref
+  const addToRefs = (el) => {
+    if (el && !cardRefs.current.includes(el)) cardRefs.current.push(el);
+  };
+
+  // GSAP animation 
+  useEffect(() => {
+    if (cardRefs.current.length > 0) {
+
+      cardRefs.current.forEach((card)=>{
+        gsap.fromTo(card,{
+          opacity:0,
+          y:80,
+          scale:0.8
+        },
+          {
+          opacity:1,
+          y:0,
+          scale:1,
+          duration:0.8,
+          ease:"power2.inOut",
+          scrollTrigger:{
+            trigger:card,
+            // grid:[4,4],
+        start: "top bottom-=100",
+        end: "bottom top ",
+        //  scrub: true,  
+        // markers:true
+
+          }
+
+        })
+      })
+
+    
+    }
+  }, [products]);
 
 
 
-  // const productItems = [
-  //   {
-  //     name: "Asus Rog strix g15",
-  //     rating: 4.5,
-  //     category: "laptop",
-  //     brand: "Asus",
-  //     price: 90000,
-  //     image: laptop,
-  //   },
-  //   {
-  //     name: "Lenovo Legion",
-  //     rating: 4.2,
-  //     category: "laptop",
-  //     brand: "Asus",
-  //     price: 90000,
-  //     image: monitor,
-  //   },
-  //   {
-  //     name: "Logitech",
-  //     rating: 4,
-  //     category: "Mouse",
-  //     brand: "Logitech",
-  //     price: 9000,
-  //     image: laptop,
-  //   },
-  //   {
-  //     name: "Asus Rog strix g15",
-  //     rating: 4.5,
-  //     category: "laptop",
-  //     brand: "Asus",
-  //     price: 90000,
-  //     image: monitor,
-  //   },
-  //   {
-  //     name: "Lenovo Legion",
-  //     rating: 4.2,
-  //     category: "laptop",
-  //     brand: "Asus",
-  //     price: 90000,
-  //     image: laptop,
-  //   },
-  //   {
-  //     name: "Logitech",
-  //     rating: 4,
-  //     category: "Mouse",
-  //     brand: "Logitech",
-  //     price: 9000,
-  //     image: monitor,
-  //   },
-  // ];
+
 
   return (
    <>
@@ -110,10 +101,10 @@ const addingToCart =async (e,id)=>{
     <section className = " section_style">
     <h3 className = "uppercase ">Products</h3>
      {/* cards container */}
-     <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 sm:gap-3 xl:gap-x-2 gap-y-4">
+     <div  className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 sm:gap-3 xl:gap-x-2 gap-y-4">
       {(products || []).map((item,i) => (
         // card wrapper
-        <div key={i} className=" relative group flex flex-col w-full rounded-sm bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
+        <div ref={addToRefs} key={i} className=" relative group flex flex-col w-full rounded-sm bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
  ">
           {/* <div className="absolute z-10 top-3 right-3">
             <HiPlus className="card-icon" />

@@ -8,6 +8,11 @@ import { Trophy } from 'lucide-react';
 import claw from "../assets/clawteal2.png"
 import { Loader } from 'lucide-react';
 import Loading from './Loading';
+import { useRef } from 'react';
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger); // ✅ register ScrollTrigger
 
 const TopProducts = ({className}) => {
 
@@ -23,6 +28,41 @@ const TopProducts = ({className}) => {
       }, [topRatedRecentProducts]);
 
 
+      // gsap animation
+
+      const cardRefs = useRef([]);
+
+      const addToRefs = (el)=>{
+        if(el && !cardRefs.current.includes(el)){
+          cardRefs.current.push(el);
+        }
+      }
+
+
+    useEffect(()=>{
+        if(cardRefs.current.length >0){
+          cardRefs.current.forEach((card)=>{
+            gsap.fromTo(card,
+              {opacity:0, y:50,scale:0.85 },
+              {
+                opacity:1,y:0,scale:1,duration:0.8,ease:"power1.inOut",
+                scrollTrigger:{
+                  trigger:card,
+                  start:"top bottom-=20",
+                  end:"bottom top",
+                  // scrub:true,
+                  // markers:true
+                }
+
+              }
+          )
+          })
+        }
+
+
+      },[topRatedRecentProducts])
+
+
   return (
 
 
@@ -36,11 +76,11 @@ const TopProducts = ({className}) => {
                 {loading?
                 <Loading/>:
                 
-        <div className = "flex flex-col gap-2">     
+        <div className = "flex flex-col gap-2 overflow-hidden">     
             {
                 (topRatedRecentProducts || []).map((item,i)=>(
 
-               <Link  to ={`/product/${item._id}`} key ={item._id} className = "relative  group rounded-lg flex flex-row gap-1 shadow-md bg-tertiary-color  dark:bg-dark-tertiary-color  items-center overflow-hidden ">
+               <Link ref={addToRefs} to ={`/product/${item._id}`} key ={item._id} className = "relative  group rounded-lg flex flex-row gap-1 shadow-md bg-tertiary-color  dark:bg-dark-tertiary-color  items-center overflow-hidden ">
                     {/* absolute */}
                     
                     {/* absolute of rating */}
