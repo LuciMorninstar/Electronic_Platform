@@ -82,8 +82,7 @@ const AdminNavbar = ({setOpenSidebar}) => {
             <div  className = "adminNavIconStyle ">
               <span  onClick={item.onClick? item.onClick:undefined} className = "">{item.icon}</span>
 
-          
-
+        
                 <NotificationPanel state={showNotificationPanel}/>
       
             </div>

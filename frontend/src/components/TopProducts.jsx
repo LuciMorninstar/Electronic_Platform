@@ -49,7 +49,8 @@ const TopProducts = ({className}) => {
                 scrollTrigger:{
                   trigger:card,
                   start:"top bottom-=20",
-                  end:"bottom top",
+                  // end:"bottom top",
+                  toggleActions:"play none none reverse"
                   // scrub:true,
                   // markers:true
                 }

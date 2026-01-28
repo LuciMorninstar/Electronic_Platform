@@ -18,6 +18,9 @@ import { Loader } from 'lucide-react';
 import Loading from "../components/Loading"
 import { useCartStore } from '../utils/useCartStore';
 import SimilarProducts from '../components/SimilarProducts';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useLayoutEffect } from 'react';
 
 const ProductPage = () => {
 
@@ -59,6 +62,53 @@ console.log(product)
  }
 
 
+//  gsap animation
+
+const headingRef = useRef(null);
+const titleRef = useRef(null);
+const tagRef = useRef(null);
+const ratingRef = useRef(null);
+const stockRef = useRef(null);
+const priceRef = useRef(null);
+const subHeadingRef = useRef(null);
+const featureRef = useRef([]);
+const imageRef = useRef(null);
+const buttonRef = useRef(null);
+
+const addFeatureRef = (el)=>{
+  if(el && !featureRef.current.includes(el)){
+    featureRef.current.push(el);
+  }
+}
+
+useLayoutEffect(() => {
+  if (!product) return;
+
+  const ctx = gsap.context(() => {
+    const tl = gsap.timeline({
+      defaults: {
+        ease: "power2.out",
+      },
+    });
+
+    tl.fromTo(imageRef.current, { y: 26, opacity: 0,scale:0.4 }, { y: 0, opacity: 1, duration: 0.75,scale:1 })
+    .fromTo(headingRef.current, { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.75 },"-=0.6")
+      .fromTo(titleRef.current, { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 0.65 }, "-=0.4")
+      .fromTo(tagRef.current, { y: 14, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.15, duration: 0.45 }, "-=0.3")
+      .fromTo(ratingRef.current, { scale: 0.8,x:-100, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45,x:0 }, "-=0.25")
+      .fromTo(stockRef.current, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, "-=0.25")
+      .fromTo(priceRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45 }, "-=0.25")
+      .fromTo(buttonRef.current, { x: 100, opacity: 0 }, { x: 0, opacity: 1, duration: 0.60 }, "-=0.22")
+      .fromTo(subHeadingRef.current, { y: 12, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.35 }, "-=0.2")
+      .fromTo(featureRef.current, { y: 12, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.35 }, "-=0.2");
+  });
+
+  return () => ctx.revert();
+}, [product]);
+
+
+
+
 
 
   return (
@@ -76,7 +126,7 @@ console.log(product)
    {/* hero section */}
         <div className = "  w-full flex flex-col lg:flex-row gap-10">
           {/* 1st div */}
-          <div className = " w-full lg:w-1/2 flex flex-col justify-center items-center  ">
+          <div ref={imageRef} className = " w-full lg:w-1/2 flex flex-col justify-center items-center  ">
 
           <ProductGallery images ={product?.images || []} />
          
@@ -89,20 +139,20 @@ console.log(product)
 
           <div className="w-full  lg:w-1/2 " >
           {/* first part */}
-          <div className = "flex flex-col  border-b-2 border-gray-500  py-5  gap-3">
+          <div  className = "flex flex-col  border-b-2 border-gray-500  py-5  gap-3">
            <div className = "flex flex-row justify-between">
-            <h4 className = "text-teal-400">Fuel Your Future, Power Your Passions.</h4>
+            <h4 ref={headingRef} className = "text-teal-400">Fuel Your Future, Power Your Passions.</h4>
             <Link to = {`/compare/${product?._id}`} className = "group relative flex flex-col bg-color-teal-500 items-center p-3 rounded-full cursor-pointer">
               <FaCodeCompare/>
               <span className=' group-hover:block hidden absolute -bottom-8 text-xs px-2 py-1 bg-secondary-color dark:bg-dark-search-bar-bg rounded-xl'>Compare</span>
               </Link>
             </div> 
            
-            <h1>{product?.name}</h1>
+            <h1 ref={titleRef}>{product?.name}</h1>
 
-               <div className = "w-full flex flex-row gap-3 lg:gap-5">
+               <div ref={tagRef}   className = "w-full flex flex-row gap-3 lg:gap-5">
             {product?.tags?.slice(0,2).map((tag)=>(
-              <div className = "px-5 py-1 shadow-md dark:bg-dark-secondary-color text-black dark:text-white rounded-xl w-max">{tag}</div>
+              <div  className = "px-5 py-1 shadow-md dark:bg-dark-secondary-color text-black dark:text-white rounded-xl w-max">{tag}</div>
             ))}
           </div>
 
@@ -112,8 +162,8 @@ console.log(product)
             </div> */}
 
                     {/* Rating Stars */}
-          <div className="flex flex-col gap-1 mt-2">
-            <div className="flex flex-row gap-1">
+          <div ref={ratingRef} className="flex flex-col gap-1 mt-2">
+            <div  className="flex flex-row gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
                 <span
                   key={star}
@@ -149,14 +199,14 @@ console.log(product)
           </div>
 
 
-            <p>Stocks Left : <span className ={`${product?.stock < 5 ? "text-red-500" : "text-color-teal-500" }`}>{product?.stock}</span> </p>
+            <p ref={stockRef}>Stocks Left : <span className ={`${product?.stock < 5 ? "text-red-500" : "text-color-teal-500" }`}>{product?.stock}</span> </p>
 
-            <div className = "flex flex-col gap-2 font-semibold">
+            <div ref={priceRef} className = "flex flex-col gap-2 font-semibold">
               <span className = "">Starting at</span>
               <span className = "text-3xl font-poppins">Rs. {product?.price}</span>
             </div>
 
-            <button onClick={(e)=>addingToCart(e,product?._id)} className = "w-max flex flex-row gap-2 rounded-md px-6 py-3 outline-none dark:bg-primary-color bg-dark-primary-color cursor-pointer">
+            <button ref={buttonRef} onClick={(e)=>addingToCart(e,product?._id)} className = "w-max flex flex-row gap-2 rounded-md px-6 py-3 outline-none dark:bg-primary-color bg-dark-primary-color cursor-pointer">
               <span className = "  text-sm md:text-base lg:text-lg xl:text-lg font-semibold  text-white dark:text-black font-poppins">Add to Cart</span>
             </button>
             
@@ -165,13 +215,13 @@ console.log(product)
             {/* /first part */}
 
             {/* 2nd part */}
-            <div className = "flex flex-col gap-3 py-5  ">
+            <div  className = "flex flex-col gap-3 py-5  ">
 
-              <h6 className = "font-semibold">Powerful Features at a glance !</h6>
+              <h6 ref={subHeadingRef} className = "font-semibold">Powerful Features at a glance !</h6>
 
             <div className = "grid sm:grid-cols-2 gap-y-1 gap-x-2 ">
               {product?.features?.map((feature,i)=>(
-               <div key={i} className ="overflow-hidden shadow-md dark:text-font-white   text-black  relative text-sm  px-5 py-2 rounded-xl before:content-[''] before:absolute before:top-1/2 before:-translate-1/2 before:left-0 before:h-10 before:w-5 before:rounded-full before:bg-teal-500">
+               <div ref={addFeatureRef} key={i} className ="overflow-hidden shadow-md dark:text-font-white   text-black  relative text-sm  px-5 py-2 rounded-xl before:content-[''] before:absolute before:top-1/2 before:-translate-1/2 before:left-0 before:h-10 before:w-5 before:rounded-full before:bg-teal-500">
                 {feature}
 x
                 

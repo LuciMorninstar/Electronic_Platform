@@ -11,6 +11,9 @@ import toast from 'react-hot-toast';
 import CryingAnimation from '../CryingAnimation.jsx';
 import { MdDelete } from 'react-icons/md';
 import { FiDelete } from 'react-icons/fi';
+import gsap from "gsap"
+import { useLayoutEffect } from 'react';
+import { useRef } from 'react';
 
   const ProductComment = () => {
 
@@ -30,6 +33,7 @@ import { FiDelete } from 'react-icons/fi';
      }
 
     },[productId])
+    
 
 
 
@@ -101,22 +105,79 @@ import { FiDelete } from 'react-icons/fi';
 
     }
 
-  
 
-    // to submit comment by user
+// gsap animation
+
+const headingRef = useRef(null);
+const commentLengthRef = useRef(null);
+const commentSectionRef = useRef(null);
+const commentRefs = useRef([]);
+
+const addCommentRef = (el)=>{
+  if(el && !commentRefs.current.includes(el)){
+    commentRefs.current.push(el);
+
+  }
+}
+
+useLayoutEffect(()=>{
+  if(!comments || comments.length<0  ) return;
+
+  const ctx = gsap.context(()=>{
+
+    const tl = gsap.timeline({
+      scrollTrigger:{
+        trigger:headingRef.current,
+        start:"top 90%",
+        toggleActions:"play none none reverse"
+      }
+    });
+
+    tl.fromTo(headingRef.current,
+      {opacity:0,y:18,scale:1.2},
+      {opacity:1,y:0,duration:0.6,scale:1,ease:"power1.inOut"}
+    )
+    
+    tl.fromTo(commentLengthRef.current,
+      {opacity:0,y:30},
+      {opacity:1,y:0,duration:0.6,ease:"power1.inOut"}
+    )
+    tl.fromTo(commentSectionRef.current,
+      {opacity:0,y:30},
+      {opacity:1,y:0,duration:0.6,ease:"power1.inOut"}
+    )
+    tl.fromTo(commentRefs.current,
+      {opacity:0,y:30},
+      {opacity:1,y:0,duration:0.6,ease:"power1.inOut"}
+    )
+    
+
+
+
+    
+  })
+
+  return ()=>ctx.revert();
+},[comments])
+
+
+
+
+
+
 
 
 
     return (
     <div className = "flex flex-col gap-4 border-t-2 border-gray-500 pt-5 ">
 
-    <h3>Comments</h3>
+    <h3 ref={headingRef}>Comments</h3>
 
   {/* No. of comments  showing  */}
 
-    <span className = "text-sm lg:text-base text-font-light-white">{comments?.length} comments</span> 
+    <span ref={commentLengthRef} className = "text-sm lg:text-base text-font-light-white">{comments?.length} comments</span> 
   {/* write comment section */}
-    <div className = "relative w-full rounded-md bg-tertiary-color dark:bg-dark-secondary-color ">
+    <div ref={commentSectionRef} className = "relative w-full rounded-md bg-tertiary-color dark:bg-dark-secondary-color ">
       {/* profile pic */}
       <div className = " absolute -top-10 left-1/2 -translate-x-1/2 lg:-top-5 lg:-left-12 w-10 h-10 rounded-full bg-tertiary-color dark:bg-dark-secondary-color flex flex-col justify-center items-center">
         <FaUser className = "text-lg lg:text-xl"/>
@@ -153,7 +214,7 @@ import { FiDelete } from 'react-icons/fi';
 {
   comments && comments.length > 0 ? (
     comments.map((comment, i) => (
-      <div key={i} className="flex flex-col gap-2 ">
+      <div ref={addCommentRef} key={i} className="flex flex-col gap-2 ">
         <div className="flex flex-row gap-5 items-center">
           <div className="w-10 h-10 rounded-full bg-tertiary-color dark:bg-dark-secondary-color flex flex-col justify-center items-center">
             <FaUser className="text-lg lg:text-xl" />

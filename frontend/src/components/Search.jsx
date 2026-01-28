@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 
 
 import { FaFilter } from "react-icons/fa";
+import { useRef } from 'react';
+import gsap from "gsap"
+import { useLayoutEffect } from 'react';
 
 
 
@@ -22,7 +25,7 @@ const [searchTerm, setSearchTerm] = useState("");
 
 useEffect(()=>{
 
-  const timeout =  setTimeout(()=>{
+  const timeout = setTimeout(()=>{
     searchProductByName(searchTerm);
 
   },300);
@@ -31,6 +34,36 @@ useEffect(()=>{
   
 
 },[searchTerm])
+
+
+const searchProductRefs = useRef([]);
+const addToSearchProductRef = (el)=>{
+  if(el && !searchProductRefs.current.includes(el)){
+    searchProductRefs.current.push(el);
+  }
+}
+
+useLayoutEffect(()=>{
+  if(!products || products.length<=0) return;
+
+  const ctx = gsap.context(()=>{
+
+    // searchProductRefs.current.forEach((product)=>{
+    //   gsap.fromTo(product,
+    //     {opacity:0,y:16},
+    //     {opacity:1,y:0,duration:0.3,ease:"power2.in"}
+    //   )
+    // })
+
+    gsap.fromTo(searchProductRefs.current,
+       {opacity:0,y:16},
+        {opacity:1,y:0,duration:0.3,ease:"power2.in",stagger:0.05}
+    )
+
+  })
+  return ()=>ctx.revert();
+},[products])
+
 
 
 
@@ -64,7 +97,7 @@ useEffect(()=>{
 
               
 
-              <Link to ={`/product/${item._id}`} key ={item._id} className = "relative  group flex flex-row gap-5  odd:bg-tertiary-color even:bg-secondary-color dark:even:bg-dark-search-bar-bg dark:odd:bg-dark-tertiary-color  items-center">
+              <Link ref={addToSearchProductRef} to ={`/product/${item._id}`} key ={item._id} className = "relative  group flex flex-row gap-5 shadow-2xl bg-secondary-color hover:bg-tertiary-color dark:hover:bg-dark-search-bar-bg dark:bg-dark-tertiary-color  items-center transition-all duration-200 ease-in">
                     {/* absolute */}
                   <div className ="absolute bottom-2 right-1 flex justify-end  pr-3 w-full flex-row gap-1 items-center">
                     <FaStar className = "text-yellow-500 text-sm"/>

@@ -6,8 +6,6 @@ import { useParams } from 'react-router-dom'
 
 const ComparePage = () => {
 
-    const {id} = useParams();
-    console.log(id);
   
 
 

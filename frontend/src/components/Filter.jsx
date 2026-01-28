@@ -5,6 +5,9 @@ import Loading from "./Loading"
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa6';
 import CryingAnimation from './CryingAnimation';
+import gsap from "gsap"
+import { useLayoutEffect } from 'react';
+import { useRef } from 'react';
 
 const Filter = () => {
     const [filters, setFilters] = useState({ category: "", brand: "", minPrice: "", maxPrice: "", rating: "" });
@@ -20,8 +23,52 @@ const Filter = () => {
         await filterProducts(filters); 
     }
 
+
+    // gsap
+
+    const headingRef = useRef(null);
+    const boxRef = useRef(null);
+    const filterProductRefs = useRef([]);
+    const filterSectionRef = useRef(null);
+
+    const addToFilterProductRef = (el)=>{
+        if(el && !filterProductRefs.current.includes(el)){
+            filterProductRefs.current.push(el)
+        }
+    }
+
+    useLayoutEffect(()=>{
+
+        // if(!filteredProducts || filteredProducts.length <=0) return;
+
+        const ctx = gsap.context(()=>{
+            
+            const tl = gsap.timeline({
+                ease:"power2.in"
+
+            });
+
+            tl.fromTo(headingRef.current,
+                {opacity:0,y:30},
+                {opacity:1,y:0,duration:0.6,ease:"power2.in"}
+            )
+            tl.fromTo(boxRef.current,
+                {opacity:0,y:18},
+                {opacity:1,y:0,duration:0.6,ease:"power2.in",stagger:0.9}
+            )
+            tl.fromTo(filterProductRefs.current,
+                    { opacity: 0, y: 18 },
+                      { opacity: 1, y: 0, duration: 0.6, stagger: 0.1},   "-=0.4"
+            )
+          
+
+        })
+        return ()=>ctx.revert();
+        
+    },[filteredProducts])
+
     return (
-        <section className="max-w-7xl">
+        <section ref={filterSectionRef} className="max-w-7xl">
 
             {filtering ? (
                 <Loading />
@@ -29,13 +76,13 @@ const Filter = () => {
                 <div className="w-full space-y-5 flex flex-col gap-5">
 
                     {/* 1st div */}
-                    <div className="w-full flex flex-row justify-between items-center">
+                    <div ref={headingRef} className="w-full flex flex-row justify-between items-center">
                         <h4>Products Filter</h4>
                         <span className='font-audiowide'>{filteredProducts.length} items found</span>
                     </div>
 
                     {/* 2nd div - filter inputs */}
-                    <div className="flex items-center flex-col gap-5">
+                    <div ref={boxRef} className="flex items-center flex-col gap-5">
                         <form className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                             {/* Category */}
                             <div>
@@ -124,7 +171,7 @@ const Filter = () => {
                     ) : (
                         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
                             {filteredProducts.map((item, i) => (
-                                <div 
+                                <div ref={addToFilterProductRef}
                                     key={i} 
                                     className="relative group flex flex-col gap-3 w-full rounded-xl overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] p-4"
                                 >

@@ -15,6 +15,7 @@ gsap.registerPlugin(ScrollTrigger); // ✅ register ScrollTrigger
 const Footer = () => {
 
   const linkRefs = useRef([]);
+  const footerSectionRef = useRef(null);
 
   const addToRefs = (el)=>{
     if(el && !linkRefs.current.includes(el)){
@@ -34,6 +35,8 @@ useEffect(()=>{
       scrollTrigger: {
         trigger: link,
         start: "top 85%",
+        toggleActions:"play none none reverse"
+
         // scrub:true
       }
     }
@@ -70,7 +73,7 @@ const socialMedias = [
 
 
   return (
-   <section className="mt-10 px-10 py-10 lg:py-15 lg:px-26 w-full dark:bg-dark-secondary-color flex flex-col gap-15 justify-center items-center">
+   <section ref={footerSectionRef} className="mt-10 px-10 py-10 lg:py-15 lg:px-26 w-full dark:bg-dark-secondary-color flex flex-col gap-15 justify-center items-center">
 
     <div className = " border-t-2 border-gray-600 w-full">
 {/* This is a border at top */}

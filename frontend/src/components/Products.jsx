@@ -78,7 +78,7 @@ const addingToCart =async (e,id)=>{
             trigger:card,
             // grid:[4,4],
         start: "top bottom-=100",
-        end: "bottom top ",
+        toggleActions:"play none none reverse"
         //  scrub: true,  
         // markers:true
 

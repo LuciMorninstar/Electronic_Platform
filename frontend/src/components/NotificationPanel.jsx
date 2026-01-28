@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { useNotificationStore } from '../utils/useNotification';
 import Loading from './Loading';
 import { Link } from 'react-router-dom';
+import gsap from "gsap"
+import { useLayoutEffect } from 'react';
+import { useRef } from 'react';
 
 const NotificationPanel = ({state}) => {
   const { loading, notifications, getNotificationsById } = useNotificationStore();
@@ -16,12 +19,39 @@ const NotificationPanel = ({state}) => {
 
   // putting the state of open in dependency array whenever state chnages getNotificationsById  runs
 
+  // gsap
+
+  const notificationRefs = useRef([]);
+
+  const addToNotificationRef = (el) =>{
+    if(el && !notificationRefs.current.includes(el)){
+      notificationRefs.current.push(el)
+    }
+  }
+
+  useLayoutEffect(()=>{
+  if(!notifications || notifications.length<=0) return;
+
+  const ctx = gsap.context(()=>{
+
+
+    gsap.fromTo(notificationRefs.current,
+       {opacity:0,x:-200},
+        {opacity:1,x:0,duration:0.8,ease:"elastic.inOut",stagger:0.07}
+    )
+
+  })
+  return ()=>ctx.revert();
+},[notifications])
+
+
+
   return (
-    <section className={`${state ? " notification absolute top-25 z-50 right-10 block w-[300px] h-[310px] overflow-auto px-5 py-5 bg-primary-color dark:bg-dark-secondary-color rounded-xl transition-all duration-200 ease-in flex flex-col gap-2 " : "hidden"}`}>
+    <section className={`${state ? " notification absolute top-25 z-50 right-10 block w-[300px] h-[310px] overflow-x-hidden overflow-y-auto px-5 py-5 bg-primary-color dark:bg-dark-secondary-color rounded-xl transition-all duration-200 ease-in flex flex-col gap-2 " : "hidden"}`}>
       <h4 className = "pb-2">Notifications</h4>
       {loading && <Loading/>}
       {(notifications || []).map((notification) => (
-        <Link to ={notification?.link} className = "relative bg-secondary-color dark:bg-dark-outlet-background-over rounded-2xl ">
+        <Link to ={notification?.link} ref={addToNotificationRef} className = "relative bg-secondary-color dark:bg-dark-outlet-background-over rounded-2xl ">
           <div key={notification._id} className="px-4 py-5 border-b border-gray-300 dark:border-gray-700 flex flex-col gap-1 items-center dark:bg-dark-search-bar-bg rounded-2xl">
 
             {/* <span className = "font-poppins text-xs px-2 py-1 bg-tertiary-color dark:bg-dark-search-bar-bg w-max rounded-xl">{notification?.type}</span> */}

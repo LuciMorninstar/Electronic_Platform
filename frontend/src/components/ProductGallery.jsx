@@ -9,6 +9,8 @@ import 'swiper/css/thumbs';
 
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
+import gsap from "gsap"
+
 
 const ProductGallery = ({images}) => {
 

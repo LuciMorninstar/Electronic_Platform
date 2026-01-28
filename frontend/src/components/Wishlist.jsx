@@ -18,6 +18,9 @@ import Loading from "./Loading";
 import { GiCancel } from "react-icons/gi";
 import { MdCancel } from "react-icons/md";
 import { useCartStore } from "../utils/useCartStore";
+import gsap from "gsap"
+import { useLayoutEffect } from 'react';
+import { useRef } from 'react';
 
 
 
@@ -63,6 +66,45 @@ const addingToCart = async (e, id) => {
   }
 };
 
+// gsap
+
+const headingRef = useRef(null);
+const wishlistRefs = useRef([]);
+
+const addToWishlistRef = (el)=>{
+  if(el && !wishlistRefs.current.includes(el)){
+    wishlistRefs.current.push(el)
+  }
+}
+
+useLayoutEffect(()=>{
+
+  if(!products || products.length <=0) return ;
+
+  const ctx = gsap.context(()=>{
+    const tl = gsap.timeline({ease:"power2.in"})
+
+    tl.fromTo(headingRef.current,
+          {opacity:0,y:30},
+          {opacity:1,y:0,duration:0.6,ease:"power2.in"}
+     )
+   tl.fromTo(wishlistRefs.current,
+        { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.2},   "-=0.4"
+          )
+
+
+
+    
+  });
+
+  return ()=> ctx.revert();
+
+
+
+
+},[products])
+
 
 
 
@@ -76,7 +118,7 @@ const addingToCart = async (e, id) => {
     <section className = " section_style">
 {
   products?.length >0?
-    <h3 className = "w-full  uppercase ">  Wishlists</h3>:
+    <h3 ref={headingRef} className = "w-full  uppercase ">  Wishlists</h3>:
     ""
 
 }
@@ -95,7 +137,7 @@ products?.length > 0 ?
        <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4">
       {(products || []).map((item) => (
         // card wrapper
-        <div key={item._id} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
+        <div ref={addToWishlistRef} key={item._id} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
  ">
 
   {/* absolute delete */}

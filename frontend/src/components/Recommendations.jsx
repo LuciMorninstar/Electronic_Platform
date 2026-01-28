@@ -15,6 +15,9 @@ import { Link } from "react-router-dom";
 import { useProductStore } from "../utils/useProductStore";
 import { useCartStore } from "../utils/useCartStore";
 import WidthWrapper from "./WidthWrapper";
+import gsap from "gsap"
+// import { useLayoutEffect } from "react";
+import { useRef } from "react";
 
 const Recommendations = () => {
   const { getRecommendationProducts, loading, recommendations = [] } = useProductStore();
@@ -40,6 +43,19 @@ const Recommendations = () => {
     await addToCart(id);
     getAllCartProducts();
   };
+
+  // gsap animation
+
+  const swiperSlideRefs = useRef([]);
+  const addSwiperSlideRef = (el)=>{
+    if(el && !swiperSlideRefs.current.includes(el)){
+      swiperSlideRefs.current.push(el);
+    }
+  }
+
+
+
+
 
   if (loading) {
     return (
@@ -69,10 +85,18 @@ const Recommendations = () => {
 
   return (
     <WidthWrapper>
-      <section className="section_style">
+      <section  className="section_style">
         <h3 className="uppercase mb-4">Recommendations</h3>
 
         <Swiper
+          onSlideChange={()=>{
+            swiperSlideRefs.current.forEach((card)=>{
+              gsap.fromTo(card,
+                {opacity:0,scale:0.8},
+                {opacity:1,scale:1,duration:0.8,ease:"power2.in"}
+              )
+            })
+          }}
           modules={[Pagination, Autoplay, Navigation, EffectFade]}
           pagination={{ dynamicBullets: true, clickable: true }}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
@@ -89,7 +113,7 @@ const Recommendations = () => {
           className="mySwiper recommendationSwiper"
         >
           {recommendations.map((item) => (
-            <SwiperSlide key={item._id} className="recommendationSwiperSlide">
+            <SwiperSlide ref={addSwiperSlideRef} key={item._id} className="recommendationSwiperSlide">
               <div className="relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]">
                 
                 {/* Image and Rating */}
