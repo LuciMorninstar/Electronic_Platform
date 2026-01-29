@@ -1,6 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { BsPrinter } from "react-icons/bs";
 import { useReactToPrint } from 'react-to-print';
+import gsap from 'gsap';
+import { useLayoutEffect } from 'react';
 
 const Invoice = ({ loading, order }) => {
   // Subtotal
@@ -24,11 +26,57 @@ const Invoice = ({ loading, order }) => {
     documentTitle: `invoice-${order?._id}`,
   });
 
+  // gsap
+
+  const headingRef = useRef(null);
+  const myInfoRef = useRef(null);
+  const userInfoRef = useRef(null);
+  const tableRef = useRef(null);
+  const table2Ref = useRef(null);
+
+  useLayoutEffect(()=>{
+
+  if(!order || order.length<=0) return;
+
+  const ctx = gsap.context(()=>{
+
+    const tl = gsap.timeline({defaults:{ease:"power3.out"}})
+
+    tl.fromTo(headingRef.current,
+      {opacity:0,y:30},
+      {opacity:1,y:0, duration:0.8}
+    )
+    tl.fromTo(myInfoRef.current,
+      {opacity:0,x:-300,scale:0.7},
+      {opacity:1,x:0, duration:0.8,delay:0.2,scale:1},"-=0.8"
+    )
+    tl.fromTo(userInfoRef.current,
+      {opacity:0,x:300,scale:0.7},
+      {opacity:1,x:0, duration:0.8,delay:0.2,scale:1},"-=0.6"
+    )
+    tl.fromTo(tableRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,delay:0.2,scale:1},"-=0.5"
+    )
+    tl.fromTo(table2Ref.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,delay:0.2,scale:1},"-=0.6"
+    )
+
+  })
+  return ()=> ctx.revert();
+
+
+},[order])
+
+
+
+
   return (
     <section className="max-w-7xl mx-auto  px-5 flex flex-col gap-8 items-center min-h-screen">
       <div ref={printRef} className="w-full bg-primary-color dark:bg-dark-secondary-color min-h-screen rounded-xl">
         {/* Invoice Header */}
-        <div className="flex flex-row justify-between items-center px-5 py-5 border-b border-gray-200 dark:border-gray-800">
+        <div ref={headingRef} className="flex flex-row justify-between items-center px-5 py-5 border-b border-gray-200 dark:border-gray-800">
           <h5 className="font-opensans">Invoice</h5>
           <span className="font-semibold">{order?.orderNo}</span>
         </div>
@@ -36,7 +84,7 @@ const Invoice = ({ loading, order }) => {
         {/* To and From */}
         <div className="w-full flex max-sm:flex-col sm:flex-row items-center px-10 py-8 gap-5">
           {/* From */}
-          <div className="w-1/2 flex flex-col gap-4 max-sm:border-b max-sm:pb-5 sm:border-r border-gray-200 dark:border-gray-800">
+          <div ref={myInfoRef} className="w-1/2 flex flex-col gap-4 max-sm:border-b max-sm:pb-5 sm:border-r border-gray-200 dark:border-gray-800">
             <span className="invoice_small_text">From</span>
             <h6 className="font-semibold text-font-white">TechHive Pvt.Ltd</h6>
             <span className="invoice_smallest_text">
@@ -49,7 +97,7 @@ const Invoice = ({ loading, order }) => {
           </div>
 
           {/* To */}
-          <div className="w-1/2 flex flex-col gap-4 sm:text-end">
+          <div ref={userInfoRef} className="w-1/2 flex flex-col gap-4 sm:text-end">
             <span className="invoice_small_text">To</span>
             <h6 className="font-semibold text-font-white">{order?.deliveryDetails?.fullName}</h6>
             <span className="invoice_smallest_text">
@@ -67,7 +115,7 @@ const Invoice = ({ loading, order }) => {
 
         {/* Items Table */}
         <div className="w-full px-10 py-5">
-          <table className="w-full" border="1">
+          <table ref={tableRef} className="w-full" border="1">
             <thead>
               <tr className="bg-secondary-color dark:bg-dark-search-bar-bg">
                 {table_headers.map((header) => (
@@ -91,7 +139,7 @@ const Invoice = ({ loading, order }) => {
 
         {/* Totals */}
         <div className="w-full px-10 py-5 flex max-sm:justify-center sm:justify-end">
-          <div className="w-full max-w-md ml-auto bg-secondary-color dark:bg-dark-search-bar-bg p-4 rounded-lg flex flex-col gap-2">
+          <div ref={table2Ref} className="w-full max-w-md ml-auto bg-secondary-color dark:bg-dark-search-bar-bg p-4 rounded-lg flex flex-col gap-2">
             <div className="flex justify-between">
               <span className="invoice_small_text">Sub Total:</span>
               <span className="font-semibold">Rs. {subTotal}</span>

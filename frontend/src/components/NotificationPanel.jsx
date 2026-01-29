@@ -37,7 +37,7 @@ const NotificationPanel = ({state}) => {
 
     gsap.fromTo(notificationRefs.current,
        {opacity:0,x:-200},
-        {opacity:1,x:0,duration:0.8,ease:"elastic.inOut",stagger:0.07}
+        {opacity:1,x:0,duration:0.8,ease:"elastic.inOut",stagger:0.2}
     )
 
   })

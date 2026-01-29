@@ -17,6 +17,7 @@ import { useCartStore } from "../utils/useCartStore";
 import { Loader } from "lucide-react";
 import Loading from "./Loading"
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLayoutEffect } from "react";
 
 
 gsap.registerPlugin(ScrollTrigger); // ✅ register ScrollTrigger
@@ -59,7 +60,7 @@ const addingToCart =async (e,id)=>{
   };
 
   // GSAP animation 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (cardRefs.current.length > 0) {
 
       cardRefs.current.forEach((card)=>{

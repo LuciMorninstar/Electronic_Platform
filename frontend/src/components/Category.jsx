@@ -22,6 +22,9 @@ import { useProductStore } from "../utils/useProductStore";
 import { useCartStore } from "../utils/useCartStore";
 import { useUserStore } from "../utils/useUserStore";
 import { useParams } from "react-router-dom";
+import gsap from "gsap"
+import { useLayoutEffect } from 'react';
+import { useRef } from 'react';
 
 
 
@@ -72,6 +75,47 @@ const {category} = useParams();
 
 
 
+    // gsap
+    const headingRef = useRef(null);
+    const categoryRefs = useRef([]);
+    
+    const addToCategoryRef = (el)=>{
+      if(el && !categoryRefs.current.includes(el)){
+        categoryRefs.current.push(el)
+      }
+    }
+
+    useLayoutEffect(()=>{
+
+  if(!products || products.length <=0) return ;
+
+  const ctx = gsap.context(()=>{
+    const tl = gsap.timeline({ease:"power2.in"})
+
+    tl.fromTo(headingRef.current,
+          {opacity:0,y:30},
+          {opacity:1,y:0,duration:0.6,ease:"power2.in"}
+     )
+   tl.fromTo(categoryRefs.current,
+        { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.2},   "-=0.4"
+          )
+
+
+
+    
+  });
+
+  return ()=> ctx.revert();
+
+
+
+
+},[products])
+
+
+
+
 
 
 
@@ -83,7 +127,7 @@ const {category} = useParams();
    <WidthWrapper className = "">
     <section className = " section_style">
 
-<div className = "flex flex-row justify-between w-full pr-5">
+<div ref={headingRef} className = "flex flex-row justify-between w-full pr-5">
     <h3 className = "uppercase font-opensans">{category}</h3>
     <span className = "font-audiowide">Items Found : {products?.length}</span>
 </div>
@@ -104,7 +148,7 @@ products?.length > 0 ?
          <div className=" grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4">
               {(products || []).map((item,i) => (
                 // card wrapper
-                <div key={i} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
+                <div ref={addToCategoryRef} key={i} className=" relative group flex flex-col w-full rounded-xl bg-secondary-color dark:bg-dark-secondary-color overflow-hidden cursor-pointer shadow-[0_0_25px_-5px_rgba(0,0,0,0.6)] hover:shadow-[0_0_40px_5px_rgba(0,255,255,0.35)]
          ">
                   {/* <div className="absolute z-10 top-3 right-3">
                     <HiPlus className="card-icon" />

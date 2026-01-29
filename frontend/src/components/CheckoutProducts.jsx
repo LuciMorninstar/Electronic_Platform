@@ -15,7 +15,7 @@ useEffect(()=>{
 
                 
     <div className = "flex flex-col gap-0 bg-primary-color dark:bg-dark-secondary-color px-10 py-8 rounded-lg ">
-        <h4 className = "pb-5" >Product Overview</h4>
+        <h4 className = "pb-5 text-center" >Product Overview</h4>
     {
         cartItems?.map((item,i)=>(
             // card
@@ -31,7 +31,7 @@ useEffect(()=>{
                 </div>
                 {/* /for image */} 
                 <div>
-                    <span className = "text-sm sm:text-base lg:text-xs font-semibold font-poppins">{item.product?.name.slice(0,27)+"..."}</span>
+                    <span className = "text-xs sm:text-base lg:text-xs font-semibold font-poppins">{item.product?.name.slice(0,27)+"..."}</span>
                 </div>
 
                 </div>
@@ -43,18 +43,18 @@ useEffect(()=>{
                     <div className='flex flex-row gap-0'>
                     
 
-                    <input className = " text-sm border-2 border-font-light-white w-8 h-8 text-center rounded-lg" type="text" id="quantity" onChange={(e)=>e.target.value } value={item.quantity} />
+                    <input className = " text-xs sm:text-sm border-2 border-font-light-white w-8 h-8 text-center rounded-lg" type="text" id="quantity" onChange={(e)=>e.target.value } value={item.quantity} />
                     
                 
                     </div>
                     {/* quantity ends */}
 
                     {/* for price */}
-                    <span className = "text-sm">Rs. {item.product?.price.toLocaleString()}</span>
+                    <span className = "text-xs sm:text-sm">Rs. {item.product?.price.toLocaleString()}</span>
                     {/* /for price */}
 
                     {/* for total price */}
-                    <span className = "text-sm">Rs.{(item.quantity * item.product?.price).toLocaleString() }</span>
+                    <span className = " text-xs sm:text-sm">Rs.{(item.quantity * item.product?.price).toLocaleString() }</span>
 
 
                     

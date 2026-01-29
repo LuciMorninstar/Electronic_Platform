@@ -17,7 +17,7 @@ const CartPage = () => {
       
   
   return (
-    <section className = "w-full xl:w-7xl   mx-auto mt-30 lg:mt-32 flex flex-col lg:flex-row gap-5 lg:gap-10 ">
+    <section className = "w-full xl:w-7xl   mx-auto mt-30 lg:mt-32 flex flex-col lg:flex-row gap-5 lg:gap-10 lg:px-5 ">
        
 
 

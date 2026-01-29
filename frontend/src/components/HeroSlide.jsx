@@ -82,7 +82,21 @@ useEffect(() => {
           
            {/* slide details */}
           <div  className = " pb-5 lg:pb-7 xl:pb-25 absolute   left-1/2 max-lg:-translate-x-1/2 bottom-0 lg:bottom-0 lg:left-0 flex flex-col  lg:gap-4 max-lg:items-center content-center w-full lg:w-1/2 px-5 lg:px-10 z-20 ">
-            <h1 className = "gsapTitles title font-poppins ">{item.name}</h1>
+
+       <h1 className='gsapTitles title font-poppins'>
+          {(() => {   // immediately invoke the function
+            const words = item?.name?.split(" ");
+            if (!words) return null; 
+            const firstWord = words.shift();
+            return (
+              <>
+                <span className="text-teal-500">{firstWord}</span>{" "}
+                {words.join(" ")}
+              </>
+            );
+          })()}
+        </h1>
+
             {/* rating */}
                 <div className='gsapRatings flex flex-row gap-2 items-center'>
                   <span className=" flex gap-1">

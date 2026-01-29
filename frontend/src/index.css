@@ -461,7 +461,7 @@ body::-webkit-scrollbar-thumb{
 
 .admin_form_small_input_style{
   
-    @apply w-[250px] sm:w-[300px] md:w-[350px] lg:w-[270px] xl:w-[320px] not-only-of-type:lg:w-[150px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-text-dark-color-outlet  caret-color-teal-500 text-sm
+    @apply w-[220px] sm:w-[300px] md:w-[350px] lg:w-[270px] xl:w-[320px] not-only-of-type:lg:w-[150px] bg-tertiary-color active:bg-tertiary-color dark:active:bg-dark-search-bar-bg dark:bg-dark-search-bar-bg px-3 py-3 rounded-md text-font-light-white dark:text-tertiary-color placeholder:text-font-light-white border-1 border-gray-800 outline-none dark:placeholder:text-text-dark-color-outlet  caret-color-teal-500 text-sm
 }
 .admin_form_big_input_style{
   

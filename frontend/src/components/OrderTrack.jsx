@@ -6,6 +6,10 @@ import delivered from "../assets/delivered.png"
 import ordered from "../assets/ordered.png"
 import { Check } from 'lucide-react'
 import { Ban } from 'lucide-react'
+import gsap from "gsap"
+import { useLayoutEffect } from 'react'
+import { useRef } from 'react'
+
 
 
 const OrderTrack = ({order}) => {
@@ -15,12 +19,58 @@ const OrderTrack = ({order}) => {
     const deliveredAt = order?.statusHistory?.find(item=> item.state === "delivered")?.at ;
                            
     const cancelledAt = order?.statusHistory?.find(item=> item.state === "cancelled")?.at ;
+
+
+    // gsap
+
+    const topRef = useRef(null);
+    const trackingRef = useRef(null);
+    const shippingRef = useRef(null);
+    const productRef = useRef(null);
+    const noteRef = useRef(null);
+
+    useLayoutEffect(()=>{
+
+  if(!order || order.length<=0) return;
+
+  const ctx = gsap.context(()=>{
+
+    const tl = gsap.timeline({defaults:{ease:"power3.out"}})
+
+    tl.fromTo(topRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,scale:1}
+    )
+    tl.fromTo(trackingRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,delay:0.2,scale:1},"-=0.7"
+    )
+    tl.fromTo(shippingRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,delay:0.2,scale:1},"-=0.5"
+    )
+    tl.fromTo(productRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,delay:0.2,scale:1},"-=0.5"
+    )
+    tl.fromTo(noteRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,delay:0.2,scale:1},"-=0.3"
+    )
+
+  })
+  return ()=> ctx.revert();
+
+
+},[order])
+
+
                            
 
     
   return (
     <section className='w-full bg-tertiary-color dark:bg-dark-secondary-color px-5 py-5 flex flex-col gap-5'>
-        <div className='flex flex-col gap-3 between bg-secondary-color dark:bg-dark-search-bar-bg px-5 py-3 rounded-lg'>
+        <div ref={topRef} className='flex flex-col gap-3 between bg-secondary-color dark:bg-dark-search-bar-bg px-5 py-3 rounded-lg'>
 
             <div className='flex flex-col justify-between gap-3'>
             <span className='font-bold text-lg'>Order ID: {order?.orderNo}</span>
@@ -32,7 +82,7 @@ const OrderTrack = ({order}) => {
 
     <div className='w-full flex flex-col lg:flex-row gap-5'>   
 
-      <aside className = " w-full lg:w-1/2 bg-secondary-color dark:bg-dark-search-bar-bg p-5">
+      <aside ref={trackingRef} className = " w-full lg:w-1/2 bg-secondary-color dark:bg-dark-search-bar-bg p-5">
             {cancelledAt ?
             <div className='h-screen w-full flex flex-col gap-5 items-center justify-center pb-30'>
                 <Ban className=' text-red-500 size-60' />
@@ -135,7 +185,7 @@ const OrderTrack = ({order}) => {
       
 
       <aside className='flex flex-col gap-5'>
-            <div className='flex flex-col gap-4 bg-secondary-color dark:bg-dark-search-bar-bg p-5'>
+            <div ref={shippingRef} className='flex flex-col gap-4 bg-secondary-color dark:bg-dark-search-bar-bg p-5'>
                     <h4>Shipping Info</h4> 
 
                     <div className='flex flex-col gap-2'>
@@ -151,7 +201,7 @@ const OrderTrack = ({order}) => {
                 {/* product summary */}
 
                                 
-    <div className = "flex flex-col gap-0 bg-primary-color dark:bg-dark-search-bar-bg px-3 lg:px-10 py-8 rounded-lg ">
+    <div ref={productRef} className = "flex flex-col gap-0 bg-primary-color dark:bg-dark-search-bar-bg px-3 lg:px-10 py-8 rounded-lg ">
         <h4 className = "pb-5" >Product Overview</h4>
     {
         order?.items?.map((item,i)=>(
@@ -216,7 +266,7 @@ s
 
     </div>   
 
-    <span className='font-semibold mt-10 flex mx-auto text-center px-5 py-2 bg-color-teal-500 w-max rounded-lg'>* Inside valley 1-2 days for delivery. Outside valley may take 3-5 business days for Delivery</span>
+    <span ref={noteRef} className='font-semibold mt-10 flex mx-auto text-center px-5 py-2 bg-color-teal-500 w-max rounded-lg'>* Inside valley 1-2 days for delivery. Outside valley may take 3-5 business days for Delivery</span>
 
     </section>
   )

@@ -16,13 +16,17 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import Search from "./Search";
 import { useState } from "react";
 import ToggleDarkMode from "./ToggleDarkMode";
-import gsap from "gsap"
+
 import { useGSAP } from "@gsap/react";
 import { useUserStore } from "../utils/useUserStore";
 import toast from "react-hot-toast"
 import { useCartStore } from "../utils/useCartStore";
 import { useEffect } from "react";
 import NotificationPanel from "./NotificationPanel";
+import gsap from "gsap"
+import { useLayoutEffect } from "react";
+import { useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
 
@@ -45,21 +49,6 @@ const Navbar = () => {
     getAllCartProducts();
   },[getAllCartProducts])
   
-
-
-
-  useGSAP(()=>{
-
-    gsap.from(".gsapNav",{
-      opacity:0,
-      // z:-200,
-      duration:1,
-      ease:"power1.in",
-      delay:0.3,
-    })
-
-  },[])
-
 
 
   const [showSearchBar, setShowSearchBar] = useState(false);
@@ -174,15 +163,81 @@ const Navbar = () => {
     },
   ];
 
+  // gsap
+
+  const location = useLocation();
+
+const navRef = useRef(null);
+const logoRef = useRef(null);
+const searchRef = useRef(null);
+const linksRef = useRef([]);
+
+
+const nav2Ref = useRef(null);
+const logo2Ref = useRef(null);
+const links2Ref = useRef([]);
+
+
+const addToLinkRef = (el)=>{
+  if(el && !linksRef.current.includes(el)){
+    linksRef.current.push(el);
+  }
+}
+const addToLink2Ref = (el)=>{
+  if(el && !links2Ref.current.includes(el)){
+    links2Ref.current.push(el);
+  }
+}
+
+useLayoutEffect(()=>{
+
+  if(location.pathname !== "/") return ; //only in homepage show animation
+  
+
+  const ctx = gsap.context(()=>{
+    const tl = gsap.timeline({defaults:{ease:"power2.out"}})
+
+    tl.fromTo([navRef.current,nav2Ref.current],
+      {opacity:0,y:30,scale:0.8},
+      {opacity:1,y:0,scale:1, duration:0.7,delay:0.5,ease:"power2.out"}
+    )
+    .fromTo([logoRef.current,logo2Ref.current],
+      {opacity:0,y:30,scale:0.8},
+      {opacity:1,y:0,scale:1, duration:0.6},"-=0.5"
+    )
+    .fromTo(searchRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0,scale:1, duration:0.6},"-=0.7"
+    )
+    .fromTo([linksRef.current,links2Ref.current],
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.6,scale:1,stagger:0.2},"-=0.7"
+    )
+    
+
+  })
+
+  return ()=> ctx.revert();
+
+
+
+},[])
+
+
+
+
+
+
+
   return (
     <>
-      <nav className="gsapNav absolute z-50 top-6 w-full  lg:hidden opacity-100  ">
+      <nav ref={nav2Ref} className="gsapNav absolute z-50 top-6 w-full  lg:hidden opacity-100  ">
         {/* For small screens upto lg:1024px */}
         <div className=" relative flex flex-row justify-between items-center mx-4 px-4 py-2  bg-secondary-color dark:bg-dark-secondary-color  rounded-2xl ">
           {/* 1st part   */}
           <div className="flex flex-row gap-2 items-center sm:gap-4 lg:gap-6 ">
             {/* hamburger */}
-            <div>
+            {/* <div>
               {smallScreenLinksForTopNav.slice(0, 1).map((item) => (
                 <div className=" group" key={item.name}>
                   {item.icon ? (
@@ -192,9 +247,9 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-            </div>
+            </div> */}
             {/* logo */}
-            <div>
+            <div ref={logo2Ref}>
               <Link to ="/" className="logo">TechHive</Link>
             </div>
           </div>
@@ -204,6 +259,7 @@ const Navbar = () => {
           <div className="flex flex-row gap-1 items-center sm:gap-5 lg:gap-6 xl:gap-8 ">
             {smallScreenLinksForTopNav.slice(1).map((item) => (
               <div
+                ref={addToLink2Ref}
                 onClick={() => OnSearchIconClick(item.name)}
                 className=" group icon-wrapper"
                 key={item.name}
@@ -234,13 +290,13 @@ const Navbar = () => {
 
       {/* for large screen lg and up(1024px and up) */}
 
-      <nav className="gsapNav absolute top-7 w-full z-50 max-lg:hidden opacity-95  ">
+      <nav ref={navRef} className="gsapNav absolute top-7 w-full z-50 max-lg:hidden opacity-95   ">
         {/* For small screens */}
         <div className="flex flex-row justify-between items-center lg:mx-4 xl:mx-6 px-6 xl:px-8 py-2 shadow-xl bg-secondary-color dark:bg-dark-secondary-color  rounded-2xl ">
           {/* 1st part   */}
           <div className="flex flex-row gap-1 items-center sm:gap-4 lg:gap-6 ">
             {/* hamburger */}
-            <div>
+            {/* <div>
               {largeScreenLinksForTopNav.slice(0, 1).map((item) => (
                 <div className=" group icon-wrapper" key={item.name}>
                   {item.icon ? (
@@ -250,23 +306,23 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-            </div>
+            </div> */}
             {/* logo */}
-            <div>
-              <Link to ="/" className="logo">TechHive</Link>
+            <div ref={logoRef}>
+              <Link  to ="/" className="logo">TechHive</Link>
             </div>
           </div>
 
           {/* 2nd part */}
 
           <div className="flex flex-row items-center gap-1  lg:gap-4 xl:gap-8 ">
-            <div>
+            <div ref={searchRef}>
               <Search />
             </div>
 
             <div className="flex flex-row gap-1 items-center  lg:gap-6 xl:gap-8 ">
               {largeScreenLinksForTopNav.slice(1).map((item) => (
-                <Link to ={item.link}
+                <Link ref={addToLinkRef} to ={item.link}
                   className="flex flex-row gap-1 items-center "
                   key={item.name}
                 >

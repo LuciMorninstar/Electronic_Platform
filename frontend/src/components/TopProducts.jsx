@@ -10,6 +10,7 @@ import { Loader } from 'lucide-react';
 import Loading from './Loading';
 import { useRef } from 'react';
 import gsap from "gsap"
+import { useLayoutEffect } from 'react';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger); // ✅ register ScrollTrigger
@@ -39,7 +40,7 @@ const TopProducts = ({className}) => {
       }
 
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         if(cardRefs.current.length >0){
           cardRefs.current.forEach((card)=>{
             gsap.fromTo(card,

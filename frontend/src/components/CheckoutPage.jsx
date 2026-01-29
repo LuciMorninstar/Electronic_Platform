@@ -7,6 +7,9 @@ import CheckoutProducts from './CheckoutProducts'
 import OrderSummary from './OrderSummary'
 import { Link, useNavigate } from 'react-router-dom'
 import { useOrderStore } from '../utils/useOrderStore'
+import gsap from "gsap"
+import { useLayoutEffect } from 'react'
+import { useRef } from 'react'
 
 
 
@@ -84,9 +87,43 @@ const cashingOnDelivery =async(e,formData,shippingCharges)=>{
   navigate("/myOrders");
 
 
-
-
 }
+
+
+// gsap
+
+const deliveryRef = useRef(null);
+const productRef = useRef(null);
+const summaryRef = useRef(null);
+
+
+
+useLayoutEffect(()=>{
+
+  if(!cartItems || cartItems.length<=0) return;
+
+  const ctx = gsap.context(()=>{
+
+    const tl = gsap.timeline({defaults:{ease:"power3.out"}})
+
+    tl.fromTo(deliveryRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,scale:1}
+    )
+    tl.fromTo(productRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,delay:0.2,scale:1},"-=0.8"
+    )
+    tl.fromTo(summaryRef.current,
+      {opacity:0,y:30,scale:0.7},
+      {opacity:1,y:0, duration:0.8,delay:0.2,scale:1},"-=0.4"
+    )
+
+  })
+  return ()=> ctx.revert();
+
+
+},[cartItems])
 
         
   
@@ -99,15 +136,15 @@ const cashingOnDelivery =async(e,formData,shippingCharges)=>{
   return (
 
     <WidthWrapper>
-        <section className = "w-full flex flex-col items-center  mt-26 ">
+        <section className = "w-full min-h-screen flex flex-col items-center  mt-26 ">
 
-          <div className = " max-w-8xl flex flex-col lg:flex-row gap-5 sm:px-10 lg:px-20 ">
+          <div className = " max-w-8xl flex flex-col xl:flex-row gap-5 sm:px-10 lg:px-20 ">
               {/* first div */}
-              <div className = "flex flex-col gap-10">
-                <form className='bg-secondary-color shadow-xl dark:bg-dark-secondary-color max-sm:px-10 sm:px-20 lg:px-10 xl:px-10 rounded-xl  py-10 '>
+              <div  className = "flex flex-col gap-10 max-sm:text-xs">
+                <form ref={deliveryRef} className='bg-secondary-color shadow-xl dark:bg-dark-secondary-color max-sm:px-10 sm:px-20 lg:px-10 xl:px-10 rounded-xl  py-10 '>
                   <div className = "flex flex-col gap-5">
 
-                    <div>
+                    <div className='text-center '>
                       <h4>Delivery Information</h4>
                     </div>
                     {/* form starts */}
@@ -212,7 +249,9 @@ const cashingOnDelivery =async(e,formData,shippingCharges)=>{
 
                 </form>
 
+                 <div ref={productRef}>     
                 <CheckoutProducts/>
+                </div>  
                 
 
 
@@ -221,13 +260,13 @@ const cashingOnDelivery =async(e,formData,shippingCharges)=>{
               {/* first div finished*/}
               
                 {/* second div */}
-                <div className='w-full  px-5  '>
+                <div ref={summaryRef} className='w-full  px-5  '>
                 
 
-                  <aside className = " w-full  lg:w-full flex flex-col gap-y-7 rounded-lg  items-center  max-lg:px-4 ">
+                  <aside className = " w-full  lg:w-full flex flex-col gap-y-7 rounded-lg  items-center  max-lg:px-4 text-xs sm:text-sm lg:text-base ">
                         
                         <div className = "w-full  flex flex-row justify-between  border-b-1 py-5 border-gray-500 ">
-                            <h4>Order Summary</h4>
+                            <h4 className='mx-auto'>Order Summary</h4>
                             
                         </div>
                             {/* card */}

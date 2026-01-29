@@ -90,7 +90,7 @@ useLayoutEffect(()=>{
      )
    tl.fromTo(wishlistRefs.current,
         { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.6, stagger: 0.2},   "-=0.4"
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.2},   "-=1"
           )
 
 
@@ -118,7 +118,7 @@ useLayoutEffect(()=>{
     <section className = " section_style">
 {
   products?.length >0?
-    <h3 ref={headingRef} className = "w-full  uppercase ">  Wishlists</h3>:
+    <h3 ref={headingRef} className = "w-full text-center uppercase ">  Wishlists</h3>:
     ""
 
 }
